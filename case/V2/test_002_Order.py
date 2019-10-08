@@ -10,11 +10,11 @@ from data.Order.data import *
 from data.Common.data import *
 
 
-class TestOrder(StartEnd):
+class TestPlaceOrder(StartEnd):
     """下单"""
     data = d
 
-    def test_order_000(self):
+    def test_PlaceOrder_000(self):
         """成功下单"""
         header['trade_sToken'] = sToken
         result = requests.post(placeOrder, json=self.data, headers=header)
@@ -23,7 +23,7 @@ class TestOrder(StartEnd):
         assert_json(result.json(), 'message', '下单成功')
         assert_json(result.json(), 'success', True)
 
-    def test_order_001(self):
+    def test_PlaceOrder_001(self):
         """sToken为空下单"""
         header['trade_sToken'] = ""
         result = requests.post(placeOrder, json=self.data, headers=header)
@@ -31,7 +31,7 @@ class TestOrder(StartEnd):
         assert_json(result.json(), 'code', 2002)
         assert_json(result.json(), 'success', False)
 
-    def test_order_002(self):
+    def test_PlaceOrder_002(self):
         """错误sToken下单"""
         header['trade_sToken'] = sToken + 'xxx'
         result = requests.post(placeOrder, json=self.data, headers=header)
@@ -39,7 +39,7 @@ class TestOrder(StartEnd):
         assert_json(result.json(), 'code', 2002)
         assert_json(result.json(), 'success', False)
 
-    def test_order_003(self):
+    def test_PlaceOrder_003(self):
         """错误ID或ID为空下单"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
@@ -56,7 +56,7 @@ class TestOrder(StartEnd):
         assert_json(result.json(), 'code', 2001)
         assert_json(result.json(), 'success', False)
 
-    def test_order_004(self):
+    def test_PlaceOrder_004(self):
         """错误交易所或空参数下单"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
@@ -73,7 +73,7 @@ class TestOrder(StartEnd):
         assert_json(result.json(), 'code', 2001)
         assert_json(result.json(), 'success', False)
 
-    def test_order_005(self):
+    def test_PlaceOrder_005(self):
         """错误子市场或空参数下单"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
@@ -92,7 +92,7 @@ class TestOrder(StartEnd):
         assert_json(result.json(), 'success', False)
 
     @unittest.skip('postType 参数没有校验')
-    def test_order_006(self):
+    def test_PlaceOrder_006(self):
         """错误的postType下单"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
@@ -102,7 +102,7 @@ class TestOrder(StartEnd):
         print(result.json())
 
     @unittest.skip('postType 为空默认 normal')
-    def test_order_006_01(self):
+    def test_PlaceOrder_006_01(self):
         """postType为空下单"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
@@ -111,7 +111,7 @@ class TestOrder(StartEnd):
         result = requests.post(placeOrder, json=self.data, headers=header)
         print(result.json())
 
-    def test_order_007(self):
+    def test_PlaceOrder_007(self):
         """price为空下单"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
@@ -123,7 +123,7 @@ class TestOrder(StartEnd):
         assert_json(result.json(), 'success', False)
 
     @unittest.skip('price 错误参数没有校验')
-    def test_order_008(self):
+    def test_PlaceOrder_008(self):
         """错误的price下单"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
@@ -132,7 +132,7 @@ class TestOrder(StartEnd):
         result = requests.post(placeOrder, json=self.data, headers=header)
         print(result.json())
 
-    def test_order_009(self):
+    def test_PlaceOrder_009(self):
         """大于可买入个数下单"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
@@ -143,7 +143,7 @@ class TestOrder(StartEnd):
         assert_json(result.json(), 'code', 2000)
         assert_json(result.json(), 'success', False)
 
-    def test_order_010(self):
+    def test_PlaceOrder_010(self):
         """买入个数为空下单"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
@@ -155,7 +155,7 @@ class TestOrder(StartEnd):
         assert_json(result.json(), 'success', False)
 
     @unittest.skip('qty 错误参数没有校验')
-    def test_order_011(self):
+    def test_PlaceOrder_011(self):
         """错误的买入个数下单"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
@@ -164,7 +164,7 @@ class TestOrder(StartEnd):
         result = requests.post(placeOrder, json=self.data, headers=header)
         print(result.json())
 
-    def test_order_012(self):
+    def test_PlaceOrder_012(self):
         """错误交易方向下单"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
@@ -175,7 +175,7 @@ class TestOrder(StartEnd):
         assert_json(result.json(), 'code', 2104)
         assert_json(result.json(), 'success', False)
 
-    def test_order_013(self):
+    def test_PlaceOrder_013(self):
         """交易方向为空参数下单"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
@@ -186,7 +186,7 @@ class TestOrder(StartEnd):
         assert_json(result.json(), 'code', 2001)
         assert_json(result.json(), 'success', False)
 
-    def test_order_014(self):
+    def test_PlaceOrder_014(self):
         """币对错误下单"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
@@ -197,7 +197,7 @@ class TestOrder(StartEnd):
         assert_json(result.json(), 'code', 2000)
         assert_json(result.json(), 'success', False)
 
-    def test_order_015(self):
+    def test_PlaceOrder_015(self):
         """币对错误为空"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
@@ -209,7 +209,7 @@ class TestOrder(StartEnd):
         assert_json(result.json(), 'success', False)
 
     @unittest.skip('type 为空默认 limit')
-    def test_order_016(self):
+    def test_PlaceOrder_016(self):
         """错误的type下单"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
@@ -218,7 +218,7 @@ class TestOrder(StartEnd):
         result = requests.post(placeOrder, json=self.data, headers=header)
         print(result.json())
 
-    def test_order_017(self):
+    def test_PlaceOrder_017(self):
         """type为空下单"""
         self.data = reset_data(self.data)
         header['trade_sToken'] = sToken
