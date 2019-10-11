@@ -9,5 +9,5 @@ import unittest
 import requests
 
 from common.BaseUnit import StartEnd
-from common.Urls import *
 from common.PublicFunc import *
+from config.Urls import *
