@@ -5,6 +5,8 @@
 # @File    : test_002_Order01.py
 # @Software: PyCharm
 
+from time import sleep
+
 from all_import import *
 from config.data.test_data import *
 from config.config import R
@@ -57,14 +59,16 @@ def generating_orders(exchange=None, exchangeType=None, postType=None, side=None
     if exchangeType == 'spot':
         print('func -> generating_orders data -> spot')
         result = requests.post(placeOrder, json=d, headers=header)
+        return result
     if exchangeType == 'margin':
         print('func -> generating_orders data -> margin')
+        return
     if exchangeType == 'future':
         print('func -> generating_orders data -> future')
+        return
     if exchangeType == 'swap':
         print('func -> generating_orders data -> swap')
-
-    return result
+        return
 
 
 # 查询需要交易币对资产
@@ -104,9 +108,9 @@ def assets_contrast(exchangeType, symbol_l, symbol_r):
 
 
 #  查看订单状态
-def check_order(exchange, exchangeType, orderId, symbol):
+def check_order(exchange, exchangeType, orderId, symbol, a_id=accountId):
     j = {
-        "accountId": accountId,
+        "accountId": a_id,
         "customId": "",
         "exchange": exchange,
         "exchangeType": exchangeType,
@@ -117,7 +121,10 @@ def check_order(exchange, exchangeType, orderId, symbol):
 
     result = requests.post(getOrderById, json=j, headers=header)
     print(result.json())
-    return result.json()['data']['status']
+    if result.json()['code'] == 1000:
+        return result.json()['data']['status']
+    else:
+        return result.json()
 
 
 # 数据处理
@@ -130,13 +137,142 @@ def bl8(n):
     return round(float(n), 8)
 
 
-class TestPlaceOrderReverseLogic(StartEnd):
+class PublicOrderFunc:
+    """公共类"""
+
+    result = ''
+
+    def clear_db_08(self):
+        """测试数据init"""
+        R.flushall()
+        print('redis db8 flushall .....')
+
+    def before_use(self):
+        """币币:交易前金额"""
+        pre_transaction = assets_contrast('spot', 'eos', 'okb')
+        R.set('pre_total', round(float(pre_transaction['total']), 8))
+        R.set('pre_free', round(float(pre_transaction['free']), 8))
+
+    def after_use(self):
+        """币币:交易后金额"""
+        post_transaction = assets_contrast('spot', 'eos', 'okb')
+        R.set('post_total', round(post_transaction['total'], 8))
+        R.set('post_free', round(post_transaction['free'], 8))
+
+    def assert_balance(self, order_status):
+        """断言余额"""
+        if order_status == 'active':
+            print('挂单')
+            print(R.get('pre_free'), type(R.get('pre_free')))
+            print(R.get('post_free'), type(R.get('post_free')))
+            print(R.get('price'), type(R.get('price')))
+            print(bl8(R.get('pre_free')), type(bl8(R.get('pre_free'))))
+
+            pre_free = bl8(R.get('pre_free'))
+            post_free = bl8(R.get('post_free'))
+            price = bl8(R.get('price'))
+            assert round(pre_free, 8) == round(post_free + price, 8)
+            print('断言结束')
+            print('Contrast of transaction amount before and after normal')
+
+        # if order_status == '':
+        #     print('撤销')
+        # if order_status == '':
+        #     print('下单成功')
+        # else:
+        #     print('测试数据错误')
+
+    def go_active(self):
+        """生成订单 -> 挂单"""
+        result = generating_orders()
+        print(result.json())
+        assert_json(result.json(), 'code', 1000)
+        assert_json(result.json(), 'message', '下单成功')
+        assert_json(result.json(), 'success', True)
+        print('test place order success')
+        self.result = result
+
+    def save_test_data_to_db(self, result):
+        """保存测试数据"""
+        print(float(result.json()['data']['price']))
+        R.set('price', float(result.json()['data']['price']))
+        R.set('orderId', result.json()['data']['orderId'])
+        R.set('exchangeType', result.json()['data']['exchangeType'])
+        R.set('symbol', result.json()['data']['symbol'])
+        print('save db success')
+
+
+class TestPlaceOrderForwardLogic(StartEnd, PublicOrderFunc):
+    """Place Order Forward logic"""
+
+    def test_001_PlaceOrderActive_001(self):
+        """测试-币币:偏离交易下单 -> buy【挂单】 测试:前后金额增加/减少"""
+
+        self.clear_db_08()
+
+        """交易前"""
+        self.before_use()
+
+        """生成订单"""
+        self.go_active()
+
+        """测试数据存储"""
+        result = self.result
+        self.save_test_data_to_db(result)
+
+        """查看订单状态"""
+        exchangeType = result.json()['data']['exchangeType']
+        orderId = result.json()['data']['orderId']
+        symbol = result.json()['data']['symbol']
+        sleep(1)
+        order_status = check_order('okex', exchangeType, orderId, symbol)
+        print(order_status)
+        print('check order status success')
+
+        """交易后"""
+        self.after_use()
+
+        """检查金额"""
+        self.assert_balance(order_status)
+
+    def test_002_PlaceOrderActive_002(self):
+        """测试-币币:交易 -> buy【撤单】前后金额增加/减少"""
+
+        co['orderId'] = R.get('orderId')
+        co['exchangeType'] = R.get('exchangeType')
+        co['symbol'] = R.get('symbol')
+
+        result = requests.post(cancelOrder, json=co, headers=header)
+        print(result.json())
+        assert_json(result.json(), 'code', 1000)
+        assert_json(result.json(), 'message', '撤单成功')
+        assert_json(result.json(), 'success', True)
+        print('撤单 assert end')
+
+        pre_free = bl8(R.get('pre_free'))
+        post_free = bl8(R.get('post_free'))
+        price = bl8(R.get('price'))
+
+        assert round(pre_free, 8) == round(post_free + price, 8)
+        print('free success')
+
+        pre_total = bl8(R.get('pre_total'))
+        post_total = bl8(R.get('post_total'))
+        print(pre_total)
+        print(post_total)
+        assert round(pre_total, 8) == round(post_total, 8)
+        print('total success')
+        self.clear_db_08()
+
+
+class TestPlaceOrderReverseLogic(StartEnd, PublicOrderFunc):
     """Place Order Reverse logic"""
 
     """
     test_000 ~ test_005: -> 查询参数异常逻辑
     test_006 ~ test_026: -> 下单参数异常逻辑
     test_027 ~ test_037: -> 撤单参数异常逻辑
+    test_038 ~ test_000: -> 状态参数异常逻辑
     
     """
     j = {
@@ -439,8 +575,8 @@ class TestPlaceOrderReverseLogic(StartEnd):
 
     def test_027(self):
         """生成挂单用于测单测试"""
-        print('调用:TestPlaceOrderForwardLogic -> test_004_PlaceOrderActive_000 生成挂单')
-        TestPlaceOrderForwardLogic().test_004_PlaceOrderActive_000()
+        print('调用:TestPlaceOrderForwardLogic -> test_001_PlaceOrderActive_001 生成挂单')
+        TestPlaceOrderForwardLogic().test_001_PlaceOrderActive_001()
 
     def test_028(self):
         """错误 accountId 撤单"""
@@ -560,112 +696,120 @@ class TestPlaceOrderReverseLogic(StartEnd):
         print(result.json())
         print('done')
 
+    def test_038(self):
+        """生成挂单测试数据用于查询订单"""
+        self.go_active()  # 生成订单
+        result = self.result
+        self.save_test_data_to_db(result)  # 保存订单测试数据
+        print('c test data order')
 
-class TestPlaceOrderForwardLogic(StartEnd):
-    """Place Order Forward logic"""
+    def test_039(self):
+        """错误 accountId 查询订单"""
+        exchangeType = R.get('exchangeType')
+        orderId = R.get('orderId')
+        symbol = R.get('symbol')
+        result = check_order('okex', exchangeType, orderId, symbol, a_id='999999')
+        assert_json(result, 'code', 2002)
+        assert_json(result, 'message', '系统中不存在这个账户或这个账户的key不可用')
+        assert_json(result, 'success', False)
+        print('test error accountId check order end')
 
-    def test_001_clear_db_08(self):
-        """测试数据init"""
-        R.flushall()
-        print('flushall.....')
+    def test_040(self):
+        """accountId 为空 查询订单"""
+        exchangeType = R.get('exchangeType')
+        orderId = R.get('orderId')
+        symbol = R.get('symbol')
+        result = check_order('okex', exchangeType, orderId, symbol, a_id='')
+        assert_json(result, 'code', 2001)
+        assert_json(result, 'success', False)
+        print('test none accountId check order end')
 
-    def test_002_PlaceOrder_data_001(self):
-        """币币:交易前金额"""
-        pre_transaction = assets_contrast('spot', 'eos', 'okb')
-        R.set('pre_total', round(float(pre_transaction['total']), 8))
-        R.set('pre_free', round(float(pre_transaction['free']), 8))
+    def test_041(self):
+        """错误 交易所 查询订单"""
+        exchangeType = R.get('exchangeType')
+        orderId = R.get('orderId')
+        symbol = R.get('symbol')
+        result = check_order('test...', exchangeType, orderId, symbol)
+        assert_json(result, 'code', 2100)
+        assert_json(result, 'message', '系统中没有该交易所')
+        assert_json(result, 'success', False)
+        print('test error exchange check order end')
 
-    def test_003_PlaceOrder_data_002(self):
-        """币币:交易后金额"""
-        post_transaction = assets_contrast('spot', 'eos', 'okb')
-        R.set('post_total', round(post_transaction['total'], 8))
-        R.set('post_free', round(post_transaction['free'], 8))
+    def test_042(self):
+        """交易所 为空 查询订单"""
+        exchangeType = R.get('exchangeType')
+        orderId = R.get('orderId')
+        symbol = R.get('symbol')
+        result = check_order('', exchangeType, orderId, symbol)
+        assert_json(result, 'code', 2001)
+        assert_json(result, 'success', False)
+        print('test none exchange check order end')
 
-    def test_004_PlaceOrderActive_000(self):
-        """测试-币币:偏离交易下单 -> buy【挂单】 测试:前后金额增加/减少"""
+    def test_043(self):
+        """错误 exchangeType 查询订单"""
+        exchangeType = 'test......'
+        orderId = R.get('orderId')
+        symbol = R.get('symbol')
+        result = check_order('okex', exchangeType, orderId, symbol)
+        assert_json(result, 'code', 2103)
+        assert_json(result, 'message', '系统中没有这个子市场')
+        assert_json(result, 'success', False)
+        print('test error exchangeType check order end')
 
-        """交易前"""
-        self.test_002_PlaceOrder_data_001()
+    def test_044(self):
+        """exchangeType 为空 查询订单"""
+        exchangeType = ''
+        orderId = R.get('orderId')
+        symbol = R.get('symbol')
+        result = check_order('okex', exchangeType, orderId, symbol)
+        assert_json(result, 'code', 2001)
+        assert_json(result, 'success', False)
+        print('test error exchangeType check order end')
 
-        """生成订单"""
-        result = generating_orders()
-        print(result.json())
-        assert_json(result.json(), 'code', 1000)
-        assert_json(result.json(), 'message', '下单成功')
-        assert_json(result.json(), 'success', True)
-        print('test place order success')
+    def test_045(self):
+        """错误 orderId 查询订单"""
+        exchangeType = R.get('exchangeType')
+        orderId = '999999999'
+        symbol = R.get('symbol')
+        result = check_order('okex', exchangeType, orderId, symbol)
+        assert_json(result, 'code', 2000)
+        assert_json(result, 'message', '没有该订单【{}】的存在'.format(orderId))
+        assert_json(result, 'success', False)
+        print('test error orderId check order end')
 
-        """测试数据存储"""
-        print(float(result.json()['data']['price']))
-        R.set('price', float(result.json()['data']['price']))
-        R.set('orderId', result.json()['data']['orderId'])
-        R.set('exchangeType', result.json()['data']['exchangeType'])
-        R.set('symbol', result.json()['data']['symbol'])
-        print('save db success')
+    def test_046(self):
+        """orderId 为空 查询订单"""
+        exchangeType = R.get('exchangeType')
+        orderId = ''
+        symbol = R.get('symbol')
+        result = check_order('okex', exchangeType, orderId, symbol)
+        assert_json(result, 'code', 2001)
+        assert_json(result, 'success', False)
+        print('test none orderId check order end')
 
-        """查看订单状态"""
-        exchangeType = result.json()['data']['exchangeType']
-        orderId = result.json()['data']['orderId']
-        symbol = result.json()['data']['symbol']
-        from time import sleep
-        sleep(1)
-        order_status = check_order('okex', exchangeType, orderId, symbol)
-        print(order_status)
-        print('check order status success')
+    def test_047(self):
+        """错误 symbol 查询订单"""
+        exchangeType = R.get('exchangeType')
+        orderId = R.get('orderId')
+        symbol = 'test......'
+        result = check_order('okex', exchangeType, orderId, symbol)
+        assert_json(result, 'code', 2000)
+        assert_json(result, 'success', False)
+        print('test error symbol check order end')
 
-        """交易后"""
-        self.test_003_PlaceOrder_data_002()
+    def test_048(self):
+        """ symbol 为空 查询订单"""
+        exchangeType = R.get('exchangeType')
+        orderId = R.get('orderId')
+        symbol = ''
+        result = check_order('okex', exchangeType, orderId, symbol)
+        assert_json(result, 'code', 2001)
+        assert_json(result, 'success', False)
+        print('test none symbol check order end')
 
-        """检查金额"""
-        if order_status == 'active':
-            print('挂单')
-            print(R.get('pre_free'), type(R.get('pre_free')))
-            print(R.get('post_free'), type(R.get('post_free')))
-            print(R.get('price'), type(R.get('price')))
-            print(bl8(R.get('pre_free')), type(bl8(R.get('pre_free'))))
-
-            pre_free = bl8(R.get('pre_free'))
-            post_free = bl8(R.get('post_free'))
-            price = bl8(R.get('price'))
-            assert round(pre_free, 8) == round(post_free + price, 8)
-            print('断言结束')
-            print('Contrast of transaction amount before and after normal')
-
-        # if order_status == '':
-        #     print('撤销')
-        # if order_status == '':
-        #     print('下单成功')
-        # else:
-        #     print('测试数据错误')
-        # self.test_PlaceOrder_001()
-
-    def test_005_PlaceOrderActive_001(self):
-        """测试-币币:交易 -> buy【撤单】前后金额增加/减少"""
-
-        co['orderId'] = R.get('orderId')
-        co['exchangeType'] = R.get('exchangeType')
-        co['symbol'] = R.get('symbol')
-
-        result = requests.post(cancelOrder, json=co, headers=header)
-        print(result.json())
-        assert_json(result.json(), 'code', 1000)
-        assert_json(result.json(), 'message', '撤单成功')
-        assert_json(result.json(), 'success', True)
-        print('撤单 assert end')
-
-        pre_free = bl8(R.get('pre_free'))
-        post_free = bl8(R.get('post_free'))
-        price = bl8(R.get('price'))
-
-        assert round(pre_free, 8) == round(post_free + price, 8)
-        print('free success')
-
-        pre_total = bl8(R.get('pre_total'))
-        post_total = bl8(R.get('post_total'))
-        print(pre_total)
-        print(post_total)
-        assert round(pre_total, 8) == round(post_total, 8)
-        print('total success')
+    def test_049(self):
+        """调用 TestPlaceOrderReverseLogic().test_037()"""
+        TestPlaceOrderReverseLogic().test_037()
 
 
 if __name__ == '__main__':
