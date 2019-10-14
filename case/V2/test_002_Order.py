@@ -22,7 +22,8 @@ generating_orders -> 生产需要测试的订单类型
 """
 
 
-def generating_orders(exchange=None, exchangeType=None, postType=None, side=None):
+# def generating_orders(exchange=None, exchangeType=None, postType=None, price=None, qty=None, side=None, symbol=None):
+def generating_orders(exchange, exchangeType, postType, price, qty, side, symbol):
     """
     :param exchange:        交易所
     :param exchangeType:    交易类型  币币-> spot, 杠杆-> margin, 交割-> future, 永续-> swap
@@ -31,10 +32,13 @@ def generating_orders(exchange=None, exchangeType=None, postType=None, side=None
     :return:
     """
 
-    exchange = 'okex'
-    exchangeType = 'spot'
-    postType = 'normal'
-    side = 'buy'
+    # exchange = 'okex'
+    # exchangeType = 'spot'
+    # postType = 'normal'
+    # price = '1'
+    # qty = '1'
+    # side = 'buy'
+    # symbol = 'ltc_okb'
 
     """
     永续/交割:
@@ -49,12 +53,13 @@ def generating_orders(exchange=None, exchangeType=None, postType=None, side=None
         "exchange": exchange,
         "exchangeType": exchangeType,
         "postType": postType,
-        "price": "1",
-        "qty": "1",
+        "price": price,
+        "qty": qty,
         "side": side,
-        "symbol": "ltc_okb",
+        "symbol": symbol,
         "type": "limit"
     }
+    print(d)
 
     if exchangeType == 'spot':
         print('func -> generating_orders data -> spot')
@@ -69,42 +74,6 @@ def generating_orders(exchange=None, exchangeType=None, postType=None, side=None
     if exchangeType == 'swap':
         print('func -> generating_orders data -> swap')
         return
-
-
-# 查询需要交易币对资产
-def assets_contrast(exchangeType, symbol_l, symbol_r):
-    """
-    okb -> eos
-
-    :param exchangeType:    交易类型
-    :param symbol_1:        币对L -> eos
-    :param symbol_2:        币对R -> okb
-    :return:
-    """
-
-    j = {
-        "accountId": accountId
-    }
-    total = 0
-    free = 0
-    result = requests.post(getAsset, json=j, headers=header)
-    # print(result.json()['data']['position']['spot'])
-    for i in result.json()['data']['position'][exchangeType]:
-        if i['symbol'] == symbol_r:
-            print(i)
-            print('total:', i['total'])
-            print('free :', i['free'])
-            total = i['total']
-            free = i['free']
-            # print(total)
-            # print(free)
-            print(float(total))
-            print(float(free))
-
-    return {
-        'total': float(total),
-        'free': float(free),
-    }
 
 
 #  查看订单状态
@@ -127,6 +96,33 @@ def check_order(exchange, exchangeType, orderId, symbol, a_id=accountId):
         return result.json()
 
 
+# 查看挂单list
+def get_active_orders():
+    """获取活跃订单列表"""
+    result = requests.post(getActiveOrders, json=ao, headers=header)
+    # print(result.json())
+    return result
+
+
+# 获取币对金额
+def get_ticker(exchange, symbol, contractType=''):
+    """
+
+    :param exchange:
+    :param symbol:          okex:spot
+    :param contractType:    trx_okb
+    :return:
+    """
+    da = {
+        'contractType': contractType,
+        'exchange': exchange,
+        'symbol': symbol
+    }
+    result = requests.get(ticker, da)
+    print(result.json())
+    return result
+
+
 # 数据处理
 def bl8(n):
     """
@@ -141,50 +137,103 @@ class PublicOrderFunc:
     """公共类"""
 
     result = ''
+    active_list = []
 
     def clear_db_08(self):
         """测试数据init"""
         R.flushall()
         print('redis db8 flushall .....')
 
-    def before_use(self):
-        """币币:交易前金额"""
-        pre_transaction = assets_contrast('spot', 'eos', 'okb')
-        R.set('pre_total', round(float(pre_transaction['total']), 8))
-        R.set('pre_free', round(float(pre_transaction['free']), 8))
+    def fund_status(self, x, exchangeType, symbol_l, symbol_r):
+        """
+        当前需要交易的币对或者期货余额
 
-    def after_use(self):
-        """币币:交易后金额"""
-        post_transaction = assets_contrast('spot', 'eos', 'okb')
-        R.set('post_total', round(post_transaction['total'], 8))
-        R.set('post_free', round(post_transaction['free'], 8))
+        :param x:               pre->交易前金额  post->交易后金额
+        :param exchangeType:    交易类型-> spot, margin, future, swap
+        :param symbol_l:        币对L -> eos
+        :param symbol_r:        币对R -> okb
+        :return:
+        """
 
-    def assert_balance(self, order_status):
-        """断言余额"""
+        j = {
+            "accountId": accountId
+        }
+        total = 0
+        free = 0
+        result = requests.post(getAsset, json=j, headers=header)
+        # print(result.json()['data']['position']['spot'])
+        for i in result.json()['data']['position'][exchangeType]:
+            if i['symbol'] == symbol_r:
+                print(i)
+                print('total:', i['total'])
+                print('free :', i['free'])
+                total = i['total']
+                free = i['free']
+                # print(total)
+                # print(free)
+                print(float(total))
+                print(float(free))
+
+        if x == 'pre':
+            R.set('pre_total', round(float(total), 8))
+            R.set('pre_free', round(float(free), 8))
+        elif x == 'post':
+            R.set('post_total', round(float(total), 8))
+            R.set('post_free', round(float(free), 8))
+
+        print('{} -> fund_status end'.format(x))
+
+    def assert_balance(self, order_status, ty='buy'):
+        """状态与余额"""
+        msg = 'Contrast of transaction amount before and after normal -> {}'.format(order_status)
+
+        print(R.get('pre_free'), type(R.get('pre_free')))
+        print(R.get('post_free'), type(R.get('post_free')))
+        print(R.get('price'), type(R.get('price')))
+        print(bl8(R.get('pre_free')), type(bl8(R.get('pre_free'))))
         if order_status == 'active':
             print('挂单')
-            print(R.get('pre_free'), type(R.get('pre_free')))
-            print(R.get('post_free'), type(R.get('post_free')))
-            print(R.get('price'), type(R.get('price')))
-            print(bl8(R.get('pre_free')), type(bl8(R.get('pre_free'))))
-
             pre_free = bl8(R.get('pre_free'))
             post_free = bl8(R.get('post_free'))
             price = bl8(R.get('price'))
             assert round(pre_free, 8) == round(post_free + price, 8)
-            print('断言结束')
-            print('Contrast of transaction amount before and after normal')
+            print(msg)
+            return
 
-        # if order_status == '':
-        #     print('撤销')
-        # if order_status == '':
-        #     print('下单成功')
-        # else:
-        #     print('测试数据错误')
+        elif order_status == 'cancelled':
+            print('撤销')
+            print(msg)
+            return
+
+        elif order_status == 'completed':
+            print('下单成功')
+            pre_total = bl8(R.get('pre_total'))
+            post_total = bl8(R.get('post_total'))
+            price = bl8(R.get('price'))
+            print('原金额:{}\n使用金额:{}\n下单后金额:{}'.format(pre_total, price, post_total))
+            sc = pre_total * 0.001
+            if ty == 'buy':
+                assert round(pre_total, 8) == round(post_total + price, 8)
+            elif ty == 'sell':
+                assert round(pre_total, 8) == round(post_total + price, 8)
+            print(msg)
+            return
+
+        else:
+            print('测试数据错误-> {}'.format(order_status))
+            assert 1 == 1 - 1
 
     def go_active(self):
         """生成订单 -> 挂单"""
-        result = generating_orders()
+        result = generating_orders(
+            exchange='okex',
+            exchangeType='spot',
+            postType='normal',
+            price='1',
+            qty='1',
+            side='buy',
+            symbol='ltc_okb'
+        )
         print(result.json())
         assert_json(result.json(), 'code', 1000)
         assert_json(result.json(), 'message', '下单成功')
@@ -202,6 +251,10 @@ class PublicOrderFunc:
         print('save db success')
 
 
+class NewPublicOrderFunc:
+    """公共类"""
+
+
 class TestPlaceOrderForwardLogic(StartEnd, PublicOrderFunc):
     """Place Order Forward logic"""
 
@@ -211,7 +264,7 @@ class TestPlaceOrderForwardLogic(StartEnd, PublicOrderFunc):
         self.clear_db_08()
 
         """交易前"""
-        self.before_use()
+        self.fund_status('pre', 'spot', 'eos', 'okb')
 
         """生成订单"""
         self.go_active()
@@ -229,10 +282,12 @@ class TestPlaceOrderForwardLogic(StartEnd, PublicOrderFunc):
         print(order_status)
         print('check order status success')
 
-        """交易后"""
-        self.after_use()
+        x = get_active_orders().json()['data'][0]['orderId']
 
-        """检查金额"""
+        """交易后"""
+        self.fund_status('post', 'spot', 'eos', 'okb')
+
+        """检查状态金额"""
         self.assert_balance(order_status)
 
     def test_002_PlaceOrderActive_002(self):
@@ -264,6 +319,9 @@ class TestPlaceOrderForwardLogic(StartEnd, PublicOrderFunc):
         print('total success')
         self.clear_db_08()
 
+    def test_003_PlaceOrderActive_003(self):
+        """测试-币币:交易 -> buy【成交】前后金额增加/减少"""
+
 
 class TestPlaceOrderReverseLogic(StartEnd, PublicOrderFunc):
     """Place Order Reverse logic"""
@@ -272,7 +330,8 @@ class TestPlaceOrderReverseLogic(StartEnd, PublicOrderFunc):
     test_000 ~ test_005: -> 查询参数异常逻辑
     test_006 ~ test_026: -> 下单参数异常逻辑
     test_027 ~ test_037: -> 撤单参数异常逻辑
-    test_038 ~ test_000: -> 状态参数异常逻辑
+    test_038 ~ test_049: -> 状态参数异常逻辑
+    test_050 ~ test_060: -> 挂单列表异常逻辑
     
     """
     j = {
@@ -810,6 +869,178 @@ class TestPlaceOrderReverseLogic(StartEnd, PublicOrderFunc):
     def test_049(self):
         """调用 TestPlaceOrderReverseLogic().test_037()"""
         TestPlaceOrderReverseLogic().test_037()
+
+    def test_050(self):
+        """1"""
+        self.go_active()
+        self.go_active()
+        self.go_active()
+        sleep(1)
+
+    def test_051(self):
+        """错误 accountId 查询活跃订单"""
+        ao['accountId'] = '999999'
+        result = requests.post(getActiveOrders, json=ao, headers=header)
+        print(result.json())
+        assert_json(result.json(), 'code', 2002)
+        assert_json(result.json(), 'message', "系统中不存在这个账户或这个账户的key不可用")
+        assert_json(result.json(), 'success', False)
+        print('test error accountId get active orders end')
+
+    def test_052(self):
+        """ accountId 为空 查询活跃订单"""
+        ao['accountId'] = ''
+        result = requests.post(getActiveOrders, json=ao, headers=header)
+        print(result.json())
+        assert_json(result.json(), 'code', 2001)
+        assert_json(result.json(), 'success', False)
+        print('test none accountId get active orders end')
+        ao['accountId'] = accountId
+
+    def test_053(self):
+        """错误 exchange 查询活跃订单"""
+        print(ao)
+        ao['exchange'] = 'test.....'
+        result = requests.post(getActiveOrders, json=ao, headers=header)
+        print(result.json())
+        assert_json(result.json(), 'code', 2100)
+        assert_json(result.json(), 'message', '系统中没有该交易所')
+        assert_json(result.json(), 'success', False)
+        print('test error exchange get active orders end')
+
+    def test_054(self):
+        """ exchange 为空 查询活跃订单"""
+        ao['exchange'] = ''
+        result = requests.post(getActiveOrders, json=ao, headers=header)
+        print(result.json())
+        assert_json(result.json(), 'code', 2001)
+        assert_json(result.json(), 'message', '参数错误。参数名：exchange， 值：， 提示：交易所不能为空; ')
+        assert_json(result.json(), 'success', False)
+        print('test none exchange get active orders end')
+        ao['exchange'] = 'okex'
+
+    def test_055(self):
+        """错误 exchangeType 查询活跃订单"""
+        ao['exchangeType'] = 'test.....'
+        result = requests.post(getActiveOrders, json=ao, headers=header)
+        print(result.json())
+        assert_json(result.json(), 'code', 2103)
+        assert_json(result.json(), 'message', '系统中没有这个子市场')
+        assert_json(result.json(), 'success', False)
+        print('test error exchangeType get active orders end')
+
+    def test_057(self):
+        """ exchangeType 为空 查询活跃订单"""
+        ao['exchangeType'] = ''
+        result = requests.post(getActiveOrders, json=ao, headers=header)
+        print(result.json())
+        assert_json(result.json(), 'code', 2001)
+        assert_json(result.json(), 'message', '参数错误。参数名：exchangeType， 值：， 提示：交易所子市场不能为空; ')
+        assert_json(result.json(), 'success', False)
+        print('test none exchangeType get active orders end')
+        ao['exchangeType'] = 'spot'
+
+    def test_058(self):
+        """错误 readFromCache 查询活跃订单"""
+        ao['readFromCache'] = 'test.....'
+        result = requests.post(getActiveOrders, json=ao, headers=header)
+        print(result.json())
+        assert_json(result.json(), 'code', 2001)
+        assert_json(result.json(), 'message', '参数json格式错误，请检查后重试。')
+        assert_json(result.json(), 'success', False)
+        print('test error readFromCache get active orders end')
+
+    def test_059(self):
+        """readFromCache 为空 查询活跃订单"""
+        ao['readFromCache'] = ''
+        result = requests.post(getActiveOrders, json=ao, headers=header)
+        print(result.json())
+        assert_json(result.json(), 'code', 2001)
+        assert_json(result.json(), 'message', '参数错误。参数名：readFromCache， 值：null， 提示：是否从缓存中读取不能为空; ')
+        assert_json(result.json(), 'success', False)
+        print('test none readFromCache get active orders end')
+        ao['readFromCache'] = True
+
+    def test_060(self):
+        """撤销所有活跃订单"""
+        ac_list = get_active_orders().json()['data']
+        for i in ac_list:
+            print(i)
+            co['exchangeType'] = i['exchangeType']
+            co['orderId'] = i['orderId']
+            co['symbol'] = i['symbol']
+            result = requests.post(cancelOrder, json=co, headers=header)
+            print(result.json(), '')
+
+    def test_999(self):
+        """clear_db_08()"""
+        self.clear_db_08()
+
+
+# @unittest.skip('pass-> 单元调试类')
+class TestDevTest(StartEnd, PublicOrderFunc):
+    """调试类"""
+
+    # @unittest.skip('pass')
+    def test_tx_001(self):
+        """test_tx_001"""
+
+        """
+        1.获取交易前金额
+        2.保存到reids
+        3.获取当前价格
+        4.买卖->储存订单信息
+        5.判断订单状态
+            (1)挂单->检查金额->撤单->查看该订单状态
+            (2)成功->检查金额->卖出->查看该订单状态
+        
+        """
+        self.fund_status('pre', 'spot', 'trx', 'okb')
+
+        # 获取价格
+        timely_buy = get_ticker('okex:spot', 'trx_okb').json()['data']['sell']
+        result = generating_orders(
+            exchange='okex',
+            exchangeType='spot',
+            postType='normal',
+            price=timely_buy,
+            qty='1',
+            side='buy',
+            symbol='trx_okb'
+        )
+
+        print(result.json())
+        self.save_test_data_to_db(result)
+
+        exchangeType = result.json()['data']['exchangeType']
+        orderId = result.json()['data']['orderId']
+        symbol = result.json()['data']['symbol']
+        sleep(1)
+        order_status = check_order('okex', exchangeType, orderId, symbol)
+        print(order_status)
+
+        self.fund_status('post', 'spot', 'trx', 'okb')
+
+        self.assert_balance(order_status)
+
+        # if order_status == '':
+        #     pass
+        # elif order_status == '':
+        #     pass
+        # elif order_status == '':
+        #     pass
+
+    def test_tx_002(self):
+        """test_tx_002"""
+
+    def test_tx_003(self):
+        """test_tx_003"""
+
+    def test_tx_004(self):
+        """test_tx_004"""
+
+    def test_tx_005(self):
+        """test_tx_005"""
 
 
 if __name__ == '__main__':

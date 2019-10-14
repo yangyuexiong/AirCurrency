@@ -27,6 +27,7 @@ cookie = {
     "cookie": "trade_token=FF7D6C7E6280B9E67523947DF90577A946778b750a2e4ba1b0c959aa3aff8266"
 }
 
+"""--------------------private-api--------------------"""
 # User
 verifyWebToken = BaseUrl + '/auth/verifyWebToken'  # 验证web会话
 genSToken = BaseUrl + '/auth/genSToken'  # 生成sToken
@@ -37,8 +38,13 @@ user_info = BaseUrl + '/user/info'  # 用户信息
 placeOrder = BaseUrl + '/order/placeOrder'  # 下单
 cancelOrder = BaseUrl + '/order/cancelOrder'  # 撤销订单
 getOrderById = BaseUrl + '/order/getOrderById'  # 订单查询
+getActiveOrders = BaseUrl + '/order/getActiveOrders'  # 活跃订单(挂单)
 
 # Asset
 getAsset = BaseUrl + '/assets/getAsset'  # 获取资产
 getLeverage = BaseUrl + '/assets/getLeverage'  # 获取杠杆倍数
 transfer = BaseUrl + '/assets/transfer'  # 资金划转
+
+"""--------------------public-api--------------------"""
+BaseUrl2 = 'https://test.bithelp.top/public-api'
+ticker = BaseUrl2 + '/api/public/ticker'  # 获取Ticker

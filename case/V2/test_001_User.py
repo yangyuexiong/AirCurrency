@@ -9,6 +9,7 @@ from all_import import *
 from data.User.data import *
 
 
+@unittest.skip('pass-> TestWebToken')
 class TestWebToken(StartEnd):
     """验证web会话"""
 
@@ -59,7 +60,6 @@ class TestUserInfo(StartEnd):
 
     def test_userInfo_001(self):
         """"""
-        result = requests.post(user_info, )
 
 
 if __name__ == '__main__':

@@ -1,0 +1,2330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>自动化测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 80%; }
+table       { font-size: 100%; }
+
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+
+/*level 调整增加只显示通过用例的分类 --Findyou
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:All     //pt none, ft none
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+	//console.log(detail_class.length)
+	if (level == 3) {
+		for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="收起"
+		}
+	}
+	else{
+			for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="详细"
+		}
+	}
+}
+
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">自动化测试报告</h1>
+<p class='attribute'><strong>测试人员 : </strong> ShaHeTop-Almighty-ares</p>
+<p class='attribute'><strong>开始时间 : </strong> 2019-10-14 11:44:55</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:06.418781</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 70，通过 22，失败 1，错误 47，通过率= 31.43%</p>
+
+<p class='description'>回归测试</p>
+</div>
+
+
+
+<p id='show_detail_line'>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要【 31.43% 】</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败【 1 】</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过【 22 】</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有【 70 】</a>
+</p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 14px;">
+    <td>用例集/测试用例</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>详细</td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>V2.test_000_Assets.TestAssets: 资产</td>
+    <td class="text-center">5</td>
+    <td class="text-center">5</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',5)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='pt1_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_assets_001: 1</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse in">
+    <pre>
+    
+pt1_1: ======测试开始:test_assets_001 (V2.test_000_Assets.TestAssets)======
+======测试结束:test_assets_001 (V2.test_000_Assets.TestAssets)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_assets_002: 1</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse in">
+    <pre>
+    
+pt1_2: ======测试开始:test_assets_002 (V2.test_000_Assets.TestAssets)======
+======测试结束:test_assets_002 (V2.test_000_Assets.TestAssets)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_assets_003: 1</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse in">
+    <pre>
+    
+pt1_3: ======测试开始:test_assets_003 (V2.test_000_Assets.TestAssets)======
+======测试结束:test_assets_003 (V2.test_000_Assets.TestAssets)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_assets_004: 1</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse in">
+    <pre>
+    
+pt1_4: ======测试开始:test_assets_004 (V2.test_000_Assets.TestAssets)======
+======测试结束:test_assets_004 (V2.test_000_Assets.TestAssets)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_assets_005: 1</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_5'>通过</button>
+    <div id='div_pt1_5' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_5'>通过</button>
+    <div id='div_pt1_5' class="collapse in">
+    <pre>
+    
+pt1_5: ======测试开始:test_assets_005 (V2.test_000_Assets.TestAssets)======
+======测试结束:test_assets_005 (V2.test_000_Assets.TestAssets)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>V2.test_001_User.TestGenToken: 生成sToken</td>
+    <td class="text-center">3</td>
+    <td class="text-center">3</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',3)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='pt2_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_sToken_001</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse in">
+    <pre>
+    
+pt2_1: ======测试开始:test_sToken_001 (V2.test_001_User.TestGenToken)======
+======测试结束:test_sToken_001 (V2.test_001_User.TestGenToken)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_sToken_002</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+    <div id='div_pt2_2' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+    <div id='div_pt2_2' class="collapse in">
+    <pre>
+    
+pt2_2: ======测试开始:test_sToken_002 (V2.test_001_User.TestGenToken)======
+======测试结束:test_sToken_002 (V2.test_001_User.TestGenToken)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_sToken_003</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_3'>通过</button>
+    <div id='div_pt2_3' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_3'>通过</button>
+    <div id='div_pt2_3' class="collapse in">
+    <pre>
+    
+pt2_3: ======测试开始:test_sToken_003 (V2.test_001_User.TestGenToken)======
+======测试结束:test_sToken_003 (V2.test_001_User.TestGenToken)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>V2.test_001_User.TestUserInfo</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c3',1)" class="detail" id='c3'>详细</a></td>
+</tr>
+
+<tr id='pt3_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_userInfo_001</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse in">
+    <pre>
+    
+pt3_1: ======测试开始:test_userInfo_001 (V2.test_001_User.TestUserInfo)======
+======测试结束:test_userInfo_001 (V2.test_001_User.TestUserInfo)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>V2.test_001_User.TestWebToken: 验证web会话</td>
+    <td class="text-center">3</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">3</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c4',3)" class="detail" id='c4'>详细</a></td>
+</tr>
+
+<tr id='ft4_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_WebToken_001: 验证成功</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_1'>错误</button>
+    <div id='div_ft4_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_1'>错误</button>
+    <div id='div_ft4_1' class="collapse in">
+    <pre>
+    
+ft4_1: ======测试开始:test_WebToken_001 (V2.test_001_User.TestWebToken)======
+======测试结束:test_WebToken_001 (V2.test_001_User.TestWebToken)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_001_User.py", line 18, in test_WebToken_001
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft4_2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_WebToken_002: 验证失败</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_2'>错误</button>
+    <div id='div_ft4_2' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_2'>错误</button>
+    <div id='div_ft4_2' class="collapse in">
+    <pre>
+    
+ft4_2: ======测试开始:test_WebToken_002 (V2.test_001_User.TestWebToken)======
+======测试结束:test_WebToken_002 (V2.test_001_User.TestWebToken)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_001_User.py", line 28, in test_WebToken_002
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft4_3' class='none'>
+    <td class='errorCase'><div class='testcase'>test_WebToken_003: 验证失败</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_3'>错误</button>
+    <div id='div_ft4_3' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_3'>错误</button>
+    <div id='div_ft4_3' class="collapse in">
+    <pre>
+    
+ft4_3: ======测试开始:test_WebToken_003 (V2.test_001_User.TestWebToken)======
+======测试结束:test_WebToken_003 (V2.test_001_User.TestWebToken)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_001_User.py", line 38, in test_WebToken_003
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>V2.test_002_Order.TestPlaceOrderForwardLogic: Place Order Forward logic</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">2</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c5',2)" class="detail" id='c5'>详细</a></td>
+</tr>
+
+<tr id='ft5_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_001_PlaceOrderActive_001: 测试-币币:偏离交易下单 -> buy【挂单】 测试:前后金额增加/减少</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft5_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft5_1'>错误</button>
+    <div id='div_ft5_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft5_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft5_1'>错误</button>
+    <div id='div_ft5_1' class="collapse in">
+    <pre>
+    
+ft5_1: ======测试开始:test_001_PlaceOrderActive_001 (V2.test_002_Order.TestPlaceOrderForwardLogic)======
+redis db8 flushall .....
+======测试结束:test_001_PlaceOrderActive_001 (V2.test_002_Order.TestPlaceOrderForwardLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 228, in test_001_PlaceOrderActive_001
+    self.before_use()
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 161, in before_use
+    pre_transaction = assets_contrast('spot', 'eos', 'okb')
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 92, in assets_contrast
+    for i in result.json()['data']['position'][exchangeType]:
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft5_2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_002_PlaceOrderActive_002: 测试-币币:交易 -> buy【撤单】前后金额增加/减少</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft5_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft5_2'>错误</button>
+    <div id='div_ft5_2' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft5_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft5_2'>错误</button>
+    <div id='div_ft5_2' class="collapse in">
+    <pre>
+    
+ft5_2: ======测试开始:test_002_PlaceOrderActive_002 (V2.test_002_Order.TestPlaceOrderForwardLogic)======
+======测试结束:test_002_PlaceOrderActive_002 (V2.test_002_Order.TestPlaceOrderForwardLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 262, in test_002_PlaceOrderActive_002
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>V2.test_002_Order.TestPlaceOrderReverseLogic: Place Order Reverse logic</td>
+    <td class="text-center">56</td>
+    <td class="text-center">13</td>
+    <td class="text-center">1</td>
+    <td class="text-center">42</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c6',56)" class="detail" id='c6'>详细</a></td>
+</tr>
+
+<tr id='pt6_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_000: 还原测试参数</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse in">
+    <pre>
+    
+pt6_1: ======测试开始:test_000 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_000 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_001: 错误accountId查询资产</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_2'>错误</button>
+    <div id='div_ft6_2' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_2'>错误</button>
+    <div id='div_ft6_2' class="collapse in">
+    <pre>
+    
+ft6_2: ======测试开始:test_001 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_001 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 335, in test_001
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_3' class='none'>
+    <td class='errorCase'><div class='testcase'>test_002: accountId为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_3'>错误</button>
+    <div id='div_ft6_3' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_3'>错误</button>
+    <div id='div_ft6_3' class="collapse in">
+    <pre>
+    
+ft6_3: ======测试开始:test_002 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_002 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 345, in test_002
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_4' class='none'>
+    <td class='errorCase'><div class='testcase'>test_003: 错误的key查询资产</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_4'>错误</button>
+    <div id='div_ft6_4' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_4'>错误</button>
+    <div id='div_ft6_4' class="collapse in">
+    <pre>
+    
+ft6_4: ======测试开始:test_003 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_003 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 356, in test_003
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_5' class='none'>
+    <td class='errorCase'><div class='testcase'>test_004: 错误的sToken查询资产</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_5'>错误</button>
+    <div id='div_ft6_5' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_5'>错误</button>
+    <div id='div_ft6_5' class="collapse in">
+    <pre>
+    
+ft6_5: ======测试开始:test_004 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_004 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 366, in test_004
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_6' class='none'>
+    <td class='errorCase'><div class='testcase'>test_005: sToken为空查询资产</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_6'>错误</button>
+    <div id='div_ft6_6' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_6'>错误</button>
+    <div id='div_ft6_6' class="collapse in">
+    <pre>
+    
+ft6_6: ======测试开始:test_005 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_005 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 376, in test_005
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_7' class='none'>
+    <td class='errorCase'><div class='testcase'>test_006: sToken为空下单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_7'>错误</button>
+    <div id='div_ft6_7' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_7'>错误</button>
+    <div id='div_ft6_7' class="collapse in">
+    <pre>
+    
+ft6_7: ======测试开始:test_006 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_006 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 388, in test_006
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_8' class='none'>
+    <td class='errorCase'><div class='testcase'>test_007: 错误sToken下单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_8'>错误</button>
+    <div id='div_ft6_8' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_8'>错误</button>
+    <div id='div_ft6_8' class="collapse in">
+    <pre>
+    
+ft6_8: ======测试开始:test_007 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_007 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 397, in test_007
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_9' class='none'>
+    <td class='errorCase'><div class='testcase'>test_008: 错误accountId下单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_9' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_9'>错误</button>
+    <div id='div_ft6_9' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_9' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_9'>错误</button>
+    <div id='div_ft6_9' class="collapse in">
+    <pre>
+    
+ft6_9: ======测试开始:test_008 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_008 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 408, in test_008
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_10' class='none'>
+    <td class='errorCase'><div class='testcase'>test_009: accountId 为空下单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_10' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_10'>错误</button>
+    <div id='div_ft6_10' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_10' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_10'>错误</button>
+    <div id='div_ft6_10' class="collapse in">
+    <pre>
+    
+ft6_10: ======测试开始:test_009 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_009 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 418, in test_009
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_11' class='none'>
+    <td class='errorCase'><div class='testcase'>test_010: 错误交易所下单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_11' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_11'>错误</button>
+    <div id='div_ft6_11' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_11' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_11'>错误</button>
+    <div id='div_ft6_11' class="collapse in">
+    <pre>
+    
+ft6_11: ======测试开始:test_010 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_010 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 429, in test_010
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_12' class='none'>
+    <td class='errorCase'><div class='testcase'>test_011: 交易所参数为空下单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_12' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_12'>错误</button>
+    <div id='div_ft6_12' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_12' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_12'>错误</button>
+    <div id='div_ft6_12' class="collapse in">
+    <pre>
+    
+ft6_12: ======测试开始:test_011 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_011 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 440, in test_011
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_13' class='none'>
+    <td class='errorCase'><div class='testcase'>test_012: 错误子市场下单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_13' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_13'>错误</button>
+    <div id='div_ft6_13' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_13' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_13'>错误</button>
+    <div id='div_ft6_13' class="collapse in">
+    <pre>
+    
+ft6_13: ======测试开始:test_012 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_012 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 451, in test_012
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_14' class='none'>
+    <td class='errorCase'><div class='testcase'>test_013: 子市场空参数下单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_14' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_14'>错误</button>
+    <div id='div_ft6_14' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_14' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_14'>错误</button>
+    <div id='div_ft6_14' class="collapse in">
+    <pre>
+    
+ft6_14: ======测试开始:test_013 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_013 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 462, in test_013
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_15' class='none'>
+    <td class='errorCase'><div class='testcase'>test_016: price 为空下单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_15' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_15'>错误</button>
+    <div id='div_ft6_15' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_15' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_15'>错误</button>
+    <div id='div_ft6_15' class="collapse in">
+    <pre>
+    
+ft6_15: ======测试开始:test_016 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_016 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 489, in test_016
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_16' class='none'>
+    <td class='errorCase'><div class='testcase'>test_018: 大于可买入个数下单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_16' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_16'>错误</button>
+    <div id='div_ft6_16' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_16' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_16'>错误</button>
+    <div id='div_ft6_16' class="collapse in">
+    <pre>
+    
+ft6_16: ======测试开始:test_018 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_018 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 508, in test_018
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_17' class='none'>
+    <td class='errorCase'><div class='testcase'>test_019: 买入个数为空下单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_17' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_17'>错误</button>
+    <div id='div_ft6_17' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_17' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_17'>错误</button>
+    <div id='div_ft6_17' class="collapse in">
+    <pre>
+    
+ft6_17: ======测试开始:test_019 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_019 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 518, in test_019
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_18' class='none'>
+    <td class='errorCase'><div class='testcase'>test_021: 错误交易方向下单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_18' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_18'>错误</button>
+    <div id='div_ft6_18' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_18' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_18'>错误</button>
+    <div id='div_ft6_18' class="collapse in">
+    <pre>
+    
+ft6_18: ======测试开始:test_021 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_021 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 537, in test_021
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_19' class='none'>
+    <td class='errorCase'><div class='testcase'>test_022: 交易方向为空参数下单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_19' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_19'>错误</button>
+    <div id='div_ft6_19' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_19' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_19'>错误</button>
+    <div id='div_ft6_19' class="collapse in">
+    <pre>
+    
+ft6_19: ======测试开始:test_022 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_022 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 547, in test_022
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_20' class='none'>
+    <td class='errorCase'><div class='testcase'>test_023: 币对错误下单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_20' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_20'>错误</button>
+    <div id='div_ft6_20' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_20' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_20'>错误</button>
+    <div id='div_ft6_20' class="collapse in">
+    <pre>
+    
+ft6_20: ======测试开始:test_023 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_023 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 558, in test_023
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_21' class='none'>
+    <td class='errorCase'><div class='testcase'>test_024: 币对错误为空</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_21' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_21'>错误</button>
+    <div id='div_ft6_21' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_21' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_21'>错误</button>
+    <div id='div_ft6_21' class="collapse in">
+    <pre>
+    
+ft6_21: ======测试开始:test_024 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_024 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 568, in test_024
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_22' class='none'>
+    <td class='errorCase'><div class='testcase'>test_026: type为空下单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_22' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_22'>错误</button>
+    <div id='div_ft6_22' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_22' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_22'>错误</button>
+    <div id='div_ft6_22' class="collapse in">
+    <pre>
+    
+ft6_22: ======测试开始:test_026 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_026 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 587, in test_026
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_23' class='none'>
+    <td class='errorCase'><div class='testcase'>test_027: 生成挂单用于测单测试</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_23' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_23'>错误</button>
+    <div id='div_ft6_23' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_23' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_23'>错误</button>
+    <div id='div_ft6_23' class="collapse in">
+    <pre>
+    
+ft6_23: ======测试开始:test_027 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+调用:TestPlaceOrderForwardLogic -&gt; test_001_PlaceOrderActive_001 生成挂单
+redis db8 flushall .....
+======测试结束:test_027 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 596, in test_027
+    TestPlaceOrderForwardLogic().test_001_PlaceOrderActive_001()
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 228, in test_001_PlaceOrderActive_001
+    self.before_use()
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 161, in before_use
+    pre_transaction = assets_contrast('spot', 'eos', 'okb')
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 92, in assets_contrast
+    for i in result.json()['data']['position'][exchangeType]:
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_24' class='none'>
+    <td class='errorCase'><div class='testcase'>test_028: 错误 accountId 撤单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_24' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_24'>错误</button>
+    <div id='div_ft6_24' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_24' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_24'>错误</button>
+    <div id='div_ft6_24' class="collapse in">
+    <pre>
+    
+ft6_24: ======测试开始:test_028 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_028 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 605, in test_028
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_25' class='none'>
+    <td class='errorCase'><div class='testcase'>test_029: accountId 为空 撤单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_25' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_25'>错误</button>
+    <div id='div_ft6_25' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_25' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_25'>错误</button>
+    <div id='div_ft6_25' class="collapse in">
+    <pre>
+    
+ft6_25: ======测试开始:test_029 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_029 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 618, in test_029
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_26' class='none'>
+    <td class='errorCase'><div class='testcase'>test_030: 错误 orderId 撤单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_26' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_26'>错误</button>
+    <div id='div_ft6_26' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_26' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_26'>错误</button>
+    <div id='div_ft6_26' class="collapse in">
+    <pre>
+    
+ft6_26: ======测试开始:test_030 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_030 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 630, in test_030
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_27' class='none'>
+    <td class='errorCase'><div class='testcase'>test_031: orderId 为空 撤单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_27' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_27'>错误</button>
+    <div id='div_ft6_27' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_27' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_27'>错误</button>
+    <div id='div_ft6_27' class="collapse in">
+    <pre>
+    
+ft6_27: ======测试开始:test_031 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_031 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 641, in test_031
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_28' class='none'>
+    <td class='errorCase'><div class='testcase'>test_032: 错误 exchangeType 撤单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_28' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_28'>错误</button>
+    <div id='div_ft6_28' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_28' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_28'>错误</button>
+    <div id='div_ft6_28' class="collapse in">
+    <pre>
+    
+ft6_28: ======测试开始:test_032 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_032 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 653, in test_032
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_29' class='none'>
+    <td class='errorCase'><div class='testcase'>test_033: exchangeType 为空 撤单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_29' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_29'>错误</button>
+    <div id='div_ft6_29' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_29' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_29'>错误</button>
+    <div id='div_ft6_29' class="collapse in">
+    <pre>
+    
+ft6_29: ======测试开始:test_033 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_033 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 665, in test_033
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_30' class='none'>
+    <td class='errorCase'><div class='testcase'>test_034: 错误 symbol 撤单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_30' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_30'>错误</button>
+    <div id='div_ft6_30' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_30' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_30'>错误</button>
+    <div id='div_ft6_30' class="collapse in">
+    <pre>
+    
+ft6_30: ======测试开始:test_034 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_034 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 676, in test_034
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_31' class='none'>
+    <td class='errorCase'><div class='testcase'>test_035: symbol 为空 撤单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_31' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_31'>错误</button>
+    <div id='div_ft6_31' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_31' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_31'>错误</button>
+    <div id='div_ft6_31' class="collapse in">
+    <pre>
+    
+ft6_31: ======测试开始:test_035 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_035 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 689, in test_035
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_32' class='none'>
+    <td class='errorCase'><div class='testcase'>test_036: 所有参数 为空 撤单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_32' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_32'>错误</button>
+    <div id='div_ft6_32' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_32' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_32'>错误</button>
+    <div id='div_ft6_32' class="collapse in">
+    <pre>
+    
+ft6_32: ======测试开始:test_036 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_036 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 701, in test_036
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_33' class='none'>
+    <td class='errorCase'><div class='testcase'>test_037: 撤销订单还原测试数据</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_33' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_33'>错误</button>
+    <div id='div_ft6_33' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_33' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_33'>错误</button>
+    <div id='div_ft6_33' class="collapse in">
+    <pre>
+    
+ft6_33: ======测试开始:test_037 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_037 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 713, in test_037
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_34' class='none'>
+    <td class='errorCase'><div class='testcase'>test_038: 生成挂单测试数据用于查询订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_34' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_34'>错误</button>
+    <div id='div_ft6_34' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_34' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_34'>错误</button>
+    <div id='div_ft6_34' class="collapse in">
+    <pre>
+    
+ft6_34: ======测试开始:test_038 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+func -&gt; generating_orders data -&gt; spot
+======测试结束:test_038 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 718, in test_038
+    self.go_active()  # 生成订单
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 202, in go_active
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_35' class='none'>
+    <td class='errorCase'><div class='testcase'>test_039: 错误 accountId 查询订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_35' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_35'>错误</button>
+    <div id='div_ft6_35' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_35' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_35'>错误</button>
+    <div id='div_ft6_35' class="collapse in">
+    <pre>
+    
+ft6_35: ======测试开始:test_039 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_039 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 728, in test_039
+    result = check_order('okex', exchangeType, orderId, symbol, a_id='999999')
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 123, in check_order
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_36' class='none'>
+    <td class='errorCase'><div class='testcase'>test_040: accountId 为空 查询订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_36' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_36'>错误</button>
+    <div id='div_ft6_36' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_36' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_36'>错误</button>
+    <div id='div_ft6_36' class="collapse in">
+    <pre>
+    
+ft6_36: ======测试开始:test_040 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_040 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 739, in test_040
+    result = check_order('okex', exchangeType, orderId, symbol, a_id='')
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 123, in check_order
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_37' class='none'>
+    <td class='errorCase'><div class='testcase'>test_041: 错误 交易所 查询订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_37' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_37'>错误</button>
+    <div id='div_ft6_37' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_37' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_37'>错误</button>
+    <div id='div_ft6_37' class="collapse in">
+    <pre>
+    
+ft6_37: ======测试开始:test_041 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_041 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 749, in test_041
+    result = check_order('test...', exchangeType, orderId, symbol)
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 123, in check_order
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_38' class='none'>
+    <td class='errorCase'><div class='testcase'>test_042: 交易所 为空 查询订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_38' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_38'>错误</button>
+    <div id='div_ft6_38' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_38' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_38'>错误</button>
+    <div id='div_ft6_38' class="collapse in">
+    <pre>
+    
+ft6_38: ======测试开始:test_042 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_042 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 760, in test_042
+    result = check_order('', exchangeType, orderId, symbol)
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 123, in check_order
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_39' class='none'>
+    <td class='errorCase'><div class='testcase'>test_043: 错误 exchangeType 查询订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_39' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_39'>错误</button>
+    <div id='div_ft6_39' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_39' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_39'>错误</button>
+    <div id='div_ft6_39' class="collapse in">
+    <pre>
+    
+ft6_39: ======测试开始:test_043 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_043 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 770, in test_043
+    result = check_order('okex', exchangeType, orderId, symbol)
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 123, in check_order
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_40' class='none'>
+    <td class='errorCase'><div class='testcase'>test_044: exchangeType 为空 查询订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_40' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_40'>错误</button>
+    <div id='div_ft6_40' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_40' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_40'>错误</button>
+    <div id='div_ft6_40' class="collapse in">
+    <pre>
+    
+ft6_40: ======测试开始:test_044 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_044 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 781, in test_044
+    result = check_order('okex', exchangeType, orderId, symbol)
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 123, in check_order
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_41' class='none'>
+    <td class='errorCase'><div class='testcase'>test_045: 错误 orderId 查询订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_41' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_41'>错误</button>
+    <div id='div_ft6_41' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_41' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_41'>错误</button>
+    <div id='div_ft6_41' class="collapse in">
+    <pre>
+    
+ft6_41: ======测试开始:test_045 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_045 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 791, in test_045
+    result = check_order('okex', exchangeType, orderId, symbol)
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 123, in check_order
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_42' class='none'>
+    <td class='errorCase'><div class='testcase'>test_046: orderId 为空 查询订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_42' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_42'>错误</button>
+    <div id='div_ft6_42' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_42' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_42'>错误</button>
+    <div id='div_ft6_42' class="collapse in">
+    <pre>
+    
+ft6_42: ======测试开始:test_046 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_046 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 802, in test_046
+    result = check_order('okex', exchangeType, orderId, symbol)
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 123, in check_order
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_43' class='none'>
+    <td class='errorCase'><div class='testcase'>test_047: 错误 symbol 查询订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_43' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_43'>错误</button>
+    <div id='div_ft6_43' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_43' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_43'>错误</button>
+    <div id='div_ft6_43' class="collapse in">
+    <pre>
+    
+ft6_43: ======测试开始:test_047 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_047 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 812, in test_047
+    result = check_order('okex', exchangeType, orderId, symbol)
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 123, in check_order
+    print(result.json())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
+    return complexjson.loads(self.text, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_44' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_048: symbol 为空 查询订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_44' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_44'>通过</button>
+    <div id='div_pt6_44' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_44' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_44'>通过</button>
+    <div id='div_pt6_44' class="collapse in">
+    <pre>
+    
+pt6_44: ======测试开始:test_048 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+{'code': 2001, 'message': '参数错误。参数名：symbol， 值：， 提示：交易对不能为空; 参数名：exchangeType， 值：null， 提示：交易所子市场不能为空; ', 'success': False, 'timestamp': 1571024695540, 'data': None, 'rawStr': None}
+test none symbol check order end
+======测试结束:test_048 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_45' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_049: 调用 TestPlaceOrderReverseLogic().test_037()</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_45' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_45'>通过</button>
+    <div id='div_pt6_45' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_45' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_45'>通过</button>
+    <div id='div_pt6_45' class="collapse in">
+    <pre>
+    
+pt6_45: ======测试开始:test_049 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+{'code': 2001, 'message': '参数错误。参数名：exchangeType， 值：null， 提示：交易所子市场不能为空; 参数名：accountId， 值：， 提示：账户id不能为空; 参数名：symbol， 值：null， 提示：交易对不能为空; ', 'success': False, 'timestamp': 1571024695752, 'data': None, 'rawStr': None}
+done
+======测试结束:test_049 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft6_46' class='none'>
+    <td class='failCase'><div class='testcase'>test_050: 1</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_46' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_46'>失败</button>
+    <div id='div_ft6_46' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_46' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_46'>失败</button>
+    <div id='div_ft6_46' class="collapse in">
+    <pre>
+    
+ft6_46: ======测试开始:test_050 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+func -&gt; generating_orders data -&gt; spot
+{'code': 2000, 'message': '没有该币对:okex:spot:ltc_okb', 'success': False, 'timestamp': 1571024696074, 'data': None, 'rawStr': None}
+======测试结束:test_050 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 833, in test_050
+    self.go_active()
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_002_Order.py", line 203, in go_active
+    assert_json(result.json(), 'code', 1000)
+  File "/Users/yangyuexiong/Desktop/AirCurrency/common/PublicFunc.py", line 13, in assert_json
+    assert json_obj[key] == v
+AssertionError
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_47' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_051: 错误 accountId 查询活跃订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_47' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_47'>通过</button>
+    <div id='div_pt6_47' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_47' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_47'>通过</button>
+    <div id='div_pt6_47' class="collapse in">
+    <pre>
+    
+pt6_47: ======测试开始:test_051 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+{'code': 2002, 'message': '系统中不存在这个账户或这个账户的key不可用', 'success': False, 'timestamp': 1571024696226, 'data': None, 'rawStr': None}
+test error accountId get active orders end
+======测试结束:test_051 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_48' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_052: accountId 为空 查询活跃订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_48' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_48'>通过</button>
+    <div id='div_pt6_48' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_48' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_48'>通过</button>
+    <div id='div_pt6_48' class="collapse in">
+    <pre>
+    
+pt6_48: ======测试开始:test_052 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+{'code': 2001, 'message': '参数错误。参数名：accountId， 值：， 提示：账户id不能为空; ', 'success': False, 'timestamp': 1571024696337, 'data': None, 'rawStr': None}
+test none accountId get active orders end
+======测试结束:test_052 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_49' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_053: 错误 exchange 查询活跃订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_49' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_49'>通过</button>
+    <div id='div_pt6_49' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_49' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_49'>通过</button>
+    <div id='div_pt6_49' class="collapse in">
+    <pre>
+    
+pt6_49: ======测试开始:test_053 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+{'accountId': '4993', 'exchange': 'okex', 'exchangeType': 'spot', 'readFromCache': True, 'symbol': ''}
+{'code': 2100, 'message': '系统中没有该交易所', 'success': False, 'timestamp': 1571024696434, 'data': None, 'rawStr': None}
+test error exchange get active orders end
+======测试结束:test_053 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_50' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_054: exchange 为空 查询活跃订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_50' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_50'>通过</button>
+    <div id='div_pt6_50' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_50' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_50'>通过</button>
+    <div id='div_pt6_50' class="collapse in">
+    <pre>
+    
+pt6_50: ======测试开始:test_054 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+{'code': 2001, 'message': '参数错误。参数名：exchange， 值：， 提示：交易所不能为空; ', 'success': False, 'timestamp': 1571024696550, 'data': None, 'rawStr': None}
+test none exchange get active orders end
+======测试结束:test_054 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_51' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_055: 错误 exchangeType 查询活跃订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_51' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_51'>通过</button>
+    <div id='div_pt6_51' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_51' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_51'>通过</button>
+    <div id='div_pt6_51' class="collapse in">
+    <pre>
+    
+pt6_51: ======测试开始:test_055 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+{'code': 2103, 'message': '系统中没有这个子市场', 'success': False, 'timestamp': 1571024696638, 'data': None, 'rawStr': None}
+test error exchangeType get active orders end
+======测试结束:test_055 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_52' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_057: exchangeType 为空 查询活跃订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_52' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_52'>通过</button>
+    <div id='div_pt6_52' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_52' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_52'>通过</button>
+    <div id='div_pt6_52' class="collapse in">
+    <pre>
+    
+pt6_52: ======测试开始:test_057 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+{'code': 2001, 'message': '参数错误。参数名：exchangeType， 值：， 提示：交易所子市场不能为空; ', 'success': False, 'timestamp': 1571024696732, 'data': None, 'rawStr': None}
+test none exchangeType get active orders end
+======测试结束:test_057 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_53' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_058: 错误 readFromCache 查询活跃订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_53' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_53'>通过</button>
+    <div id='div_pt6_53' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_53' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_53'>通过</button>
+    <div id='div_pt6_53' class="collapse in">
+    <pre>
+    
+pt6_53: ======测试开始:test_058 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+{'code': 2001, 'message': '参数json格式错误，请检查后重试。', 'success': False, 'timestamp': 1571024696825, 'data': None, 'rawStr': None}
+test error readFromCache get active orders end
+======测试结束:test_058 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_54' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_059: readFromCache 为空 查询活跃订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_54' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_54'>通过</button>
+    <div id='div_pt6_54' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_54' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_54'>通过</button>
+    <div id='div_pt6_54' class="collapse in">
+    <pre>
+    
+pt6_54: ======测试开始:test_059 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+{'code': 2001, 'message': '参数错误。参数名：readFromCache， 值：null， 提示：是否从缓存中读取不能为空; ', 'success': False, 'timestamp': 1571024696907, 'data': None, 'rawStr': None}
+test none readFromCache get active orders end
+======测试结束:test_059 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_55' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_060: 撤销所有活跃订单</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_55' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_55'>通过</button>
+    <div id='div_pt6_55' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_55' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_55'>通过</button>
+    <div id='div_pt6_55' class="collapse in">
+    <pre>
+    
+pt6_55: ======测试开始:test_060 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+======测试结束:test_060 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_56' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_999: clear_db_08()</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_56' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_56'>通过</button>
+    <div id='div_pt6_56' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_56' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_56'>通过</button>
+    <div id='div_pt6_56' class="collapse in">
+    <pre>
+    
+pt6_56: ======测试开始:test_999 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+redis db8 flushall .....
+======测试结束:test_999 (V2.test_002_Order.TestPlaceOrderReverseLogic)======
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>70</td>
+    <td>22</td>
+    <td>1</td>
+    <td>47</td>
+    <td>通过率：31.43%</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+
+</body>
+</html>

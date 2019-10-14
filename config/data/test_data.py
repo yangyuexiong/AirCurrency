@@ -33,6 +33,20 @@ sToken = '9b09f5cd-9832-4bfe-9800-8ed5c38eefc1'
     "orderId": "string",
     "symbol": "string"          # 币对如 btc_usdt
 
+accountId*	string
+账户id
+
+exchange*	string
+交易所名字
+
+exchangeType*	string
+交易所子市场，共有：spot, margin, future, swap
+
+readFromCache*	boolean
+是否从缓存中读取, true，从缓存中读取；false直接访问交易所获取数据
+
+symbol*	string
+交易对,下单使用系统映射后的交易对，使用下划线分隔，如btc_usdt；如果该字段为空，无法从交易所中获取数据，只能从缓存中获取。
 
 '''
 
@@ -76,6 +90,15 @@ co = {
     "exchange": "okex",
     "exchangeType": "",
     "orderId": "",
+    "symbol": ""
+}
+
+# 挂单list
+ao = {
+    "accountId": accountId,
+    "exchange": "okex",
+    "exchangeType": "spot",
+    "readFromCache": True,
     "symbol": ""
 }
 
@@ -125,14 +148,3 @@ def return_exchange(exch, ):
 
 if __name__ == '__main__':
     pass
-
-    # 交易前
-    pre_transaction = assets_contrast('spot', 'eos', 'okb')
-
-    # 交易用例
-
-    # 交易后
-    post_transaction = assets_contrast('spot', 'eos', 'okb')
-
-    print(pre_transaction)
-    print(post_transaction)
