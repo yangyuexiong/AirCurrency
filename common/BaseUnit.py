@@ -13,7 +13,7 @@ class StartEnd(unittest.TestCase):
 
     def setUp(self):
         # urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-        print('======测试开始:{}======'.format(self))
+        print('======Test start:{}======'.format(self))
 
     def tearDown(self):
-        print('======测试结束:{}======'.format(self))
+        print('======End of test:{}======'.format(self))

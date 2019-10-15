@@ -48,3 +48,5 @@ transfer = BaseUrl + '/assets/transfer'  # 资金划转
 """--------------------public-api--------------------"""
 BaseUrl2 = 'https://test.bithelp.top/public-api'
 ticker = BaseUrl2 + '/api/public/ticker'  # 获取Ticker
+Symbol_url = BaseUrl2 + '/api/public/symbols'  # 获取Symbol
+Orderbook = BaseUrl2 + '/api/public/orderbook'  # 获取Orderbook

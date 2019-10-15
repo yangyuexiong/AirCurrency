@@ -9,7 +9,7 @@ from time import sleep
 
 from all_import import *
 from config.data.test_data import *
-from config.config import R
+
 
 """
 
@@ -198,7 +198,7 @@ class PublicOrderFunc:
             price = bl8(R.get('price'))
             assert round(pre_free, 8) == round(post_free + price, 8)
             print(msg)
-            return
+            return 'active'
 
         elif order_status == 'cancelled':
             print('撤销')
@@ -217,7 +217,7 @@ class PublicOrderFunc:
             elif ty == 'sell':
                 assert round(pre_total, 8) == round(post_total + price, 8)
             print(msg)
-            return
+            return 'completed'
 
         else:
             print('测试数据错误-> {}'.format(order_status))
@@ -986,11 +986,10 @@ class TestDevTest(StartEnd, PublicOrderFunc):
         """test_tx_001"""
 
         """
-        1.获取交易前金额
-        2.保存到reids
-        3.获取当前价格
-        4.买卖->储存订单信息
-        5.判断订单状态
+        1.获取交易前金额 -> 保存到reids
+        2.获取当前价格
+        3.买卖->储存订单信息
+        4.判断订单状态
             (1)挂单->检查金额->撤单->查看该订单状态
             (2)成功->检查金额->卖出->查看该订单状态
         
@@ -1021,14 +1020,13 @@ class TestDevTest(StartEnd, PublicOrderFunc):
 
         self.fund_status('post', 'spot', 'trx', 'okb')
 
-        self.assert_balance(order_status)
-
-        # if order_status == '':
-        #     pass
-        # elif order_status == '':
-        #     pass
-        # elif order_status == '':
-        #     pass
+        r = self.assert_balance(order_status)
+        if r == 'active':
+            pass
+        elif r == 'completed':
+            pass
+        elif r == 'cancelled':
+            pass
 
     def test_tx_002(self):
         """test_tx_002"""

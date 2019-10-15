@@ -11,3 +11,4 @@ import requests
 from common.BaseUnit import StartEnd
 from common.PublicFunc import *
 from config.Urls import *
+from config.config import POOL, R
