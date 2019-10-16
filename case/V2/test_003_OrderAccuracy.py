@@ -100,8 +100,8 @@ def cnmd(d):
     for k, v in d.items():
         d2[v[0]] = v[1]
     print(d2)
-    print(sorted(d2.items(), key=lambda x: x[0]))
-    print(sorted(d2.items(), key=lambda x: x[0])[-1][1])
+    # print(sorted(d2.items(), key=lambda x: x[0]))
+    # print(sorted(d2.items(), key=lambda x: x[0])[-1][1])
     return sorted(d2.items(), key=lambda x: x[0])[-1][1]
 
 
@@ -211,17 +211,14 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
             self.check_sy_kv(dic_obj)
         print('check success')
 
-    # @unittest.skip('pass')
     def test_004(self):
         """
         1.从 Redis Symbol List 中提取逐一对比 用于 与 orderbook 精度 对比
             错误 -> 记录Redis
             查看错误
-        2.根据需要交易币对准备买入金额
-        3.交易
         """
 
-        # list_c = 60
+        # list_c = 1
         # sy_ob = 'okex:spot_list_'
 
         error_num = 0
@@ -248,13 +245,12 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
             # 排序反取 与 切出精度
             asks_and_bids_c = str(cnmd(count_list_max_len(asks_and_bids)))
-            # asks_and_bids_c = str(count_list_max_len(asks_and_bids)).split('.')[1]
 
             print('-----精度提取-----')
             moneyPrecision_c = dic_obj['moneyPrecision'].split('.')[1]
 
             print('moneyPrecision - > {} -> 精度:{}'.format(dic_obj['moneyPrecision'], moneyPrecision_c))
-            print('买卖平均精度:{}'.format(asks_and_bids_c))
+            print('买卖平均价格 -> {} -> 精度:{}'.format(asks_and_bids_c, asks_and_bids_c.split('.')[1]))
 
             if len(moneyPrecision_c) != len(asks_and_bids_c.split('.')[1]):
                 d = {
@@ -270,22 +266,21 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         # else:
         #     print(''.format(error_num))
 
-    @unittest.skip('pass')
     def test_005(self):
-        """1"""
+        """
+        2.根据需要交易币对准备买入金额
+        3.交易
+        """
 
     @unittest.skip('pass')
     def test_099(self):
-        """"""
+        """调试函数"""
         R.flushall()
         print('redis db8 flushall .....')
 
     @unittest.skip('pass')
     def test_0999(self):
-        """1"""
-        # print(R.get('okex:spot_list_00001'))
-        i = 1
-        print(eval('(' + R.get('okex:spot_list_' + str(("%05d" % i))) + ')'))
+        """调试函数"""
 
 
 if __name__ == '__main__':
