@@ -10,7 +10,6 @@ from time import sleep
 from all_import import *
 from config.data.test_data import *
 
-
 """
 
 币币 -> 下单/挂单
@@ -108,9 +107,9 @@ def get_active_orders():
 def get_ticker(exchange, symbol, contractType=''):
     """
 
-    :param exchange:
-    :param symbol:          okex:spot
-    :param contractType:    trx_okb
+    :param exchange:        okex:spot
+    :param symbol:          trx_okb
+    :param contractType:    期货的合约类型，如果是现货或杠杆时填空即可 -> this_week,quarter,swap
     :return:
     """
     da = {

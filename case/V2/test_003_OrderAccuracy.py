@@ -5,9 +5,11 @@
 # @File    : test_003_OrderAccuracy.py
 # @Software: PyCharm
 
+import shortuuid
 
 from all_import import *
-import shortuuid
+from config.data.test_data import *
+from case.V2.test_002_Order import generating_orders, get_ticker
 
 
 # 获取交易所所有币的list
@@ -16,7 +18,7 @@ def get_url_symbol_list(exchange):
 
     moneyPrecision -> 价格精度
     basePrecision  -> 数量精度
-    minOrderSize   -> 落单数量
+    minOrderSize   -> 下单数量
     minOrderValue  -> 价值
 
     :param exchange:  交易所:子市场 -> okex:spot
@@ -105,6 +107,49 @@ def cnmd(d):
     return sorted(d2.items(), key=lambda x: x[0])[-1][1]
 
 
+def last_add_2(s, sell=False):
+    k = '0.'
+    s = as_num(s)
+    # print(s)
+    # print(s.split('.')[1])
+    # print(len(s.split('.')[1]))
+
+    if len(s.split('.')[1]) < 2:
+        # print(float(s) + 0.5)
+        if sell:
+            r = float(s) + 0.5  # 卖 +0.5 买 -0.5
+            return str(r)
+        else:
+            r = float(s) - 0.5
+            if r < 0:
+                if float(s) - 0.1 == 0 or float(s) - 0.1 < 0:
+                    print(float(s))
+                    return 0
+            print(r)
+            return str(r)
+
+    for i in s[2:]:
+        k = k + '0'
+    # print(k)
+    k1 = k[:-2]
+    # print('s1', k1)
+    k2 = k[len(k) - 2:-1]
+    # print('s2', k2)
+    if sell:
+        k2_1 = int(k2) + 1  # 卖+1 买-1
+    else:
+        k2_1 = int(k2) - 1
+    # print('s2_1', k2_1)
+    k3 = k[len(s) - 1:]
+    # print('s3', k3)
+    ss = k1 + str(k2_1) + k3
+    # print(ss)
+    r = round(float(s) + float(ss), len(s) - 2)
+    r = as_num(r)
+    # print(r)
+    return str(r)
+
+
 def count_list_max_len(list):
     """
     取出list中 出现长度 最多的 任意值
@@ -128,6 +173,16 @@ def count_list_max_len(list):
             d[len(str(i))] = [n1 + 1, n2]
     print(d)
     return d
+
+
+# 获取余额
+def get_user_asset():
+    """获取余额"""
+    j = {
+        "accountId": accountId
+    }
+    result = requests.post(getAsset, json=j, headers=header)
+    return result
 
 
 class CommonFunc:
@@ -177,10 +232,21 @@ class CommonFunc:
 class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
     """okex"""
 
+    """
+    test_004: 通过已有orderBook校验 -> moneyPrecision精度
+    
+    test_000: 通过下单测试 -> moneyPrecision
+    """
+
     def test_001(self):
         """获取交易所所有Symbol -> 储存至Redis"""
         R.flushall()
         print('redis db8 flushall .....')
+
+        with open(os.getcwd() + '/err_symbol.json', 'w', encoding='utf-8') as f:
+            f.write('')
+        print('clear file -> err_symbol.json')
+
         get_url_symbol_list('okex:spot')
 
     def test_002(self):
@@ -191,8 +257,8 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         print(res[1])
         global list_c
         global sy_ob
-        list_c = int(res[0])
-        sy_ob = res[1][:-5]
+        list_c = int(res[0])  # 总数
+        sy_ob = res[1][:-5]  # 前缀
 
     def test_003(self):
         """检查币obj参数"""
@@ -212,9 +278,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         print('check success')
 
     def test_004(self):
+        """通过已有orderBook校验 -> moneyPrecision精度"""
         """
-        1.从 Redis Symbol List 中提取逐一对比 用于 与 orderbook 精度 对比
-            错误 -> 记录Redis
+        1.从 Redis Symbol List 中提取逐一对比 用于 与 orderbook 精度 对比校验
+            错误 -> 记录Redis -> 记录文件
             查看错误
         """
 
@@ -254,23 +321,73 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
             if len(moneyPrecision_c) != len(asks_and_bids_c.split('.')[1]):
                 d = {
-                    '币对:moneyPrecision': str(dic_obj['moneyPrecision']),
+                    'symbol_obj': dic_obj,
+                    '该用例检验参数:moneyPrecision': str(dic_obj['moneyPrecision']),
                     'OrderBook精度': asks_and_bids_c,
                 }
+                with open(os.getcwd() + '/err_symbol.json', 'a+') as f:
+                    f.write(str(d) + '\n')
+
                 R.set('error_dic_obj_{}'.format(i), str(d))
                 print('======记录错误精度 -> {} ======'.format(n))
                 error_num += 1
-        # if error_num != 0:
-        #     print('发现错误的错误精度,明细查看Redis')
-        #     assert error_num == 0
-        # else:
-        #     print(''.format(error_num))
+
+        with open(os.getcwd() + '/err_symbol.json', 'r', encoding='utf-8') as f:
+            fs = f.read()
+            if not fs:
+                print('not error symbol')
+            else:
+                print('error symbol ->>>\n')
+                print(fs)
+                assert not fs
+
+        if error_num != 0:
+            print('发现错误的错误精度,明细查看 -> Redis db8')
+            assert error_num == 0
+        else:
+            print('error symbol number:{}'.format(error_num))
 
     def test_005(self):
+        """通过下单测试 -> moneyPrecision"""
         """
+        从Redis逐一取出币对进行下单
+        1.获取币对obj
         2.根据需要交易币对准备买入金额
-        3.交易
+            查询余额 
+                不足 -> 划转 
+                足够 -> 下挂单
+        3.下单 -> 挂单
+            提取最少下单量 -> minOrderSize
+            
+        4.查看订单状态
+        5.检验 moneyPrecision
         """
+        # list_c = 421
+        test_sy_ob = 'okex:spot_list_{}'.format("%05d" % 1)
+
+        d = eval('(' + R.get(test_sy_ob) + ')')
+        sy = d['symbol']
+        sy_l = d['symbol'].split('_')[0]
+        sy_r = d['symbol'].split('_')[1]
+        print(d, type(d))
+        print('symbol -> {}'.format(sy))
+        print('买入币种 -> {}'.format(sy_l))
+        print('使用币种 -> {}'.format(sy_r))
+        print('最少下单量 -> {}'.format(d['minOrderSize']))
+        r = get_user_asset().json()['data']['position']  # 余额情况
+
+        # print(r['spot'])
+        # print(r['margin'])
+        for i in r['spot']:
+            print(i)
+
+        # 买减->sell 卖加->buy
+        p = get_ticker('okex:spot', sy).json()['data']['sell']
+        print(p, type(p))
+        p = last_add_2(p)
+        print(p)
+
+        # r = generating_orders('okex', 'spot', 'normal', '1', '1', 'buy', sy)
 
     @unittest.skip('pass')
     def test_099(self):

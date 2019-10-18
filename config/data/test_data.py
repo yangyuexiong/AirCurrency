@@ -50,7 +50,7 @@ symbol*	string
 
 '''
 
-accountId = '4993'  # 即交易所
+accountId = '4993'  # okex交易所
 
 # 交易类型
 exchangeType = {
