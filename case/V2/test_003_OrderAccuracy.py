@@ -121,7 +121,11 @@ def last_add_2(s, sell=False):
     :return:
     """
     k = '0.'
-    s = as_num(s)
+    if type(s) == type(int(1)):
+        s = str(float(s))
+    else:
+        s = str(as_num(s))
+
     print(s)
 
     """处理只有一位小数 或者 整数 例: 0.1"""
@@ -430,18 +434,22 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
             #     print(i)
 
             # 买减->sell 卖加->buy
-            p = get_ticker('okex:spot', sy).json()['data']['sell']
-            print(p, type(p))
-            p = last_add_2(p)
+            p = get_url_order_book('okex:spot', sy).json()
+            asks_one = p['data']['asks'][0][0]
+            bids_one = p['data']['bids'][0][0]
+            print('卖一:{}'.format(asks_one))
+            print('买一:{}'.format(bids_one))
+
+            p = last_add_2(bids_one)
             print('下单金额:', p)
 
             r = generating_orders('okex', 'spot', 'normal', p, d['minOrderSize'], 'buy', sy)
             print(r.json())
+            sleep(1)
 
             exchangeType = r.json()['data']['exchangeType']
             orderId = r.json()['data']['orderId']
             symbol = r.json()['data']['symbol']
-            sleep(1)
             order_status = check_order('okex', exchangeType, orderId, symbol, all_json=True)
 
             obj_price = d['moneyPrecision']
@@ -449,13 +457,16 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
             print(obj_price, type(obj_price))
             print(od_price, type(od_price))
             print('=====校验订单精度=====')
-            if len(obj_price.split('.')[1]) != len(od_price.split('.')[1]):
-                with open(os.getcwd() + '/err_symbol_to_order.json', 'a+') as f:
-                    f.write(str(d) + '\n' + str(order_status) + '\n')
-            else:
+
+            ff = '币种对象:\n\t{}\n订单对象:\n\t{}\n\n'.format(str(d), str(order_status))
+            try:
+                if len(obj_price.split('.')[1]) != len(od_price.split('.')[1]):
+                    with open(os.getcwd() + '/err_symbol_to_order.json', 'a+') as f:
+                        f.write(ff)
+            except BaseException as e:
+                print(str(e))
+            finally:
                 try:
-                    print('=====订单精度校验通过=====')
-                    print('=====撤销该挂单=====')
                     co['exchangeType'] = order_status['data']['exchangeType']
                     co['orderId'] = order_status['data']['orderId']
                     co['symbol'] = order_status['data']['symbol']
@@ -464,8 +475,8 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 except BaseException as e:
                     with open(os.getcwd() + '/err_symbol_to_order.json', 'a+') as f:
                         msg = 'File "/test_003_OrderAccuracy.py", line 444'
-                        f.write('form Exception {}\n'.format(msg) + str(d) + '\n' + str(order_status) + '\n')
-                    print('没有找到该挂单 或 已经成交: -> {}'.format(str(e)))
+                        f.write('form Exception {}\n'.format(msg) + ff)
+                        print('没有找到该挂单 或 已经成交: -> {}'.format(str(e)))
 
         # with open(os.getcwd() + '/err_symbol_to_order.json', 'r', encoding='utf-8') as f:
         #     fs = f.read()

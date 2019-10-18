@@ -54,7 +54,11 @@ if __name__ == '__main__':
         :return:
         """
         k = '0.'
-        s = as_num(s)
+        if type(s) == type(int(1)):
+            s = str(float(s))
+        else:
+            s = str(as_num(s))
+
         print(s)
 
         """处理只有一位小数 或者 整数 例: 0.1"""
@@ -122,6 +126,3 @@ if __name__ == '__main__':
     # last_add_2('0.012')
     last_add_2('0.0000103')
     # last_add_2('0.6')
-
-    print(float(1))
-    print(str(float(1)))
