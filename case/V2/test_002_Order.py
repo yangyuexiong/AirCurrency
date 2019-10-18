@@ -76,7 +76,7 @@ def generating_orders(exchange, exchangeType, postType, price, qty, side, symbol
 
 
 #  查看订单状态
-def check_order(exchange, exchangeType, orderId, symbol, a_id=accountId):
+def check_order(exchange, exchangeType, orderId, symbol, a_id=accountId, all_json=False):
     j = {
         "accountId": a_id,
         "customId": "",
@@ -89,8 +89,11 @@ def check_order(exchange, exchangeType, orderId, symbol, a_id=accountId):
 
     result = requests.post(getOrderById, json=j, headers=header)
     print(result.json())
-    if result.json()['code'] == 1000:
+    if result.json()['code'] == 1000 and not all_json:
         return result.json()['data']['status']
+    elif all_json and result.json()['code'] == 1000:
+        return result.json()
+
     else:
         return result.json()
 

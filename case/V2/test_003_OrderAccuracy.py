@@ -9,7 +9,7 @@ import shortuuid
 
 from all_import import *
 from config.data.test_data import *
-from case.V2.test_002_Order import generating_orders, get_ticker
+from case.V2.test_002_Order import generating_orders, get_ticker, check_order
 
 
 # 获取交易所所有币的list
@@ -78,6 +78,12 @@ def save_symbol_obj(s):
     return R.get(list_count), list_obj
 
 
+def kexue_add(number, ll):
+    # print('{:.{}f}'.format(number, ll))
+    # print(type('{:.{}f}'.format(number, ll)))
+    return '{:.{}f}'.format(number, ll)
+
+
 def as_num(number, prec=20):
     """
     解决科学计数不现实为直观小数
@@ -108,46 +114,76 @@ def cnmd(d):
 
 
 def last_add_2(s, sell=False):
+    """
+
+    :param s:      浮点数字符串
+    :param sell:   卖加 买减
+    :return:
+    """
     k = '0.'
     s = as_num(s)
-    # print(s)
-    # print(s.split('.')[1])
-    # print(len(s.split('.')[1]))
+    print(s)
 
+    """处理只有一位小数 或者 整数 例: 0.1"""
     if len(s.split('.')[1]) < 2:
-        # print(float(s) + 0.5)
         if sell:
             r = float(s) + 0.5  # 卖 +0.5 买 -0.5
-            return str(r)
-        else:
-            r = float(s) - 0.5
-            if r < 0:
-                if float(s) - 0.1 == 0 or float(s) - 0.1 < 0:
-                    print(float(s))
-                    return 0
             print(r)
             return str(r)
+        else:
+            r = float(s)
+            if 0.5 > r > 0.2:
+                r = round(r - 0.1, len(s) - 2)
+                print(r)
+                return str(r)
 
+            else:
+                print(r)
+                return str(r)
+
+    """处理一位小数以上 例: 0.01"""
     for i in s[2:]:
         k = k + '0'
-    # print(k)
+    print(k)
+
     k1 = k[:-2]
-    # print('s1', k1)
+    print('加减精度:', k1)
+
     k2 = k[len(k) - 2:-1]
-    # print('s2', k2)
-    if sell:
-        k2_1 = int(k2) + 1  # 卖+1 买-1
-    else:
-        k2_1 = int(k2) - 1
-    # print('s2_1', k2_1)
+    print('倒数第二位:', k2)
+
+    k2_1 = int(k2) + 1
+    print('倒数第二位 +1:', k2_1)
+
     k3 = k[len(s) - 1:]
-    # print('s3', k3)
-    ss = k1 + str(k2_1) + k3
-    # print(ss)
-    r = round(float(s) + float(ss), len(s) - 2)
-    r = as_num(r)
-    # print(r)
-    return str(r)
+    print('最后一位 默认 ->:', k3)
+
+    ss = k1 + str(k2_1) + k3  # 例: "0.0" + "1" + "0"
+    print('生成需要计数精度:', ss)
+
+    if sell:
+        r = kexue_add(float(s) + float(ss), len(s) - 2)  # 卖+1 买-1
+        r = as_num(r)
+        print(r)
+        return str(r)
+    else:
+        if int(s[-2:-1]) == 0:  # 值的倒数第二位为 0 往后 推一位
+            print(type(float(s)))
+            msg = '{} - {}'.format(float(s), as_num(float(ss) / 10))
+            print(msg)
+            r = kexue_add((float(s)) - (float(ss) / 10), len(s) - 2)
+            if r == 0:  # 计算结果为:0
+                print('==0 ->', r, '返回 -> 0')
+                return 0
+            r = as_num(r)
+            print('倒数第二位 == 0 且最后一位减法后结果 >0 :', r)
+            return str(r)
+        else:
+            r = round(float(s) - float(ss), len(s) - 2)
+            r = as_num(r)
+            print('倒数第二位不为 0 减法:', r)
+            print(r)
+            return str(r)
 
 
 def count_list_max_len(list):
@@ -235,7 +271,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
     """
     test_004: 通过已有orderBook校验 -> moneyPrecision精度
     
-    test_000: 通过下单测试 -> moneyPrecision
+    test_005: 通过下单测试 -> moneyPrecision
     """
 
     def test_001(self):
@@ -243,9 +279,13 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         R.flushall()
         print('redis db8 flushall .....')
 
-        with open(os.getcwd() + '/err_symbol.json', 'w', encoding='utf-8') as f:
+        with open(os.getcwd() + '/err_symbol_to_orderbook.json', 'w', encoding='utf-8') as f:
             f.write('')
-        print('clear file -> err_symbol.json')
+        print('clear file -> err_symbol_to_orderbook.json')
+
+        with open(os.getcwd() + '/err_symbol_to_order.json', 'w', encoding='utf-8') as f:
+            f.write('')
+        print('clear file -> err_symbol_to_order.json')
 
         get_url_symbol_list('okex:spot')
 
@@ -325,14 +365,14 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     '该用例检验参数:moneyPrecision': str(dic_obj['moneyPrecision']),
                     'OrderBook精度': asks_and_bids_c,
                 }
-                with open(os.getcwd() + '/err_symbol.json', 'a+') as f:
+                with open(os.getcwd() + '/err_symbol_to_orderbook.json', 'a+') as f:
                     f.write(str(d) + '\n')
 
                 R.set('error_dic_obj_{}'.format(i), str(d))
                 print('======记录错误精度 -> {} ======'.format(n))
                 error_num += 1
 
-        with open(os.getcwd() + '/err_symbol.json', 'r', encoding='utf-8') as f:
+        with open(os.getcwd() + '/err_symbol_to_orderbook.json', 'r', encoding='utf-8') as f:
             fs = f.read()
             if not fs:
                 print('not error symbol')
@@ -361,33 +401,80 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
             
         4.查看订单状态
         5.检验 moneyPrecision
+        6.撤单
+            (1)成功撤单
+            (2)撤单失败 -> 订单成交 -> 记录日志
         """
-        # list_c = 421
-        test_sy_ob = 'okex:spot_list_{}'.format("%05d" % 1)
+        list_c = 421  # 调试
+        sy_ob = 'okex:spot_list_'  # 调试
+        # test_sy_ob = 'okex:spot_list_{}'.format("%05d" % 1)
 
-        d = eval('(' + R.get(test_sy_ob) + ')')
-        sy = d['symbol']
-        sy_l = d['symbol'].split('_')[0]
-        sy_r = d['symbol'].split('_')[1]
-        print(d, type(d))
-        print('symbol -> {}'.format(sy))
-        print('买入币种 -> {}'.format(sy_l))
-        print('使用币种 -> {}'.format(sy_r))
-        print('最少下单量 -> {}'.format(d['minOrderSize']))
-        r = get_user_asset().json()['data']['position']  # 余额情况
+        for i in range(1, list_c + 1):
+            n = "%05d" % i
+            pass
+            # d = eval('(' + R.get(test_sy_ob) + ')')   # 调试单条币对
+            d = eval('(' + R.get(sy_ob + n) + ')')
+            sy = d['symbol']
+            sy_l = d['symbol'].split('_')[0]
+            sy_r = d['symbol'].split('_')[1]
+            print(d, type(d))
+            print('symbol -> {}'.format(sy))
+            print('买入币种 -> {}'.format(sy_l))
+            print('使用币种 -> {}'.format(sy_r))
+            print('最少下单量 -> {}'.format(d['minOrderSize']))
 
-        # print(r['spot'])
-        # print(r['margin'])
-        for i in r['spot']:
-            print(i)
+            # r = get_user_asset().json()['data']['position']  # 余额情况
+            # print(r['spot'])
+            # print(r['margin'])
+            # for i in r['spot']:
+            #     print(i)
 
-        # 买减->sell 卖加->buy
-        p = get_ticker('okex:spot', sy).json()['data']['sell']
-        print(p, type(p))
-        p = last_add_2(p)
-        print(p)
+            # 买减->sell 卖加->buy
+            p = get_ticker('okex:spot', sy).json()['data']['sell']
+            print(p, type(p))
+            p = last_add_2(p)
+            print('下单金额:', p)
 
-        # r = generating_orders('okex', 'spot', 'normal', '1', '1', 'buy', sy)
+            r = generating_orders('okex', 'spot', 'normal', p, d['minOrderSize'], 'buy', sy)
+            print(r.json())
+
+            exchangeType = r.json()['data']['exchangeType']
+            orderId = r.json()['data']['orderId']
+            symbol = r.json()['data']['symbol']
+            sleep(1)
+            order_status = check_order('okex', exchangeType, orderId, symbol, all_json=True)
+
+            obj_price = d['moneyPrecision']
+            od_price = order_status['data']['price']
+            print(obj_price, type(obj_price))
+            print(od_price, type(od_price))
+            print('=====校验订单精度=====')
+            if len(obj_price.split('.')[1]) != len(od_price.split('.')[1]):
+                with open(os.getcwd() + '/err_symbol_to_order.json', 'a+') as f:
+                    f.write(str(d) + '\n' + str(order_status) + '\n')
+            else:
+                try:
+                    print('=====订单精度校验通过=====')
+                    print('=====撤销该挂单=====')
+                    co['exchangeType'] = order_status['data']['exchangeType']
+                    co['orderId'] = order_status['data']['orderId']
+                    co['symbol'] = order_status['data']['symbol']
+                    result = requests.post(cancelOrder, json=co, headers=header)
+                    print(result.json())
+                except BaseException as e:
+                    with open(os.getcwd() + '/err_symbol_to_order.json', 'a+') as f:
+                        msg = 'File "/test_003_OrderAccuracy.py", line 444'
+                        f.write('form Exception {}\n'.format(msg) + str(d) + '\n' + str(order_status) + '\n')
+                    print('没有找到该挂单 或 已经成交: -> {}'.format(str(e)))
+
+        # with open(os.getcwd() + '/err_symbol_to_order.json', 'r', encoding='utf-8') as f:
+        #     fs = f.read()
+        #     if not fs:
+        #         print('not error symbol ')
+        #     else:
+        #         print('error symbol ->>>\n')
+        #         print(fs)
+        #         assert not fs
 
     @unittest.skip('pass')
     def test_099(self):

@@ -18,6 +18,13 @@ if __name__ == '__main__':
     pass
 
 
+    def kexue_add(number, ll):
+
+        # print('{:.{}f}'.format(number, ll))
+        # print(type('{:.{}f}'.format(number, ll)))
+        return '{:.{}f}'.format(number, ll)
+
+
     def as_num(number, prec=20):
         """
         解决科学计数不现实为直观小数
@@ -30,8 +37,10 @@ if __name__ == '__main__':
         ctx = decimal.Context()
         ctx.prec = prec
         if 'E' in str(number) or 'e' in str(number):  # 判断时候为科学计数
-            # n = format(ctx.create_decimal(str(number)), 'f')
-            return format(ctx.create_decimal(str(number)), 'f')
+            n = format(ctx.create_decimal(str(number)), 'f')
+            # '{:.10f}'.format(self)
+            return round(ctx.create_decimal(float(number)), len(n.split('.')[1]))
+            # return ctx.create_decimal(str(number))
         else:
             # print(number, type(number))
             return number
@@ -55,19 +64,21 @@ if __name__ == '__main__':
                 print(r)
                 return str(r)
             else:
-                r = float(s) - 0.5
-                if r < 0:
-                    if float(s) - 0.1 == 0 or float(s) - 0.1 < 0:
-                        print(float(s))
-                        return 0
-                print(r)
-                return str(r)
+                r = float(s)
+                if 0.5 > r > 0.2:
+                    r = round(r - 0.1, len(s) - 2)
+                    print(r)
+                    return str(r)
+
+                else:
+                    print(r)
+                    return str(r)
 
         """处理一位小数以上 例: 0.01"""
         for i in s[2:]:
             k = k + '0'
         print(k)
-        
+
         k1 = k[:-2]
         print('加减精度:', k1)
 
@@ -84,18 +95,33 @@ if __name__ == '__main__':
         print('生成需要计数精度:', ss)
 
         if sell:
-            r = round(float(s) + float(ss), len(s) - 2)  # 卖+1 买-1
+            r = kexue_add(float(s) + float(ss), len(s) - 2)  # 卖+1 买-1
             r = as_num(r)
             print(r)
-            return r
+            return str(r)
         else:
             if int(s[-2:-1]) == 0:  # 值的倒数第二位为 0 往后 推一位
-                r = round(float(s) - as_num(float(ss) / 10), len(s) - 2)
-                if r == 0:
+                print(type(float(s)))
+                msg = '{} - {}'.format(float(s), as_num(float(ss) / 10))
+                print(msg)
+                r = kexue_add((float(s)) - (float(ss) / 10), len(s) - 2)
+                if r == 0:  # 计算结果为:0
+                    print('==0 ->', r, '返回 -> 0')
                     return 0
                 r = as_num(r)
+                print('倒数第二位 == 0 且最后一位减法后结果 >0 :', r)
+                return str(r)
+            else:
+                r = round(float(s) - float(ss), len(s) - 2)
+                r = as_num(r)
+                print('倒数第二位不为 0 减法:', r)
                 print(r)
-                return r
+                return str(r)
 
 
-    last_add_2('0.001')
+    # last_add_2('0.012')
+    last_add_2('0.0000103')
+    # last_add_2('0.6')
+
+    print(float(1))
+    print(str(float(1)))
