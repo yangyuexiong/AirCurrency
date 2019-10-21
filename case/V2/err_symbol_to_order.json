@@ -1,0 +1,30 @@
+币种对象:
+	{'exSymbol': 'doge_usdt', 'symbol': 'doge_usdt', 'exBaseCoin': 'doge', 'exMoneyCoin': 'usdt', 'baseCoin': 'doge', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.000001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'doge', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571658727078, 'data': {'customId': '2138f9759a154cb1ad35bc533a73ebc6', 'orderId': '3730487770110976', 'price': '0.0026', 'qty': '1', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571658725993, 'dealTime': 0, 'updateTime': 1571658726026, 'symbol': 'doge_usdt', 'exSymbol': 'doge_usdt', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'pma_btc', 'symbol': 'pma_btc', 'exBaseCoin': 'pma', 'exMoneyCoin': 'btc', 'baseCoin': 'pma', 'moneyCoin': 'btc', 'basePrecision': '0.0001', 'moneyPrecision': '0.0000000001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'pma', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571658733639, 'data': {'customId': 'e56fd60377f140c18e4678f4b9d06ff2', 'orderId': '3730488200027136', 'price': '0.000000019', 'qty': '1', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571658732553, 'dealTime': 0, 'updateTime': 1571658733285, 'symbol': 'pma_btc', 'exSymbol': 'pma_btc', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'bnt_eth', 'symbol': 'bnt_eth', 'exBaseCoin': 'bnt', 'exMoneyCoin': 'eth', 'baseCoin': 'bnt', 'moneyCoin': 'eth', 'basePrecision': '0.0001', 'moneyPrecision': '0.00001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'bnt', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571658902588, 'data': {'customId': '2b89c3e2a87546f3bf41d7fbbc6dedc3', 'orderId': '3730499272122368', 'price': '0.002', 'qty': '0.1', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571658901502, 'dealTime': 0, 'updateTime': 1571658902143, 'symbol': 'bnt_eth', 'exSymbol': 'bnt_eth', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'pma_btc', 'symbol': 'pma_btc', 'exBaseCoin': 'pma', 'exMoneyCoin': 'btc', 'baseCoin': 'pma', 'moneyCoin': 'btc', 'basePrecision': '0.0001', 'moneyPrecision': '0.0000000001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'pma', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571659267210, 'data': {'customId': '6bd36b7a61f341c0a80e44f482f2894d', 'orderId': '3730523168577536', 'price': '0.000000019', 'qty': '1', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571659266132, 'dealTime': 0, 'updateTime': 1571659266190, 'symbol': 'pma_btc', 'exSymbol': 'pma_btc', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'stc_usdt', 'symbol': 'stc_usdt', 'exBaseCoin': 'stc', 'exMoneyCoin': 'usdt', 'baseCoin': 'stc', 'moneyCoin': 'usdt', 'basePrecision': '0.01', 'moneyPrecision': '0.000001', 'minOrderSize': '10', 'symbolType': 'spot', 'tradeType': 'stc', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571659340036, 'data': {'customId': '2a60a9f9e9f64f549f397c9cbdc70a52', 'orderId': '3730527940780032', 'price': '0.0066', 'qty': '10', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571659338950, 'dealTime': 0, 'updateTime': 1571659339270, 'symbol': 'stc_usdt', 'exSymbol': 'stc_usdt', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'bnt_eth', 'symbol': 'bnt_eth', 'exBaseCoin': 'bnt', 'exMoneyCoin': 'eth', 'baseCoin': 'bnt', 'moneyCoin': 'eth', 'basePrecision': '0.0001', 'moneyPrecision': '0.00001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'bnt', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571659439930, 'data': {'customId': '116b170a8a864316ac3e479bae0a7f3e', 'orderId': '3730534486977536', 'price': '0.002', 'qty': '0.1', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571659438837, 'dealTime': 0, 'updateTime': 1571659438939, 'symbol': 'bnt_eth', 'exSymbol': 'bnt_eth', 'leverage': 1}, 'rawStr': None}
+
