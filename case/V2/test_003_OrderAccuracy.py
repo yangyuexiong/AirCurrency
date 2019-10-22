@@ -17,10 +17,10 @@ from case.V2.test_002_Order import generating_orders, get_ticker, check_order, g
 def get_url_symbol_list(exchange):
     """
 
-    moneyPrecision -> 价格精度
-    basePrecision  -> 数量精度
+    moneyPrecision -> 下单价格精度
+    basePrecision  -> 下单数量精度
     minOrderSize   -> 下单数量
-    minOrderValue  -> 价值
+    minOrderValue  -> 下单价值
 
     :param exchange:  交易所:子市场 -> okex:spot
     :return:
@@ -657,7 +657,8 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
     @unittest.skip('test_005的调试类->>>【不包含】try-except')
     def test_007(self):
         """test_005的调试类->>>【不包含】try-except"""
-        list_c = 421  # 调试
+
+        list_c = 2  # 调试
         sy_ob = 'okex:spot_list_'  # 调试
         # test_sy_ob = 'okex:spot_list_{}'.format("%05d" % 1)
 
@@ -757,15 +758,64 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 print(result.json())
             print('已经处理漏撤订单')
 
+    def test_009(self):
+        """1"""
+        list_c = 2  # 调试
+        sy_ob = 'okex:spot_list_'  # 调试
+        d = eval('(' + R.get(sy_ob + '00001') + ')')
+        print(d)
+        basePrecision = d['basePrecision']
+        minOrderSize = d['minOrderSize']
+        print('basePrecision', basePrecision)
+        print('minOrderSize', minOrderSize)
+
+        try:
+            l = str(basePrecision).split('.')[1]
+            pass
+        except BaseException as e:
+            l = 0
+            pass
+
+        print(kexue_add(float(basePrecision) + float(minOrderSize), l))
+
     @unittest.skip('pass')
     def test_099(self):
         """调试函数"""
         R.flushall()
         print('redis db8 flushall .....')
 
-    @unittest.skip('pass')
+    # @unittest.skip('pass')
     def test_0999(self):
         """调试函数"""
+        list_c = 2  # 调试
+        sy_ob = 'okex:spot_list_'  # 调试
+
+        for i in range(1, list_c + 1):
+            n = "%05d" % i
+            d = eval('(' + R.get(sy_ob + n) + ')')
+            basePrecision = d['basePrecision']
+            minOrderSize = d['minOrderSize']
+
+            try:
+                l = str(basePrecision).split('.')[1]
+                print('basePrecision:精度->{}'.format(len(str(l))))
+                order_q = kexue_add(float(basePrecision) + float(minOrderSize), len(str(l)))
+                print('basePrecision -> {} {} + minOrderSize -> {} {} -> 下单数量 -> {} {} \n'.format(basePrecision,
+                                                                                                  type(basePrecision),
+                                                                                                  minOrderSize,
+                                                                                                  type(minOrderSize),
+                                                                                                  order_q,
+                                                                                                  type(order_q)))
+            except BaseException as e:
+                l = 0
+                print(
+                    '========================================{}========================================'.format(str(e)))
+                print('basePrecision:精度->{}'.format(l))
+                order_q = kexue_add(float(basePrecision) + float(minOrderSize), l)
+                print('basePrecision -> {} {} + minOrderSize -> {} {} -> 下单数量 -> {} {} ========int======== \n'.format(
+                    basePrecision, type(basePrecision), minOrderSize, type(minOrderSize), order_q, type(order_q)))
+
+            print(order_q)
 
 
 if __name__ == '__main__':
