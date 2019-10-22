@@ -1,5 +1,5 @@
 精度丢失无法下单:'orderId'
 {'exSymbol': 'btc_usdk', 'symbol': 'btc_usdk', 'exBaseCoin': 'btc', 'exMoneyCoin': 'usdk', 'baseCoin': 'btc', 'moneyCoin': 'usdk', 'basePrecision': '0.00000001', 'moneyPrecision': '0.1', 'minOrderSize': '0.001', 'symbolType': 'spot', 'tradeType': 'btc', 'multiplier': '1'}Traceback (most recent call last):
-  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy.py", line 609, in test_006
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy.py", line 520, in test_005
     orderId = r.json()['data']['orderId']
 KeyError: 'orderId'
