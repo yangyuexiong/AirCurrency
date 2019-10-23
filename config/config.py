@@ -223,3 +223,5 @@ if __name__ == '__main__':
 
     # ad_price(test001)
     # print(cnmd(count_list_max_len(test001)))
+
+    print(os.getcwd())

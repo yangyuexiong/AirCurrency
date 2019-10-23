@@ -58,7 +58,7 @@ def generating_orders(exchange, exchangeType, postType, price, qty, side, symbol
         "symbol": symbol,
         "type": "limit"
     }
-    print(d)
+    print('send json -> {} '.format(d))
 
     if exchangeType == 'spot':
         print('func -> generating_orders data -> spot')

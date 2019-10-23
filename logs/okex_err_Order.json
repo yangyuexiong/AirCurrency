@@ -1,0 +1,5 @@
+精度丢失无法下单:'NoneType' object is not subscriptable
+{'exSymbol': 'cro_btc', 'symbol': 'cro_btc', 'exBaseCoin': 'cro', 'exMoneyCoin': 'btc', 'baseCoin': 'cro', 'moneyCoin': 'btc', 'basePrecision': '0.0001', 'moneyPrecision': '0.00000001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'cro', 'multiplier': '1'}Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 512, in test_005
+    asks_one = p['data']['asks'][0][0]
+TypeError: 'NoneType' object is not subscriptable
