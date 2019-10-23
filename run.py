@@ -19,10 +19,11 @@ sys.path.append(path)
 # 报告路径
 report_dir = './reports'
 # 测试路径
-test_dir = './case'
+test_dir = './case/V2'
 # test_dir = './case/v3.0_'
 # 文件前缀
-file_prefix = 'test_*.py'
+# file_prefix = 'test_*.py'
+file_prefix = 'test_003_OrderAccuracy_OKEX.py'
 
 if not C:
     file_prefix = ''

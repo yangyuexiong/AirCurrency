@@ -204,7 +204,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
     test_009: 查看输出错误
     """
     error_num = 0
-    logs_path = os.getcwd().split('case')[0] + 'logs'
+    logs_path = os.getcwd().split('case')[0] + '/logs'
     f_list = [
         'okex_err_OrderBook.json',
         'okex_err_OrderBook_MoneyPrecision.json',
