@@ -9,130 +9,7 @@ from time import sleep
 
 from all_import import *
 from config.data.test_data import *
-
-"""
-
-币币 -> 下单/挂单
-杠杆 -> 下单/挂单
-永续 -> 下单/挂单
-交割 -> 下单/挂单
-
-generating_orders -> 生产需要测试的订单类型
-"""
-
-
-# def generating_orders(exchange=None, exchangeType=None, postType=None, price=None, qty=None, side=None, symbol=None):
-def generating_orders(exchange, exchangeType, postType, price, qty, side, symbol):
-    """
-    :param exchange:        交易所
-    :param exchangeType:    交易类型  币币-> spot, 杠杆-> margin, 交割-> future, 永续-> swap
-    :param postType:                 默认-> normal , 吃单-> post_only
-    :param side:            交易方向
-    :return:
-    """
-
-    # exchange = 'okex'
-    # exchangeType = 'spot'
-    # postType = 'normal'
-    # price = '1'
-    # qty = '1'
-    # side = 'buy'
-    # symbol = 'ltc_okb'
-
-    """
-    永续/交割:
-        "qty": "1" 整数张
-        "symbol":"trx_usd_this_week",当周
-        "symbol":"trx_usd_next_week",次周
-        "symbol":"trx_usd_quarter",季度
-    """
-
-    d = {
-        "accountId": accountId,
-        "exchange": exchange,
-        "exchangeType": exchangeType,
-        "postType": postType,
-        "price": price,
-        "qty": qty,
-        "side": side,
-        "symbol": symbol,
-        "type": "limit"
-    }
-    print('send json -> {} '.format(d))
-
-    if exchangeType == 'spot':
-        print('func -> generating_orders data -> spot')
-        result = requests.post(placeOrder, json=d, headers=header)
-        return result
-    if exchangeType == 'margin':
-        print('func -> generating_orders data -> margin')
-        return
-    if exchangeType == 'future':
-        print('func -> generating_orders data -> future')
-        return
-    if exchangeType == 'swap':
-        print('func -> generating_orders data -> swap')
-        return
-
-
-#  查看订单状态
-def check_order(exchange, exchangeType, orderId, symbol, a_id=accountId, all_json=False):
-    j = {
-        "accountId": a_id,
-        "customId": "",
-        "exchange": exchange,
-        "exchangeType": exchangeType,
-        "orderId": orderId,
-        "readFromCache": 'true',
-        "symbol": symbol
-    }
-
-    result = requests.post(getOrderById, json=j, headers=header)
-    print(result.json())
-    if result.json()['code'] == 1000 and not all_json:
-        return result.json()['data']['status']
-    elif all_json and result.json()['code'] == 1000:
-        return result.json()
-
-    else:
-        return result.json()
-
-
-# 查看挂单list
-def get_active_orders():
-    """获取活跃订单列表"""
-    result = requests.post(getActiveOrders, json=ao, headers=header)
-    # print(result.json())
-    return result
-
-
-# 获取币对金额
-def get_ticker(exchange, symbol, contractType=''):
-    """
-
-    :param exchange:        okex:spot
-    :param symbol:          trx_okb
-    :param contractType:    期货的合约类型，如果是现货或杠杆时填空即可 -> this_week,quarter,swap
-    :return:
-    """
-    da = {
-        'contractType': contractType,
-        'exchange': exchange,
-        'symbol': symbol
-    }
-    result = requests.get(ticker, da)
-    print(result.json())
-    return result
-
-
-# 数据处理
-def bl8(n):
-    """
-    保留8位小数
-    :param n:
-    :return:
-    """
-    return round(float(n), 8)
+from common.OrderFunc import *
 
 
 class PublicOrderFunc:
@@ -251,10 +128,6 @@ class PublicOrderFunc:
         R.set('exchangeType', result.json()['data']['exchangeType'])
         R.set('symbol', result.json()['data']['symbol'])
         print('save db success')
-
-
-class NewPublicOrderFunc:
-    """公共类"""
 
 
 class TestPlaceOrderForwardLogic(StartEnd, PublicOrderFunc):

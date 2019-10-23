@@ -5,78 +5,12 @@
 # @File    : test_003_OrderAccuracy_OKEX.py
 # @Software: PyCharm
 
-import shortuuid
+
 import traceback
 
 from all_import import *
 from config.data.test_data import *
-from case.V2.test_002_Order import generating_orders, get_ticker, check_order, get_active_orders
-
-
-# 获取交易所所有币的list
-def get_url_symbol_list(exchange):
-    """
-
-    moneyPrecision -> 下单价格精度
-    basePrecision  -> 下单数量精度
-    minOrderSize   -> 下单数量
-    minOrderValue  -> 下单价值
-
-    :param exchange:  交易所:子市场 -> okex:spot
-    :return:
-    """
-    kv = {
-        'exchange': exchange
-    }
-    result = requests.get(Symbol_url, kv)
-    # print(result.json()['data'][0])
-    # print(result.json()['data'][1])
-    print(type(result.json()['data']))
-
-    v = result.json()['data']
-    print(v)
-    R.set(exchange, str(v))
-    return
-
-
-def get_url_order_book(exchange, symbol):
-    """
-
-    :param exchange:  交易所:子市场 -> okex:spot
-    :param symbol:    币对: -> 如 btc_usdt
-    :return:
-    """
-    kv = {
-        'exchange': exchange,
-        'symbol': symbol
-    }
-    result = requests.get(Orderbook, kv)
-    # print(result.json(), '\n')
-    return result
-
-
-# 分开保存每一个币种
-def save_symbol_obj(s):
-    """
-
-    :param s: 交易所:子市场 -> okex:spot
-    :return:
-    """
-    okex_spot_list = eval('(' + R.get(s) + ')')
-    # print(okex_spot_list)
-
-    list_obj = ''
-    list_count = '{}_list_count'.format(s)
-    print(list_count)
-    print('obj count ->', len(okex_spot_list))
-    new_list = zip(range(1, len(okex_spot_list) + 1), okex_spot_list)
-    for k, v in new_list:
-        print('key:', "%05d" % k)
-        print('vaule:', v)
-        R.set('{}_list_{}'.format(s, "%05d" % k), str(v))
-    list_obj = '{}_list_{}'.format(s, "%05d" % k)
-    R.set(list_count, len(okex_spot_list))
-    return R.get(list_count), list_obj
+from common.OrderFunc import *
 
 
 def kexue_add(number, ll):
@@ -255,67 +189,6 @@ def last_add_2(s, sell=False):
             return str(r)
 
 
-# 获取余额
-def get_user_asset():
-    """获取余额"""
-    j = {
-        "accountId": accountId
-    }
-    result = requests.post(getAsset, json=j, headers=header)
-    return result
-
-
-# 错误记录
-def error_log(p, sy, o_s):
-    ff = '币种对象:\n\t{}\n订单对象:\n\t{}\n\n'.format(sy, o_s)
-    with open(p + '/okex_err_Symbol_OrderMoneyPrecision.json', 'a+') as f:
-        f.write(ff)
-
-
-class CommonFunc:
-    """公共类"""
-
-    def check_sy_kv(self, sy):
-        """
-        检查symbol参数
-
-        :param sy:
-        :return:
-
-        """
-        demo = {'exSymbol': 'knc_btc', 'symbol': 'knc_btc', 'exBaseCoin': 'knc', 'exMoneyCoin': 'btc',
-                'baseCoin': 'knc',
-                'moneyCoin': 'btc', 'basePrecision': '0.001', 'moneyPrecision': '0.0000001', 'minOrderSize': '1',
-                'symbolType': 'spot', 'tradeType': 'knc', 'multiplier': '1'}
-
-        if not sy.get('moneyPrecision') or not sy.get('basePrecision'):
-            print('moneyPrecision 或 basePrecision 为 None')
-            R.set('error_data_{}'.format(shortuuid.uuid()), str(sy))
-            assert 1 == 1 - 1
-
-        if float(sy.get('moneyPrecision')) <= 0 or float(sy.get('basePrecision')) <= 0:
-            print('moneyPrecision 或 basePrecision 值 < 0')
-            R.set('error_data_{}'.format(shortuuid.uuid()), str(sy))
-            assert 1 == 1 - 1
-
-        if not sy.get('minOrderSize') and not sy.get('minOrderValue'):
-            print('minOrderSize 与 minOrderValue 为 None')
-            R.set('error_data_{}'.format(shortuuid.uuid()), str(sy))
-            assert 1 == 1 - 1
-
-        if sy.get('minOrderSize'):
-            if float(sy.get('minOrderSize')) <= 0:
-                print('minOrderSize  <= 0')
-                R.set('error_data_{}'.format(shortuuid.uuid()), str(sy))
-                assert 1 == 1 - 1
-
-        if sy.get('minOrderValue'):
-            if float(sy.get('minOrderValue')) <= 0:
-                print('minOrderValue  <= 0')
-                R.set('error_data_{}'.format(shortuuid.uuid()), str(sy))
-                assert 1 == 1 - 1
-
-
 class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
     """okex"""
 
@@ -340,9 +213,8 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
     def test_001(self):
         """获取交易所所有Symbol -> 储存至Redis"""
-        R.flushall()
-        print('redis db8 flushall .....')
-        'okex_err_Order'
+
+        self.clear_db_08()
 
         for i in self.f_list:
             with open(self.logs_path + '/{}'.format(i), 'w', encoding='utf-8') as f:
@@ -893,7 +765,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         R.flushall()
         print('redis db8 flushall .....')
 
-    # @unittest.skip('调试函数 -> Pass')
+    @unittest.skip('调试函数 -> Pass')
     def test_0999(self):
         """调试函数"""
 

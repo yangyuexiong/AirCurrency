@@ -13,16 +13,6 @@ def assert_json(json_obj, key, v):
     assert json_obj[key] == v
 
 
-# 返回sk
-def return_sk():
-    return
-
-
-# 检查金额
-def c_money():
-    return
-
-
 # 查找最新报告
 def latest_report(report_dir):
     lists = os.listdir(report_dir)  # 报告列表

@@ -1,32 +1,10 @@
 币种对象:
 	{'exSymbol': 'doge_usdk', 'symbol': 'doge_usdk', 'exBaseCoin': 'doge', 'exMoneyCoin': 'usdk', 'baseCoin': 'doge', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.000001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'doge', 'multiplier': '1'}
 订单对象:
-	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571825318437, 'data': {'customId': '046dbb403eed46f2937fe433cb4b8690', 'orderId': '3741405498712064', 'price': '0.0025', 'qty': '1.0001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571825317313, 'dealTime': 0, 'updateTime': 1571825317839, 'symbol': 'doge_usdk', 'exSymbol': 'doge_usdk', 'leverage': 1}, 'rawStr': None}
-
-form Exception File "/test_003_OrderAccuracy_OKEX.py", line 444
-币种对象:
-	{'exSymbol': 'leo_usdt', 'symbol': 'leo_usdt', 'exBaseCoin': 'leo', 'exMoneyCoin': 'usdt', 'baseCoin': 'leo', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'leo', 'multiplier': '1'}
-订单对象:
-	{'code': 2000, 'message': '没有该订单【3741406984497152】的存在', 'success': False, 'timestamp': 1571825341088, 'data': None, 'rawStr': None}
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571828731150, 'data': {'customId': '8e053fb69cc84289847960fa7425e127', 'orderId': '3741629152371712', 'price': '0.0025', 'qty': '1.0001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571828729997, 'dealTime': 0, 'updateTime': 1571828731084, 'symbol': 'doge_usdk', 'exSymbol': 'doge_usdk', 'leverage': 1}, 'rawStr': None}
 
 币种对象:
 	{'exSymbol': 'leo_usdk', 'symbol': 'leo_usdk', 'exBaseCoin': 'leo', 'exMoneyCoin': 'usdk', 'baseCoin': 'leo', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'leo', 'multiplier': '1'}
 订单对象:
-	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571825343990, 'data': {'customId': '799a77f0e2004580a91bfc9c1aab580a', 'orderId': '3741407175993344', 'price': '0.15', 'qty': '0.1001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571825342905, 'dealTime': 0, 'updateTime': 1571825343405, 'symbol': 'leo_usdk', 'exSymbol': 'leo_usdk', 'leverage': 1}, 'rawStr': None}
-
-币种对象:
-	{'exSymbol': 'yee_usdt', 'symbol': 'yee_usdt', 'exBaseCoin': 'yee', 'exMoneyCoin': 'usdt', 'baseCoin': 'yee', 'moneyCoin': 'usdt', 'basePrecision': '0.1', 'moneyPrecision': '0.000001', 'minOrderSize': '10', 'symbolType': 'spot', 'tradeType': 'yee', 'multiplier': '1'}
-订单对象:
-	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571825345557, 'data': {'customId': '88d2219ab16e403e9e5168cfde37f6d7', 'orderId': '3741407277555712', 'price': '0.00102', 'qty': '10.1', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571825344456, 'dealTime': 0, 'updateTime': 1571825344901, 'symbol': 'yee_usdt', 'exSymbol': 'yee_usdt', 'leverage': 1}, 'rawStr': None}
-
-币种对象:
-	{'exSymbol': 'aac_eth', 'symbol': 'aac_eth', 'exBaseCoin': 'aac', 'exMoneyCoin': 'eth', 'baseCoin': 'aac', 'moneyCoin': 'eth', 'basePrecision': '0.01', 'moneyPrecision': '0.00000001', 'minOrderSize': '10', 'symbolType': 'spot', 'tradeType': 'aac', 'multiplier': '1'}
-订单对象:
-	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571825396956, 'data': {'customId': '5fba068157ea42a8950ad59325567a7e', 'orderId': '3741410643681280', 'price': '0.000012', 'qty': '10.01', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571825395819, 'dealTime': 0, 'updateTime': 1571825396568, 'symbol': 'aac_eth', 'exSymbol': 'aac_eth', 'leverage': 1}, 'rawStr': None}
-
-form Exception File "/test_003_OrderAccuracy_OKEX.py", line 444
-币种对象:
-	{'exSymbol': 'tusd_btc', 'symbol': 'tusd_btc', 'exBaseCoin': 'tusd', 'exMoneyCoin': 'btc', 'baseCoin': 'tusd', 'moneyCoin': 'btc', 'basePrecision': '0.0001', 'moneyPrecision': '0.0000001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'tusd', 'multiplier': '1'}
-订单对象:
-	{'code': 2000, 'message': '没有该订单【3741412011415552】的存在', 'success': False, 'timestamp': 1571825417785, 'data': None, 'rawStr': None}
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571828757163, 'data': {'customId': '7416e0f7e5374935ae8609f3cb4f0b10', 'orderId': '3741630860977152', 'price': '0.15', 'qty': '0.1001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571828756067, 'dealTime': 0, 'updateTime': 1571828756123, 'symbol': 'leo_usdk', 'exSymbol': 'leo_usdk', 'leverage': 1}, 'rawStr': None}
 

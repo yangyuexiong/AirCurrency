@@ -5,6 +5,7 @@
 # @File    : all_import.py
 # @Software: PyCharm
 
+import shortuuid
 from time import sleep
 
 import unittest
