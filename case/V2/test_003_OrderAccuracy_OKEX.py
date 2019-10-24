@@ -209,7 +209,9 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         'okex_err_OrderBook.json',
         'okex_err_OrderBook_MoneyPrecision.json',
         'okex_err_Symbol_OrderMoneyPrecision.json',
-        'okex_err_Order.json']
+        'okex_err_Order.json',
+        'okex_func_errors.json'
+    ]
 
     def test_001(self):
         """获取交易所所有Symbol -> 储存至Redis"""
@@ -377,7 +379,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         """
         print(list_c)
         print(sy_ob)
-        # list_c = 421  # 调试
+        # list_c = 1  # 调试
         # sy_ob = 'okex:spot_list_'  # 调试
         # test_sy_ob = 'okex:spot_list_{}'.format("%05d" % 1)
 
@@ -465,17 +467,25 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
                 print('*下单数量:', order_q, type(order_q))
 
+                # 下单
                 r = generating_orders('okex', 'spot', 'normal', this_p, order_q, 'buy', sy)  # buy
                 # r = generating_orders('okex', 'spot', 'normal', this_p, order_q, 'sell', sy)  # sell
-                print(r.json())
+                res = r.json()
+                print(res)
                 print('\n')
+                c = res.get('code', None)
+                m = res.get('message', None)
+                s = res.get('success', None)
+                sleep(1)
+                try:
+                    """
+                    捕捉: 下单,获取订单,撤单 异常
+                    """
+                    exchangeType = res['data']['exchangeType']
+                    orderId = res['data']['orderId']
+                    symbol = res['data']['symbol']
 
-                if r.json().get('code', None) == 1000 and r.json().get('success', None):
-                    pass
-                    sleep(1)
-                    exchangeType = r.json()['data']['exchangeType']
-                    orderId = r.json()['data']['orderId']
-                    symbol = r.json()['data']['symbol']
+                    # 获取订单
                     order_status = check_order('okex', exchangeType, orderId, symbol, all_json=True)
 
                     obj_price = d['moneyPrecision']
@@ -491,28 +501,27 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     if len(obj_price.split('.')[1]) != len(od_price.split('.')[1]):
                         error_log(self.logs_path, str(d), str(order_status))
 
+                    # 撤单
                     co['exchangeType'] = order_status['data']['exchangeType']
                     co['orderId'] = order_status['data']['orderId']
                     co['symbol'] = order_status['data']['symbol']
                     result = requests.post(cancelOrder, json=co, headers=header)
                     print(result.json())
-                    if result.json().get('success', None):
-                        pass
-                        print('====================end test -> {} -> {}====================\n'.format(n, sy))
-                    else:
-                        with open(self.logs_path + '/okex_err_Symbol_OrderMoneyPrecision.json', 'a+') as f:
-                            f.write('没有找到该挂单 或 订单已经成交: -> 币对ID:{}'.format(n))
-                            print('====================end test -> {} -> {}====================\n'.format(n, sy))
-                        continue
+                    print('====================end test -> {} -> {}====================\n'.format(n, sy))
 
-                else:
-                    with open(self.logs_path + '/okex_err_Order.json', 'a+') as f:
-                        ff = '币种对象:\n\t{}\n下单金额:\n\t{}\n下单数量:\n\t{}\n返回json:\n\t{}\n\n'.format(
-                            str(d), str(this_p), str(order_q), str(r.json()))
-                        f.write('无法下单 -> 精度丢失 或者 金额不足:{}'.format(n) + '\n' + str(ff))
-                        traceback.print_exc(file=open(self.logs_path + '/okex_err_Order.json', 'a+'))
-                        print('====================end test -> {} -> {}====================\n'.format(n, sy))
-                        continue
+                except BaseException as e:
+                    if not s and m != '下单成功':
+                        with open(self.logs_path + '/okex_err_Order.json', 'a+') as f:
+                            ff = '币种对象:\n\t{}\n下单金额:\n\t{}\n下单数量:\n\t{}\n返回json:\n\t{}\n\n'.format(
+                                str(d), str(this_p), str(order_q), str(res))
+                            f.write('下单失败 -> 精度丢失 或者 金额不足 币对ID:{}\n{}'.format(n, str(ff)))
+                            traceback.print_exc(file=open(self.logs_path + '/okex_err_Order.json', 'a+'))
+                    else:
+                        with open(self.logs_path + '/okex_err_Order.json', 'a+') as f:
+                            ff = '币种对象:\n\t{}\n下单金额:\n\t{}\n下单数量:\n\t{}\n\n'.format(str(d), str(this_p), str(order_q))
+                            f.write('撤单失败 -> 没有找到该挂单 或 订单已经成交: -> 币对ID:{}\n{}\n{}'.format(n, ff, str(e)))
+                            traceback.print_exc(file=open(self.logs_path + '/okex_err_Order.json', 'a+'))
+                    continue
 
             except BaseException as e:
                 msg = 'test_005 -> ID{} 执行异常 -> {}'.format(n, str(e))
@@ -520,8 +529,6 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 with open(self.logs_path + '/okex_func_errors.json', 'a+') as f:
                     f.write(msg)
                     traceback.print_exc(file=open(self.logs_path + '/okex_func_errors.json', 'a+'))
-                    f.write('\n')
-                print('====================end test -> {} -> {}====================\n'.format(n, sy))
                 continue
 
     @unittest.skip('test_005的调试类->>>【包含】try-except')

@@ -1,15 +1,5 @@
 Traceback (most recent call last):
-  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 490, in test_005
-    if len(obj_price.split('.')[1]) != len(od_price.split('.')[1]):
-IndexError: list index out of range
-
-test_005 -> ID00006 执行异常 -> list index out of rangeTraceback (most recent call last):
-  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 424, in test_005
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 427, in test_005
     msg = '未找到该币种 -> {} 请前往 -> {} 交易所复查 -> this func is test_005\n'.format(sy['symbol'], 'okex')
 TypeError: string indices must be integers
-
-test_005 -> ID00075 执行异常 -> string indices must be integersTraceback (most recent call last):
-  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 490, in test_005
-    if len(obj_price.split('.')[1]) != len(od_price.split('.')[1]):
-IndexError: list index out of range
-test_005 -> ID00080 执行异常 -> list index out of range
+test_005 -> ID00075 执行异常 -> string indices must be integers
