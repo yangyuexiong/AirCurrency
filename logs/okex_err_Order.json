@@ -1,5 +1,286 @@
-精度丢失无法下单:'NoneType' object is not subscriptable
-{'exSymbol': 'cro_btc', 'symbol': 'cro_btc', 'exBaseCoin': 'cro', 'exMoneyCoin': 'btc', 'baseCoin': 'cro', 'moneyCoin': 'btc', 'basePrecision': '0.0001', 'moneyPrecision': '0.00000001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'cro', 'multiplier': '1'}Traceback (most recent call last):
-  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 386, in test_005
-    asks_one = p['data']['asks'][0][0]
-TypeError: 'NoneType' object is not subscriptable
+NoneType: None
+精度丢失无法下单:00025
+币种对象:
+	{'exSymbol': 'leo_usdk', 'symbol': 'leo_usdk', 'exBaseCoin': 'leo', 'exMoneyCoin': 'usdk', 'baseCoin': 'leo', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'leo', 'multiplier': '1'}
+下单金额:
+	1.1253
+下单数量:
+	0.1001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"0c426c374b48425d9ac51dc91c32b033","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911657705, 'data': {'customId': '0c426c374b48425d9ac51dc91c32b033', 'price': '1.1253', 'qty': '0.1001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911657635, 'symbol': 'leo_usdk', 'exSymbol': 'LEO-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"0c426c374b48425d9ac51dc91c32b033","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00027
+币种对象:
+	{'exSymbol': 'fsn_usdk', 'symbol': 'fsn_usdk', 'exBaseCoin': 'fsn', 'exMoneyCoin': 'usdk', 'baseCoin': 'fsn', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'fsn', 'multiplier': '1'}
+下单金额:
+	0.1904
+下单数量:
+	1.0001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"7fdf5c4302f14c939dbd67c241222fbf","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911659505, 'data': {'customId': '7fdf5c4302f14c939dbd67c241222fbf', 'price': '0.1904', 'qty': '1.0001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911659435, 'symbol': 'fsn_usdk', 'exSymbol': 'FSN-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"7fdf5c4302f14c939dbd67c241222fbf","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00040
+币种对象:
+	{'exSymbol': 'ec_usdk', 'symbol': 'ec_usdk', 'exBaseCoin': 'ec', 'exMoneyCoin': 'usdk', 'baseCoin': 'ec', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.00001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'ec', 'multiplier': '1'}
+下单金额:
+	0.01881
+下单数量:
+	1.0001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"7ba44e83accd41dcb0b07e14c0d716f1","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911679017, 'data': {'customId': '7ba44e83accd41dcb0b07e14c0d716f1', 'price': '0.01881', 'qty': '1.0001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911678945, 'symbol': 'ec_usdk', 'exSymbol': 'EC-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"7ba44e83accd41dcb0b07e14c0d716f1","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00072
+币种对象:
+	{'exSymbol': 'eos_usdk', 'symbol': 'eos_usdk', 'exBaseCoin': 'eos', 'exMoneyCoin': 'usdk', 'baseCoin': 'eos', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'eos', 'multiplier': '1'}
+下单金额:
+	2.711
+下单数量:
+	0.1001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"a9027dcd72e34b01916780b1481b0dbd","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911727835, 'data': {'customId': 'a9027dcd72e34b01916780b1481b0dbd', 'price': '2.711', 'qty': '0.1001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911727766, 'symbol': 'eos_usdk', 'exSymbol': 'EOS-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"a9027dcd72e34b01916780b1481b0dbd","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00127
+币种对象:
+	{'exSymbol': 'usdt_usdk', 'symbol': 'usdt_usdk', 'exBaseCoin': 'usdt', 'exMoneyCoin': 'usdk', 'baseCoin': 'usdt', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'usdt', 'multiplier': '1'}
+下单金额:
+	1.0084
+下单数量:
+	0.1001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"29b1485b821049f1b22a370ece201420","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911810484, 'data': {'customId': '29b1485b821049f1b22a370ece201420', 'price': '1.0084', 'qty': '0.1001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911810399, 'symbol': 'usdt_usdk', 'exSymbol': 'USDT-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"29b1485b821049f1b22a370ece201420","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00149
+币种对象:
+	{'exSymbol': 'ltc_usdk', 'symbol': 'ltc_usdk', 'exBaseCoin': 'ltc', 'exMoneyCoin': 'usdk', 'baseCoin': 'ltc', 'moneyCoin': 'usdk', 'basePrecision': '0.000001', 'moneyPrecision': '0.01', 'minOrderSize': '0.001', 'symbolType': 'spot', 'tradeType': 'ltc', 'multiplier': '1'}
+下单金额:
+	49.71
+下单数量:
+	0.001001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"5dac02621efb4d4b825174258c31828a","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911846534, 'data': {'customId': '5dac02621efb4d4b825174258c31828a', 'price': '49.71', 'qty': '0.001001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911846460, 'symbol': 'ltc_usdk', 'exSymbol': 'LTC-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"5dac02621efb4d4b825174258c31828a","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00154
+币种对象:
+	{'exSymbol': 'vsys_usdk', 'symbol': 'vsys_usdk', 'exBaseCoin': 'vsys', 'exMoneyCoin': 'usdk', 'baseCoin': 'vsys', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'vsys', 'multiplier': '1'}
+下单金额:
+	0.0521
+下单数量:
+	1.0001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"f4c955c46f0c4fefa23930a56378d562","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911853615, 'data': {'customId': 'f4c955c46f0c4fefa23930a56378d562', 'price': '0.0521', 'qty': '1.0001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911853542, 'symbol': 'vsys_usdk', 'exSymbol': 'VSYS-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"f4c955c46f0c4fefa23930a56378d562","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00156
+币种对象:
+	{'exSymbol': 'lamb_usdk', 'symbol': 'lamb_usdk', 'exBaseCoin': 'lamb', 'exMoneyCoin': 'usdk', 'baseCoin': 'lamb', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.00001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'lamb', 'multiplier': '1'}
+下单金额:
+	0.03006
+下单数量:
+	1.0001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"4f0c023a35554dc8a2011fd48e5b5114","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911855358, 'data': {'customId': '4f0c023a35554dc8a2011fd48e5b5114', 'price': '0.03006', 'qty': '1.0001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911855285, 'symbol': 'lamb_usdk', 'exSymbol': 'LAMB-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"4f0c023a35554dc8a2011fd48e5b5114","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00160
+币种对象:
+	{'exSymbol': 'btc_usdk', 'symbol': 'btc_usdk', 'exBaseCoin': 'btc', 'exMoneyCoin': 'usdk', 'baseCoin': 'btc', 'moneyCoin': 'usdk', 'basePrecision': '0.00000001', 'moneyPrecision': '0.1', 'minOrderSize': '0.001', 'symbolType': 'spot', 'tradeType': 'btc', 'multiplier': '1'}
+下单金额:
+	7507.6
+下单数量:
+	0.00100001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"9715f61c646149f1baa7ffd0afecbe0a","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911860103, 'data': {'customId': '9715f61c646149f1baa7ffd0afecbe0a', 'price': '7507.6', 'qty': '0.00100001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911860023, 'symbol': 'btc_usdk', 'exSymbol': 'BTC-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"9715f61c646149f1baa7ffd0afecbe0a","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00161
+币种对象:
+	{'exSymbol': 'theta_usdt', 'symbol': 'theta_usdt', 'exBaseCoin': 'theta', 'exMoneyCoin': 'usdt', 'baseCoin': 'theta', 'moneyCoin': 'usdt', 'basePrecision': '0.01', 'moneyPrecision': '0.0001', 'minOrderSize': '10', 'symbolType': 'spot', 'tradeType': 'theta', 'multiplier': '1'}
+下单金额:
+	0.0902
+下单数量:
+	10.01
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"0c0799d1b1ac4c98a8953484db0efa69","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911860371, 'data': {'customId': '0c0799d1b1ac4c98a8953484db0efa69', 'price': '0.0902', 'qty': '10.01', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911860306, 'symbol': 'theta_usdt', 'exSymbol': 'THETA-USDT', 'leverage': 1}, 'rawStr': '{"client_oid":"0c0799d1b1ac4c98a8953484db0efa69","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00165
+币种对象:
+	{'exSymbol': 'btc_usdt', 'symbol': 'btc_usdt', 'exBaseCoin': 'btc', 'exMoneyCoin': 'usdt', 'baseCoin': 'btc', 'moneyCoin': 'usdt', 'basePrecision': '0.00000001', 'moneyPrecision': '0.1', 'minOrderSize': '0.001', 'symbolType': 'spot', 'tradeType': 'btc', 'multiplier': '1'}
+下单金额:
+	7437.2
+下单数量:
+	0.00100001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"6bbdabff866b43fa8283fb20c129d026","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911865409, 'data': {'customId': '6bbdabff866b43fa8283fb20c129d026', 'price': '7437.2', 'qty': '0.00100001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911865335, 'symbol': 'btc_usdt', 'exSymbol': 'BTC-USDT', 'leverage': 1}, 'rawStr': '{"client_oid":"6bbdabff866b43fa8283fb20c129d026","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00169
+币种对象:
+	{'exSymbol': 'bsv_usdk', 'symbol': 'bsv_usdk', 'exBaseCoin': 'bsv', 'exMoneyCoin': 'usdk', 'baseCoin': 'bsv', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.01', 'minOrderSize': '0.01', 'symbolType': 'spot', 'tradeType': 'bsv', 'multiplier': '1'}
+下单金额:
+	100.209
+下单数量:
+	0.0101
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"4dcfbf33039a4876910f15a61ad26d17","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911870586, 'data': {'customId': '4dcfbf33039a4876910f15a61ad26d17', 'price': '100.209', 'qty': '0.0101', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911870458, 'symbol': 'bsv_usdk', 'exSymbol': 'BSV-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"4dcfbf33039a4876910f15a61ad26d17","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00171
+币种对象:
+	{'exSymbol': 'bsv_usdt', 'symbol': 'bsv_usdt', 'exBaseCoin': 'bsv', 'exMoneyCoin': 'usdt', 'baseCoin': 'bsv', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.01', 'minOrderSize': '0.01', 'symbolType': 'spot', 'tradeType': 'bsv', 'multiplier': '1'}
+下单金额:
+	98.77
+下单数量:
+	0.0101
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"1345b7d51aa5493ebe75f89a8059a472","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911873287, 'data': {'customId': '1345b7d51aa5493ebe75f89a8059a472', 'price': '98.77', 'qty': '0.0101', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911873216, 'symbol': 'bsv_usdt', 'exSymbol': 'BSV-USDT', 'leverage': 1}, 'rawStr': '{"client_oid":"1345b7d51aa5493ebe75f89a8059a472","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00211
+币种对象:
+	{'exSymbol': 'algo_usdk', 'symbol': 'algo_usdk', 'exBaseCoin': 'algo', 'exMoneyCoin': 'usdk', 'baseCoin': 'algo', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'algo', 'multiplier': '1'}
+下单金额:
+	0.200
+下单数量:
+	0.1001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"9558fc3676c843769cb537b0d1e2e3c5","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911933683, 'data': {'customId': '9558fc3676c843769cb537b0d1e2e3c5', 'price': '0.2', 'qty': '0.1001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911933613, 'symbol': 'algo_usdk', 'exSymbol': 'ALGO-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"9558fc3676c843769cb537b0d1e2e3c5","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00217
+币种对象:
+	{'exSymbol': 'link_usdt', 'symbol': 'link_usdt', 'exBaseCoin': 'link', 'exMoneyCoin': 'usdt', 'baseCoin': 'link', 'moneyCoin': 'usdt', 'basePrecision': '0.001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'link', 'multiplier': '1'}
+下单金额:
+	2.6584
+下单数量:
+	1.001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"9f32c94c65cf4cdfb71395b5822e65da","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911942250, 'data': {'customId': '9f32c94c65cf4cdfb71395b5822e65da', 'price': '2.6584', 'qty': '1.001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911942185, 'symbol': 'link_usdt', 'exSymbol': 'LINK-USDT', 'leverage': 1}, 'rawStr': '{"client_oid":"9f32c94c65cf4cdfb71395b5822e65da","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00226
+币种对象:
+	{'exSymbol': 'hbar_usdk', 'symbol': 'hbar_usdk', 'exBaseCoin': 'hbar', 'exMoneyCoin': 'usdk', 'baseCoin': 'hbar', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'hbar', 'multiplier': '1'}
+下单金额:
+	0.0264
+下单数量:
+	1.0001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"0c6e092ea24441cca1ecfed5a58f39bf","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571911955574, 'data': {'customId': '0c6e092ea24441cca1ecfed5a58f39bf', 'price': '0.0264', 'qty': '1.0001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911955498, 'symbol': 'hbar_usdk', 'exSymbol': 'HBAR-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"0c6e092ea24441cca1ecfed5a58f39bf","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00269
+币种对象:
+	{'exSymbol': 'xrp_usdk', 'symbol': 'xrp_usdk', 'exBaseCoin': 'xrp', 'exMoneyCoin': 'usdk', 'baseCoin': 'xrp', 'moneyCoin': 'usdk', 'basePrecision': '0.001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'xrp', 'multiplier': '1'}
+下单金额:
+	0.2715
+下单数量:
+	1.001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"958136fbe6ee4cd7a999cd53e51d03ee","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571912021767, 'data': {'customId': '958136fbe6ee4cd7a999cd53e51d03ee', 'price': '0.2715', 'qty': '1.001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571912021694, 'symbol': 'xrp_usdk', 'exSymbol': 'XRP-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"958136fbe6ee4cd7a999cd53e51d03ee","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00271
+币种对象:
+	{'exSymbol': 'cro_usdk', 'symbol': 'cro_usdk', 'exBaseCoin': 'cro', 'exMoneyCoin': 'usdk', 'baseCoin': 'cro', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'cro', 'multiplier': '1'}
+下单金额:
+	0.0487
+下单数量:
+	1.0001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"c5801b8b214344dcaee37b10f5c1508e","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571912023527, 'data': {'customId': 'c5801b8b214344dcaee37b10f5c1508e', 'price': '0.0487', 'qty': '1.0001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571912023454, 'symbol': 'cro_usdk', 'exSymbol': 'CRO-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"c5801b8b214344dcaee37b10f5c1508e","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00330
+币种对象:
+	{'exSymbol': 'bch_usdk', 'symbol': 'bch_usdk', 'exBaseCoin': 'bch', 'exMoneyCoin': 'usdk', 'baseCoin': 'bch', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.01', 'minOrderSize': '0.01', 'symbolType': 'spot', 'tradeType': 'bch', 'multiplier': '1'}
+下单金额:
+	212.129
+下单数量:
+	0.0101
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"da7e1c07c987422da5b4159b4bc81982","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571912114817, 'data': {'customId': 'da7e1c07c987422da5b4159b4bc81982', 'price': '212.129', 'qty': '0.0101', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571912114747, 'symbol': 'bch_usdk', 'exSymbol': 'BCH-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"da7e1c07c987422da5b4159b4bc81982","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00334
+币种对象:
+	{'exSymbol': 'bch_usdt', 'symbol': 'bch_usdt', 'exBaseCoin': 'bch', 'exMoneyCoin': 'usdt', 'baseCoin': 'bch', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.01', 'minOrderSize': '0.01', 'symbolType': 'spot', 'tradeType': 'bch', 'multiplier': '1'}
+下单金额:
+	210.909
+下单数量:
+	0.0101
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"1303c81118c14135bd0660c82cb1e784","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571912119705, 'data': {'customId': '1303c81118c14135bd0660c82cb1e784', 'price': '210.909', 'qty': '0.0101', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571912119483, 'symbol': 'bch_usdt', 'exSymbol': 'BCH-USDT', 'leverage': 1}, 'rawStr': '{"client_oid":"1303c81118c14135bd0660c82cb1e784","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00336
+币种对象:
+	{'exSymbol': 'trx_usdk', 'symbol': 'trx_usdk', 'exBaseCoin': 'trx', 'exMoneyCoin': 'usdk', 'baseCoin': 'trx', 'moneyCoin': 'usdk', 'basePrecision': '0.01', 'moneyPrecision': '0.00001', 'minOrderSize': '10', 'symbolType': 'spot', 'tradeType': 'trx', 'multiplier': '1'}
+下单金额:
+	0.01466
+下单数量:
+	10.01
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"ca1a014c0fda48ffbc300d97342ffe0d","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571912121524, 'data': {'customId': 'ca1a014c0fda48ffbc300d97342ffe0d', 'price': '0.01466', 'qty': '10.01', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571912121450, 'symbol': 'trx_usdk', 'exSymbol': 'TRX-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"ca1a014c0fda48ffbc300d97342ffe0d","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00353
+币种对象:
+	{'exSymbol': 'em_usdk', 'symbol': 'em_usdk', 'exBaseCoin': 'em', 'exMoneyCoin': 'usdk', 'baseCoin': 'em', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.00001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'em', 'multiplier': '1'}
+下单金额:
+	0.01356
+下单数量:
+	1.0001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"76c87a4c994142d0b0aaee9fde2884d1","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571912146591, 'data': {'customId': '76c87a4c994142d0b0aaee9fde2884d1', 'price': '0.01356', 'qty': '1.0001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571912146522, 'symbol': 'em_usdk', 'exSymbol': 'EM-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"76c87a4c994142d0b0aaee9fde2884d1","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00381
+币种对象:
+	{'exSymbol': 'etc_usdk', 'symbol': 'etc_usdk', 'exBaseCoin': 'etc', 'exMoneyCoin': 'usdk', 'baseCoin': 'etc', 'moneyCoin': 'usdk', 'basePrecision': '0.00001', 'moneyPrecision': '0.001', 'minOrderSize': '0.01', 'symbolType': 'spot', 'tradeType': 'etc', 'multiplier': '1'}
+下单金额:
+	4.256
+下单数量:
+	0.01001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"2194da4d46c34bbe8d01ef5a4e7427af","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571912188480, 'data': {'customId': '2194da4d46c34bbe8d01ef5a4e7427af', 'price': '4.256', 'qty': '0.01001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571912188411, 'symbol': 'etc_usdk', 'exSymbol': 'ETC-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"2194da4d46c34bbe8d01ef5a4e7427af","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00390
+币种对象:
+	{'exSymbol': 'okb_usdk', 'symbol': 'okb_usdk', 'exBaseCoin': 'okb', 'exMoneyCoin': 'usdk', 'baseCoin': 'okb', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'okb', 'multiplier': '1'}
+下单金额:
+	2.3802
+下单数量:
+	1.0001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"c60a8547417e4de5ae8fe7fa1f654702","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571912201339, 'data': {'customId': 'c60a8547417e4de5ae8fe7fa1f654702', 'price': '2.3802', 'qty': '1.0001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571912201263, 'symbol': 'okb_usdk', 'exSymbol': 'OKB-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"c60a8547417e4de5ae8fe7fa1f654702","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00393
+币种对象:
+	{'exSymbol': 'okb_usdt', 'symbol': 'okb_usdt', 'exBaseCoin': 'okb', 'exMoneyCoin': 'usdt', 'baseCoin': 'okb', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'okb', 'multiplier': '1'}
+下单金额:
+	2.3545
+下单数量:
+	1.0001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"bc521379f8524d9ea7f41192736f5156","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571912204550, 'data': {'customId': 'bc521379f8524d9ea7f41192736f5156', 'price': '2.3545', 'qty': '1.0001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571912204479, 'symbol': 'okb_usdt', 'exSymbol': 'OKB-USDT', 'leverage': 1}, 'rawStr': '{"client_oid":"bc521379f8524d9ea7f41192736f5156","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+NoneType: None
+精度丢失无法下单:00412
+币种对象:
+	{'exSymbol': 'eth_usdk', 'symbol': 'eth_usdk', 'exBaseCoin': 'eth', 'exMoneyCoin': 'usdk', 'baseCoin': 'eth', 'moneyCoin': 'usdk', 'basePrecision': '0.000001', 'moneyPrecision': '0.01', 'minOrderSize': '0.001', 'symbolType': 'spot', 'tradeType': 'eth', 'multiplier': '1'}
+下单金额:
+	162.259
+下单数量:
+	0.001001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"f97e7b0dc6c64c4189de54f974eb82ec","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571912233015, 'data': {'customId': 'f97e7b0dc6c64c4189de54f974eb82ec', 'price': '162.259', 'qty': '0.001001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571912232948, 'symbol': 'eth_usdk', 'exSymbol': 'ETH-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"f97e7b0dc6c64c4189de54f974eb82ec","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+

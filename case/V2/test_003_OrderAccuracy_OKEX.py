@@ -259,11 +259,14 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
             查看错误
         """
 
+        print(list_c)
+        print(sy_ob)
         # list_c = 421  # 调试
         # sy_ob = 'okex:spot_list_'  # 调试
 
-        try:
-            for i in range(1, list_c + 1):
+        for i in range(1, list_c + 1):
+
+            try:
                 print(i)
                 n = "%05d" % i
                 print('编号:', n, type(n))
@@ -273,54 +276,68 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 print(dic_obj, type(dic_obj))
                 print(dic_obj['moneyPrecision'])
                 print('\n')
+
                 print('-----orderbook-----')
-                jd_list = get_url_order_book('okex:spot', dic_obj['symbol']).json()['data']
-                print('<<<- asks list ->>>\n', jd_list['asks'], '\n')
-                print('<<<- bids list ->>>\n', jd_list['bids'], '\n')
-                new_asks = [as_num(i[0]) for i in jd_list['asks']]
-                new_bids = [as_num(i[0]) for i in jd_list['bids']]
-                print('<<<- asks 价格 list ->>>\n', new_asks, type(new_asks), '\n')
-                print('<<<- bids 价格 list ->>>\n', new_bids, type(new_bids), '\n')
-                asks_and_bids = new_asks + new_bids
-                print('<<<- 合并价格 ->>>\n ', asks_and_bids, type(asks_and_bids))
-                print('\n')
+                jd_list_init = get_url_order_book('okex:spot', dic_obj['symbol']).json()
 
-                # 排序反取 与 切出精度
-                asks_and_bids_c = str(cnmd(count_list_max_len(asks_and_bids)))
-                # asks_and_bids_c = str(ad_price(new_asks))  # 卖价
-                # asks_and_bids_c = str(ad_price(new_bids))  # 买价
-                # asks_and_bids_c = str(ad_price(asks_and_bids))  # 合并买卖价
-                print(asks_and_bids_c)
+                if jd_list_init.get('data', None):
+                    jd_list = jd_list_init['data']
 
-                print('-----精度提取-----')
-                moneyPrecision_c = dic_obj['moneyPrecision'].split('.')[1]
+                    print('<<<- asks list ->>>\n', jd_list['asks'], '\n')
+                    print('<<<- bids list ->>>\n', jd_list['bids'], '\n')
+                    new_asks = [as_num(i[0]) for i in jd_list['asks']]
+                    new_bids = [as_num(i[0]) for i in jd_list['bids']]
+                    print('<<<- asks 价格 list ->>>\n', new_asks, type(new_asks), '\n')
+                    print('<<<- bids 价格 list ->>>\n', new_bids, type(new_bids), '\n')
+                    asks_and_bids = new_asks + new_bids
+                    print('<<<- 合并价格 ->>>\n ', asks_and_bids, type(asks_and_bids))
+                    print('\n')
 
-                print('moneyPrecision - > {} -> 精度:{}'.format(dic_obj['moneyPrecision'], moneyPrecision_c))
-                print('买卖平均价格 -> {} -> 精度:{}'.format(asks_and_bids_c, asks_and_bids_c.split('.')[1]))
+                    # 排序反取 与 切出精度
+                    asks_and_bids_c = str(cnmd(count_list_max_len(asks_and_bids)))
+                    # asks_and_bids_c = str(ad_price(new_asks))  # 卖价
+                    # asks_and_bids_c = str(ad_price(new_bids))  # 买价
+                    # asks_and_bids_c = str(ad_price(asks_and_bids))  # 合并买卖价
+                    print(asks_and_bids_c)
 
-                if len(moneyPrecision_c) != len(asks_and_bids_c.split('.')[1]):
-                    d = {
-                        'Redis_symbol_id': n,
-                        'symbol_obj': dic_obj,
-                        '该用例检验参数:moneyPrecision': str(dic_obj['moneyPrecision']),
-                        'OrderBook精度': asks_and_bids_c,
-                    }
-                    with open(self.logs_path + '/okex_err_OrderBook_MoneyPrecision.json', 'a+') as f:
-                        f.write(str(d) + '\n')
+                    print('-----精度提取-----')
+                    moneyPrecision_c = dic_obj['moneyPrecision'].split('.')[1]
 
-                    R.set('error_dic_obj_{}'.format(i), str(d))
-                    print('======Redis -> 记录该币错误精度 -> {} ======'.format(n))
-                    self.error_num += 1
-        except BaseException as e:
-            msg = '未找到该币种 -> {} 请前往 -> {} 交易所复查\n'.format(dic_obj['symbol'], 'okex')
-            with open(self.logs_path + '/okex_err_OrderBook.json', 'a+') as f:
-                f.write(msg)
+                    print('moneyPrecision - > {} -> 精度:{}'.format(dic_obj['moneyPrecision'], moneyPrecision_c))
+                    print('买卖平均价格 -> {} -> 精度:{}'.format(asks_and_bids_c, asks_and_bids_c.split('.')[1]))
 
-        # if error_num != 0:
-        #     print('发现错误的错误精度,明细查看 -> Redis db8')
-        #     assert error_num == 0
-        # else:
-        #     print('error symbol number:{}'.format(error_num))
+                    if len(moneyPrecision_c) != len(asks_and_bids_c.split('.')[1]):
+                        d = {
+                            'Redis_symbol_id': n,
+                            'symbol_obj': dic_obj,
+                            '该用例检验参数:moneyPrecision': str(dic_obj['moneyPrecision']),
+                            'OrderBook精度': asks_and_bids_c,
+                        }
+                        with open(self.logs_path + '/okex_err_OrderBook_MoneyPrecision.json', 'a+') as f:
+                            f.write(str(d) + '\n')
+
+                        R.set('error_dic_obj_{}'.format(i), str(d))
+                        print('======Redis -> 记录该币错误精度 -> {} ======'.format(n))
+                        self.error_num += 1
+                else:
+                    msg = '未找到该币种 -> {} 请前往 -> {} 交易所复查 -> this func is test_004\n'.format(dic_obj['symbol'], 'okex')
+                    with open(self.logs_path + '/okex_err_OrderBook.json', 'a+') as f:
+                        f.write(msg)
+                        continue
+            except BaseException as e:
+                msg = 'test_004 -> ID{} 执行异常 -> {}'.format(n, str(e))
+                print(msg)
+                with open(self.logs_path + '/okex_func_errors.json', 'a+') as f:
+                    f.write(msg)
+                    traceback.print_exc(file=open(self.logs_path + '/okex_func_errors.json', 'a+'))
+                    f.write('\n')
+                continue
+
+            # if error_num != 0:
+            #     print('发现错误的错误精度,明细查看 -> Redis db8')
+            #     assert error_num == 0
+            # else:
+            #     print('error symbol number:{}'.format(error_num))
 
     def test_005(self):
         """通过下单测试 -> moneyPrecision 与 basePrecision+minOrderSize"""
@@ -358,11 +375,15 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
             |
         撤单操作
         """
+        print(list_c)
+        print(sy_ob)
         # list_c = 421  # 调试
         # sy_ob = 'okex:spot_list_'  # 调试
         # test_sy_ob = 'okex:spot_list_{}'.format("%05d" % 1)
-        try:
-            for i in range(1, list_c + 1):
+
+        for i in range(1, list_c + 1):
+
+            try:
                 n = "%05d" % i
                 # d = eval('(' + R.get(test_sy_ob) + ')')   # 调试单条币对
                 d = eval('(' + R.get(sy_ob + n) + ')')  # 币种对象
@@ -381,22 +402,31 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 # asks:卖盘  bids:买盘
                 p = get_url_order_book('okex:spot', sy).json()
                 print('orderbook -> {} \n'.format(p))
-                asks_one = p['data']['asks'][0][0]
-                bids_one = p['data']['bids'][0][0]
-                print('卖一:{}'.format(asks_one))
-                print('买一:{}'.format(bids_one))
 
-                buy_list = [p['data']['asks'][0][0], p['data']['asks'][1][0], p['data']['asks'][2][0]]
-                buy_list2 = [as_num(i) for i in buy_list]
-                print('buy_list -> ', buy_list)
-                print('buy_list_to_float -> ', buy_list2)
-                print('\n')
+                if p.get('data', None):
 
-                p = last_add_2(bids_one)
-                p1 = last_add_2(ad_price(buy_list2))
-                print('\n')
-                print('*下单金额:', p, type(p))
-                print('*防止精度丢失备用下单金额:', p1, type(p1))
+                    asks_one = p['data']['asks'][0][0]
+                    bids_one = p['data']['bids'][0][0]
+                    print('卖一:{}'.format(asks_one))
+                    print('买一:{}'.format(bids_one))
+
+                    buy_list = [p['data']['asks'][0][0], p['data']['asks'][1][0], p['data']['asks'][2][0]]
+                    buy_list2 = [as_num(i) for i in buy_list]
+                    print('buy_list -> ', buy_list)
+                    print('buy_list_to_float -> ', buy_list2)
+                    print('\n')
+
+                    p = last_add_2(bids_one)
+                    p1 = last_add_2(ad_price(buy_list2))
+                    print('\n')
+                    print('*下单金额:', p, type(p))
+                    print('*防止精度丢失备用下单金额:', p1, type(p1))
+                else:
+                    msg = '未找到该币种 -> {} 请前往 -> {} 交易所复查 -> this func is test_005\n'.format(sy['symbol'], 'okex')
+                    with open(self.logs_path + '/okex_err_OrderBook.json', 'a+') as f:
+                        f.write(msg)
+                        print('====================end test -> orror {} -> {}====================\n'.format(n, sy))
+                        continue
 
                 if len(p) >= len(p1):
                     this_p = p
@@ -439,13 +469,14 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 # r = generating_orders('okex', 'spot', 'normal', this_p, order_q, 'sell', sy)  # sell
                 print(r.json())
                 print('\n')
-                sleep(1)
 
-                exchangeType = r.json()['data']['exchangeType']
-                orderId = r.json()['data']['orderId']
-                symbol = r.json()['data']['symbol']
-                order_status = check_order('okex', exchangeType, orderId, symbol, all_json=True)
-                try:
+                if r.json().get('code', None) == 1000 and r.json().get('success', None):
+                    pass
+                    sleep(1)
+                    exchangeType = r.json()['data']['exchangeType']
+                    orderId = r.json()['data']['orderId']
+                    symbol = r.json()['data']['symbol']
+                    order_status = check_order('okex', exchangeType, orderId, symbol, all_json=True)
 
                     obj_price = d['moneyPrecision']
                     od_price = order_status['data']['price']
@@ -456,31 +487,42 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     print(obj_minsize, type(obj_minsize))
                     print(od_minsize, type(od_minsize))
                     print('=====校验订单精度=====\n')
+
                     if len(obj_price.split('.')[1]) != len(od_price.split('.')[1]):
                         error_log(self.logs_path, str(d), str(order_status))
-                except BaseException as e:
-                    print(str(e))
 
-                finally:
-                    try:
-                        co['exchangeType'] = order_status['data']['exchangeType']
-                        co['orderId'] = order_status['data']['orderId']
-                        co['symbol'] = order_status['data']['symbol']
-                        result = requests.post(cancelOrder, json=co, headers=header)
-                        print(result.json())
-                        print('end -> {}\n'.format(d['symbol']))
-                    except BaseException as e:
+                    co['exchangeType'] = order_status['data']['exchangeType']
+                    co['orderId'] = order_status['data']['orderId']
+                    co['symbol'] = order_status['data']['symbol']
+                    result = requests.post(cancelOrder, json=co, headers=header)
+                    print(result.json())
+                    if result.json().get('success', None):
+                        pass
+                        print('====================end test -> {} -> {}====================\n'.format(n, sy))
+                    else:
                         with open(self.logs_path + '/okex_err_Symbol_OrderMoneyPrecision.json', 'a+') as f:
-                            msg = 'File "/test_003_OrderAccuracy_OKEX.py", line 444'
-                            ff = '币种对象:\n\t{}\n订单对象:\n\t{}\n\n'.format(str(d), str(order_status))
-                            f.write('form Exception {}\n'.format(msg) + ff)
-                            print('没有找到该挂单 或 订单已经成交: -> {}'.format(str(e)))
-                print('====================end test -> {} -> {}====================\n'.format(n, sy))
+                            f.write('没有找到该挂单 或 订单已经成交: -> 币对ID:{}'.format(n))
+                            print('====================end test -> {} -> {}====================\n'.format(n, sy))
+                        continue
 
-        except BaseException as e:
-            with open(self.logs_path + '/okex_err_Order.json', 'a+') as f:
-                f.write('精度丢失无法下单:{}'.format(str(e)) + '\n' + str(d))
-            traceback.print_exc(file=open(self.logs_path + '/okex_err_Order.json', 'a+'))
+                else:
+                    with open(self.logs_path + '/okex_err_Order.json', 'a+') as f:
+                        ff = '币种对象:\n\t{}\n下单金额:\n\t{}\n下单数量:\n\t{}\n返回json:\n\t{}\n\n'.format(
+                            str(d), str(this_p), str(order_q), str(r.json()))
+                        f.write('无法下单 -> 精度丢失 或者 金额不足:{}'.format(n) + '\n' + str(ff))
+                        traceback.print_exc(file=open(self.logs_path + '/okex_err_Order.json', 'a+'))
+                        print('====================end test -> {} -> {}====================\n'.format(n, sy))
+                        continue
+
+            except BaseException as e:
+                msg = 'test_005 -> ID{} 执行异常 -> {}'.format(n, str(e))
+                print(msg)
+                with open(self.logs_path + '/okex_func_errors.json', 'a+') as f:
+                    f.write(msg)
+                    traceback.print_exc(file=open(self.logs_path + '/okex_func_errors.json', 'a+'))
+                    f.write('\n')
+                print('====================end test -> {} -> {}====================\n'.format(n, sy))
+                continue
 
     @unittest.skip('test_005的调试类->>>【包含】try-except')
     def test_006(self):

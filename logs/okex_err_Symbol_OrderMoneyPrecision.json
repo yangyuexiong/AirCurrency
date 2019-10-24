@@ -1,32 +1,40 @@
 币种对象:
-	{'exSymbol': 'chat_usdt', 'symbol': 'chat_usdt', 'exBaseCoin': 'chat', 'exMoneyCoin': 'usdt', 'baseCoin': 'chat', 'moneyCoin': 'usdt', 'basePrecision': '0.01', 'moneyPrecision': '0.00001', 'minOrderSize': '10', 'symbolType': 'spot', 'tradeType': 'chat', 'multiplier': '1'}
+	{'exSymbol': 'pma_btc', 'symbol': 'pma_btc', 'exBaseCoin': 'pma', 'exMoneyCoin': 'btc', 'baseCoin': 'pma', 'moneyCoin': 'btc', 'basePrecision': '0.0001', 'moneyPrecision': '0.0000000001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'pma', 'multiplier': '1'}
 订单对象:
-	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571831848390, 'data': {'customId': '149c9f8f215e46f186c1bd5fd80b2667', 'orderId': '3741833448464384', 'price': '0.002', 'qty': '10.01', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571831847308, 'dealTime': 0, 'updateTime': 1571831847966, 'symbol': 'chat_usdt', 'exSymbol': 'chat_usdt', 'leverage': 1}, 'rawStr': None}
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571911649262, 'data': {'customId': '555400a7b4204445b88643c074077d7f', 'orderId': '3747063278474240', 'price': '0.00000003', 'qty': '1.0001', 'side': 'buy', 'filledQty': '1.0001', 'avgFillPrice': '0.00000003', 'fee': '0', 'status': 'completed', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911648182, 'dealTime': 1571911648287, 'updateTime': 1571911648318, 'symbol': 'pma_btc', 'exSymbol': 'pma_btc', 'leverage': 1}, 'rawStr': None}
 
 币种对象:
-	{'exSymbol': 'ipc_usdt', 'symbol': 'ipc_usdt', 'exBaseCoin': 'ipc', 'exMoneyCoin': 'usdt', 'baseCoin': 'ipc', 'moneyCoin': 'usdt', 'basePrecision': '0.001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'ipc', 'multiplier': '1'}
+	{'exSymbol': 'yee_usdt', 'symbol': 'yee_usdt', 'exBaseCoin': 'yee', 'exMoneyCoin': 'usdt', 'baseCoin': 'yee', 'moneyCoin': 'usdt', 'basePrecision': '0.1', 'moneyPrecision': '0.000001', 'minOrderSize': '10', 'symbolType': 'spot', 'tradeType': 'yee', 'multiplier': '1'}
 订单对象:
-	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571831859120, 'data': {'customId': '769b769aa51848179ecdbd32d7feb75a', 'orderId': '3741834150304768', 'price': '0.07', 'qty': '1.001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571831858016, 'dealTime': 0, 'updateTime': 1571831858603, 'symbol': 'ipc_usdt', 'exSymbol': 'ipc_usdt', 'leverage': 1}, 'rawStr': None}
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571911659079, 'data': {'customId': '68166d546ae7451cb69d6d2847be7aaf', 'orderId': '3747063918631936', 'price': '0.00114', 'qty': '10.1', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911657948, 'dealTime': 0, 'updateTime': 1571911658446, 'symbol': 'yee_usdt', 'exSymbol': 'yee_usdt', 'leverage': 1}, 'rawStr': None}
 
 币种对象:
-	{'exSymbol': 'leo_usdk', 'symbol': 'leo_usdk', 'exBaseCoin': 'leo', 'exMoneyCoin': 'usdk', 'baseCoin': 'leo', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'leo', 'multiplier': '1'}
+	{'exSymbol': 'stc_usdt', 'symbol': 'stc_usdt', 'exBaseCoin': 'stc', 'exMoneyCoin': 'usdt', 'baseCoin': 'stc', 'moneyCoin': 'usdt', 'basePrecision': '0.01', 'moneyPrecision': '0.000001', 'minOrderSize': '10', 'symbolType': 'spot', 'tradeType': 'stc', 'multiplier': '1'}
 订单对象:
-	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571831874884, 'data': {'customId': 'a44740f2b117498b84609af60c5a261e', 'orderId': '3741835182609408', 'price': '0.15', 'qty': '0.1001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571831873793, 'dealTime': 0, 'updateTime': 1571831874508, 'symbol': 'leo_usdk', 'exSymbol': 'leo_usdk', 'leverage': 1}, 'rawStr': None}
-
-form Exception File "/test_003_OrderAccuracy_OKEX.py", line 444
-币种对象:
-	{'exSymbol': 'ftm_usdk', 'symbol': 'ftm_usdk', 'exBaseCoin': 'ftm', 'exMoneyCoin': 'usdk', 'baseCoin': 'ftm', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'ftm', 'multiplier': '1'}
-订单对象:
-	{'code': 2000, 'message': '没有该订单【3741836882810880】的存在', 'success': False, 'timestamp': 1571831900795, 'data': None, 'rawStr': None}
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571911719186, 'data': {'customId': '7b758831b71f44e688045f0aec0e81d2', 'orderId': '3747067860297728', 'price': '0.0052', 'qty': '10.01', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911718094, 'dealTime': 0, 'updateTime': 1571911718188, 'symbol': 'stc_usdt', 'exSymbol': 'stc_usdt', 'leverage': 1}, 'rawStr': None}
 
 币种对象:
-	{'exSymbol': 'elf_btc', 'symbol': 'elf_btc', 'exBaseCoin': 'elf', 'exMoneyCoin': 'btc', 'baseCoin': 'elf', 'moneyCoin': 'btc', 'basePrecision': '0.001', 'moneyPrecision': '0.0000001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'elf', 'multiplier': '1'}
+	{'exSymbol': 'orbs_usdt', 'symbol': 'orbs_usdt', 'exBaseCoin': 'orbs', 'exMoneyCoin': 'usdt', 'baseCoin': 'orbs', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.000001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'orbs', 'multiplier': '1'}
 订单对象:
-	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571831930939, 'data': {'customId': '23911b8e121a4af28e470d1d93fea9d3', 'orderId': '3741838858005504', 'price': '0.00001', 'qty': '1.001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571831929850, 'dealTime': 0, 'updateTime': 1571831930618, 'symbol': 'elf_btc', 'exSymbol': 'elf_btc', 'leverage': 1}, 'rawStr': None}
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571911994333, 'data': {'customId': '68a5705827f44cb1a801a11113a70c60', 'orderId': '3747085892981760', 'price': '0.0101', 'qty': '1.0001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571911993250, 'dealTime': 0, 'updateTime': 1571911993640, 'symbol': 'orbs_usdt', 'exSymbol': 'orbs_usdt', 'leverage': 1}, 'rawStr': None}
 
-form Exception File "/test_003_OrderAccuracy_OKEX.py", line 444
 币种对象:
-	{'exSymbol': 'cvc_usdt', 'symbol': 'cvc_usdt', 'exBaseCoin': 'cvc', 'exMoneyCoin': 'usdt', 'baseCoin': 'cvc', 'moneyCoin': 'usdt', 'basePrecision': '0.001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'cvc', 'multiplier': '1'}
+	{'exSymbol': 'xas_usdt', 'symbol': 'xas_usdt', 'exBaseCoin': 'xas', 'exMoneyCoin': 'usdt', 'baseCoin': 'xas', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.00000001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'xas', 'multiplier': '1'}
 订单对象:
-	{'code': 2000, 'message': '没有该订单【3741840163212288】的存在', 'success': False, 'timestamp': 1571831950852, 'data': None, 'rawStr': None}
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571912095745, 'data': {'customId': 'daad2b0a17064686b5347c82bc6f0911', 'orderId': '3747092538024960', 'price': '0.0421', 'qty': '0.1001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571912094645, 'dealTime': 0, 'updateTime': 1571912094972, 'symbol': 'xas_usdt', 'exSymbol': 'xas_usdt', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'etm_usdt', 'symbol': 'etm_usdt', 'exBaseCoin': 'etm', 'exMoneyCoin': 'usdt', 'baseCoin': 'etm', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'etm', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571912135674, 'data': {'customId': '59534e3bb2b94a5d8d64665792dedbcc', 'orderId': '3747095155598336', 'price': '0.03', 'qty': '0.1001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571912134586, 'dealTime': 0, 'updateTime': 1571912135423, 'symbol': 'etm_usdt', 'exSymbol': 'etm_usdt', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'ada_btc', 'symbol': 'ada_btc', 'exBaseCoin': 'ada', 'exMoneyCoin': 'btc', 'baseCoin': 'ada', 'moneyCoin': 'btc', 'basePrecision': '0.00000001', 'moneyPrecision': '0.00000001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'ada', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571912185063, 'data': {'customId': 'd09f4020f01c4dceae96d6f9343fe424', 'orderId': '3747098392011776', 'price': '0.000005', 'qty': '1.00000001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571912183971, 'dealTime': 0, 'updateTime': 1571912184023, 'symbol': 'ada_btc', 'exSymbol': 'ada_btc', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'eth_usdt', 'symbol': 'eth_usdt', 'exBaseCoin': 'eth', 'exMoneyCoin': 'usdt', 'baseCoin': 'eth', 'moneyCoin': 'usdt', 'basePrecision': '0.000001', 'moneyPrecision': '0.01', 'minOrderSize': '0.001', 'symbolType': 'spot', 'tradeType': 'eth', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571912247637, 'data': {'customId': '6fd774f8038240559174c9cf208d3a17', 'orderId': '3747102494099456', 'price': '160.949', 'qty': '0.001001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571912246562, 'dealTime': 0, 'updateTime': 1571912246578, 'symbol': 'eth_usdt', 'exSymbol': 'eth_usdt', 'leverage': 1}, 'rawStr': None}
 
