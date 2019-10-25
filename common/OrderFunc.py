@@ -61,7 +61,8 @@ def generating_orders(exchange, exchangeType, postType, price, qty, side, symbol
         return result
     if exchangeType == 'margin':
         print('func -> generating_orders data -> margin')
-        return
+        result = requests.post(placeOrder, json=d, headers=header)
+        return result
     if exchangeType == 'future':
         print('func -> generating_orders data -> future')
         return
@@ -253,5 +254,61 @@ class CommonFunc:
                 R.set('error_data_{}'.format(shortuuid.uuid()), str(sy))
                 assert 1 == 1 - 1
 
-    def money_transfer(self):
-        """资金划转"""
+    def money_detailed(self, accountId):
+        """
+        资金明细
+        :param accountId: 帐户id
+        :return:
+        """
+        j = {
+            "accountId": accountId
+        }
+        result = requests.post(getAsset, json=j, headers=header)
+        return result
+
+    def money_transfer(self, accountId, amount, coin, from_, symbol, to_):
+        """
+        资金划转
+        :param accountId: 帐户id
+        :param amount: 划转数量
+        :param coin: 币种，如BTC
+        :param from_: 转出账户 如 spot
+        :param symbol: 币对，如btc_usdt
+        :param to_: 转入账户
+        :return:
+
+        {
+          "accountId": "4993",
+          "amount": 5,
+          "coin": "usdt",
+          "from": "spot",
+          "symbol": "trx_usdt",
+          "to": "margin"
+        }
+
+        """
+
+        mt = {
+            "accountId": accountId,
+            "amount": amount,
+            "coin": coin,
+            "from": from_,
+            "symbol": symbol,
+            "to": to_
+        }
+        result = requests.post(transfer, json=mt, headers=header)
+        return result
+
+    def money_spot_margin(self):
+        r = self.money_detailed(accountId).json()
+        spot_money = r['data']['position']['spot']
+        margin_money = r['data']['position']['margin']
+
+        print('<---------- spot ---------->')
+        for i in spot_money:
+            if i['symbol'] in ['btc', 'usdt', 'usdk', 'eth']:
+                print(i)
+
+        print('<---------- margin ---------->')
+        for j in margin_money:
+            print(j)

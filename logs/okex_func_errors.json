@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 427, in test_005
-    msg = '未找到该币种 -> {} 请前往 -> {} 交易所复查 -> this func is test_005\n'.format(sy['symbol'], 'okex')
-TypeError: string indices must be integers
-test_005 -> ID00075 执行异常 -> string indices must be integers
