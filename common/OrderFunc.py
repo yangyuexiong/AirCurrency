@@ -309,6 +309,10 @@ class CommonFunc:
             if i['symbol'] in ['btc', 'usdt', 'usdk', 'eth']:
                 print(i)
 
+        print('<---------- all spot ---------->')
+        for i in spot_money:
+            print(i)
+
         print('<---------- margin ---------->')
         for j in margin_money:
             print(j)

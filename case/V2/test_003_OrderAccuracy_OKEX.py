@@ -563,11 +563,27 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 continue
 
     def test_006(self):
+        """复查是否还有未撤的活跃订单->撤单"""
+        r = get_active_orders().json()  # spot订单
+        print(r['data'])
+        if len(r['data']) == 0:
+            print('未发现漏撤订单')
+        else:
+            print('发现漏撤订单')
+            for i in r['data']:
+                co['exchangeType'] = i['exchangeType']
+                co['orderId'] = i['orderId']
+                co['symbol'] = i['symbol']
+                result = requests.post(cancelOrder, json=co, headers=header)
+                print(result.json())
+            print('已经处理漏撤订单')
+
+    def test_007(self):
         """margin 通过下单测试 -> moneyPrecision 与 basePrecision+minOrderSize"""
-        # print(list_margin_c)
-        # print(sy_obj_margin)
-        list_margin_c = 10
-        sy_obj_margin = 'okex:margin_list_'
+        print(list_margin_c)
+        print(sy_obj_margin)
+        # list_margin_c = 10
+        # sy_obj_margin = 'okex:margin_list_'
 
         for i in range(1, list_margin_c + 1):
             try:
@@ -763,25 +779,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     continue
         self.test_010()
 
-    @unittest.skip('废除 test_005的调试类->>>【不包含】try-except')
-    def test_007(self):
-        """test_005的调试类->>>【不包含】try-except"""
-
+    # @unittest.skip('废除 test_005的调试类->>>【不包含】try-except')
     def test_008(self):
-        """复查是否还有未撤的活跃订单->撤单"""
-        r = get_active_orders().json()  # spot订单
-        print(r['data'])
-        if len(r['data']) == 0:
-            print('未发现漏撤订单')
-        else:
-            print('发现漏撤订单')
-            for i in r['data']:
-                co['exchangeType'] = i['exchangeType']
-                co['orderId'] = i['orderId']
-                co['symbol'] = i['symbol']
-                result = requests.post(cancelOrder, json=co, headers=header)
-                print(result.json())
-            print('已经处理漏撤订单')
+        """test_005的调试类->>>【不包含】try-except"""
+        self.money_spot_margin()
 
     def test_009(self):
         """查看错误输出"""
@@ -803,7 +804,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         """调试函数"""
         self.money_spot_margin()
 
-    # @unittest.skip('调试函数 -> Pass')
+    @unittest.skip('调试函数 -> Pass')
     def test_0999(self):
         """调试函数"""
         # {

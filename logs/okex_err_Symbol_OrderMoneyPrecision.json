@@ -1,0 +1,70 @@
+币种对象:
+	{'exSymbol': 'elf_btc', 'symbol': 'elf_btc', 'exBaseCoin': 'elf', 'exMoneyCoin': 'btc', 'baseCoin': 'elf', 'moneyCoin': 'btc', 'basePrecision': '0.001', 'moneyPrecision': '0.0000001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'elf', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571996912831, 'data': {'customId': '33e7dc6911e847b5bbb76c29465b7221', 'orderId': '3752651112145920', 'price': '0.00001', 'qty': '1.001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571996911755, 'dealTime': 0, 'updateTime': 1571996912655, 'symbol': 'elf_btc', 'exSymbol': 'elf_btc', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'act_btc', 'symbol': 'act_btc', 'exBaseCoin': 'act', 'exMoneyCoin': 'btc', 'baseCoin': 'act', 'moneyCoin': 'btc', 'basePrecision': '0.001', 'moneyPrecision': '0.00000001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'act', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571997034662, 'data': {'customId': '8b60cff341064caebf410094875e5116', 'orderId': '3752659090352128', 'price': '0.000001', 'qty': '1.001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997033493, 'dealTime': 0, 'updateTime': 1571997034279, 'symbol': 'act_btc', 'exSymbol': 'act_btc', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'bsv_usdt', 'symbol': 'bsv_usdt', 'exBaseCoin': 'bsv', 'exMoneyCoin': 'usdt', 'baseCoin': 'bsv', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.01', 'minOrderSize': '0.01', 'symbolType': 'spot', 'tradeType': 'bsv', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571997087844, 'data': {'customId': 'c9e9af8c96b94e38b2f9ca31122c0326', 'orderId': '3752662581322752', 'price': '115.989', 'qty': '0.0101', 'side': 'buy', 'filledQty': '0.0101', 'avgFillPrice': '115.98', 'fee': '0', 'status': 'completed', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997086761, 'dealTime': 1571997087195, 'updateTime': 1571997087223, 'symbol': 'bsv_usdt', 'exSymbol': 'bsv_usdt', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'dpy_usdt', 'symbol': 'dpy_usdt', 'exBaseCoin': 'dpy', 'exMoneyCoin': 'usdt', 'baseCoin': 'dpy', 'moneyCoin': 'usdt', 'basePrecision': '0.001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'dpy', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571997092404, 'data': {'customId': '5420a2b5fdc342b396891aa2ff9bac37', 'orderId': '3752662880033792', 'price': '0.04', 'qty': '1.001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997091319, 'dealTime': 0, 'updateTime': 1571997091841, 'symbol': 'dpy_usdt', 'exSymbol': 'dpy_usdt', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'ref_eth', 'symbol': 'ref_eth', 'exBaseCoin': 'ref', 'exMoneyCoin': 'eth', 'baseCoin': 'ref', 'moneyCoin': 'eth', 'basePrecision': '0.00001', 'moneyPrecision': '0.00000001', 'minOrderSize': '0.01', 'symbolType': 'spot', 'tradeType': 'ref', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571997138737, 'data': {'customId': 'be5663b5cb0a4bc4bba571e881d0f11c', 'orderId': '3752665916252160', 'price': '0.00059', 'qty': '0.01001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997137650, 'dealTime': 0, 'updateTime': 1571997138314, 'symbol': 'ref_eth', 'exSymbol': 'ref_eth', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'algo_usdk', 'symbol': 'algo_usdk', 'exBaseCoin': 'algo', 'exMoneyCoin': 'usdk', 'baseCoin': 'algo', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'algo', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571997153303, 'data': {'customId': 'fadf4af3661f41659ff3bb3c23aca55c', 'orderId': '3752666870454272', 'price': '0.2', 'qty': '0.1001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997152209, 'dealTime': 0, 'updateTime': 1571997152324, 'symbol': 'algo_usdk', 'exSymbol': 'algo_usdk', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'algo_usdt', 'symbol': 'algo_usdt', 'exBaseCoin': 'algo', 'exMoneyCoin': 'usdt', 'baseCoin': 'algo', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'algo', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571997159249, 'data': {'customId': '406c923d6f6e4c2fbae147b781119cf0', 'orderId': '3752667261113344', 'price': '0.2', 'qty': '0.1001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997158169, 'dealTime': 0, 'updateTime': 1571997158505, 'symbol': 'algo_usdt', 'exSymbol': 'algo_usdt', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'bch_btc', 'symbol': 'bch_btc', 'exBaseCoin': 'bch', 'exMoneyCoin': 'btc', 'baseCoin': 'bch', 'moneyCoin': 'btc', 'basePrecision': '0.0001', 'moneyPrecision': '0.00001', 'minOrderSize': '0.01', 'symbolType': 'spot', 'tradeType': 'bch', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571997186056, 'data': {'customId': '0dd2c3127e334218ba2238312d951c68', 'orderId': '3752669017939968', 'price': '0.029', 'qty': '0.0101', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997184976, 'dealTime': 0, 'updateTime': 1571997185124, 'symbol': 'bch_btc', 'exSymbol': 'bch_btc', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'bnt_usdt', 'symbol': 'bnt_usdt', 'exBaseCoin': 'bnt', 'exMoneyCoin': 'usdt', 'baseCoin': 'bnt', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'bnt', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571997199033, 'data': {'customId': 'a1073f7593b34d4698b2ac6f0fb9963f', 'orderId': '3752669867745280', 'price': '0.3', 'qty': '0.1001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997197943, 'dealTime': 0, 'updateTime': 1571997198046, 'symbol': 'bnt_usdt', 'exSymbol': 'bnt_usdt', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'xas_usdt', 'symbol': 'xas_usdt', 'exBaseCoin': 'xas', 'exMoneyCoin': 'usdt', 'baseCoin': 'xas', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.00000001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'xas', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571997321421, 'data': {'customId': 'ad2c1ea132244f5abcb60ecffe3ee6c8', 'orderId': '3752677888889856', 'price': '0.0415', 'qty': '0.1001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997320336, 'dealTime': 0, 'updateTime': 1571997321279, 'symbol': 'xas_usdt', 'exSymbol': 'xas_usdt', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'bch_usdt', 'symbol': 'bch_usdt', 'exBaseCoin': 'bch', 'exMoneyCoin': 'usdt', 'baseCoin': 'bch', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.01', 'minOrderSize': '0.01', 'symbolType': 'spot', 'tradeType': 'bch', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571997346963, 'data': {'customId': 'f5bba73480ad4aba8f3d3ebc10c22d4c', 'orderId': '3752679562680320', 'price': '215.509', 'qty': '0.0101', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997345876, 'dealTime': 0, 'updateTime': 1571997345959, 'symbol': 'bch_usdt', 'exSymbol': 'bch_usdt', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'xlm_usdt', 'symbol': 'xlm_usdt', 'exBaseCoin': 'xlm', 'exMoneyCoin': 'usdt', 'baseCoin': 'xlm', 'moneyCoin': 'usdt', 'basePrecision': '0.001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'xlm', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571997372731, 'data': {'customId': '063af45a795a47c5813da7414e53f966', 'orderId': '3752681251104768', 'price': '0.06', 'qty': '1.001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997371641, 'dealTime': 0, 'updateTime': 1571997372200, 'symbol': 'xlm_usdt', 'exSymbol': 'xlm_usdt', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'eth_usdt', 'symbol': 'eth_usdt', 'exBaseCoin': 'eth', 'exMoneyCoin': 'usdt', 'baseCoin': 'eth', 'moneyCoin': 'usdt', 'basePrecision': '0.000001', 'moneyPrecision': '0.01', 'minOrderSize': '0.001', 'symbolType': 'spot', 'tradeType': 'eth', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571997481304, 'data': {'customId': 'e193262aa5fb4d86b458d7636288c149', 'orderId': '3752688362400768', 'price': '162.0799', 'qty': '0.001001', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997480149, 'dealTime': 0, 'updateTime': 1571997481051, 'symbol': 'eth_usdt', 'exSymbol': 'eth_usdt', 'leverage': 1}, 'rawStr': None}
+
+币种对象:
+	{'exSymbol': 'bsv_usdt', 'symbol': 'bsv_usdt', 'exBaseCoin': 'bsv', 'exMoneyCoin': 'usdt', 'baseCoin': 'bsv', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.01', 'minOrderSize': '0.01', 'symbolType': 'margin', 'tradeType': 'bsv', 'multiplier': '1'}
+订单对象:
+	{'code': 1000, 'message': '获取订单成功：', 'success': True, 'timestamp': 1571997537520, 'data': {'customId': 'ffa497f835674997aec138c454d65836', 'orderId': '3752692051368960', 'price': '115.809', 'qty': '0.0101', 'side': 'buy', 'filledQty': '0', 'avgFillPrice': '0', 'fee': '0', 'status': 'active', 'orderType': 'limit', 'exchangeType': 'margin', 'postType': 'normal', 'orderTime': 1571997536440, 'dealTime': 0, 'updateTime': 1571997536474, 'symbol': 'bsv_usdt', 'exSymbol': 'bsv_usdt', 'leverage': 1}, 'rawStr': None}
+

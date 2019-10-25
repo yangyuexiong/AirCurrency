@@ -1,5 +1,322 @@
 Traceback (most recent call last):
-  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 702, in test_006
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00025
+币种对象:
+	{'exSymbol': 'leo_usdk', 'symbol': 'leo_usdk', 'exBaseCoin': 'leo', 'exMoneyCoin': 'usdk', 'baseCoin': 'leo', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'leo', 'multiplier': '1'}
+下单金额:
+	1.1253
+下单数量:
+	0.1001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"992261ec17e94af3a95097b85154ec9c","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571996856445, 'data': {'customId': '992261ec17e94af3a95097b85154ec9c', 'price': '1.1253', 'qty': '0.1001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571996856375, 'symbol': 'leo_usdk', 'exSymbol': 'LEO-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"992261ec17e94af3a95097b85154ec9c","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00027
+币种对象:
+	{'exSymbol': 'fsn_usdk', 'symbol': 'fsn_usdk', 'exBaseCoin': 'fsn', 'exMoneyCoin': 'usdk', 'baseCoin': 'fsn', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'fsn', 'multiplier': '1'}
+下单金额:
+	0.1988
+下单数量:
+	1.0001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"c7bf722dc9614e8698e603d68dffedca","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571996859164, 'data': {'customId': 'c7bf722dc9614e8698e603d68dffedca', 'price': '0.1988', 'qty': '1.0001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571996859098, 'symbol': 'fsn_usdk', 'exSymbol': 'FSN-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"c7bf722dc9614e8698e603d68dffedca","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 523, in test_005
+    od_price = order_status['data']['price']
+TypeError: 'NoneType' object is not subscriptable
+撤单失败 -> 没有找到该挂单 或 订单已经成交: -> 币对ID:00043
+币种对象:
+	{'exSymbol': 'gusd_usdt', 'symbol': 'gusd_usdt', 'exBaseCoin': 'gusd', 'exMoneyCoin': 'usdt', 'baseCoin': 'gusd', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'gusd', 'multiplier': '1'}
+下单金额:
+	0.9881
+下单数量:
+	0.1001
+
+
+'NoneType' object is not subscriptableTraceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00072
+币种对象:
+	{'exSymbol': 'eos_usdk', 'symbol': 'eos_usdk', 'exBaseCoin': 'eos', 'exMoneyCoin': 'usdk', 'baseCoin': 'eos', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'eos', 'multiplier': '1'}
+下单金额:
+	2.758
+下单数量:
+	0.1001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"9a45c3c6a1134ac48bec57f7f5130768","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571996930604, 'data': {'customId': '9a45c3c6a1134ac48bec57f7f5130768', 'price': '2.758', 'qty': '0.1001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571996930532, 'symbol': 'eos_usdk', 'exSymbol': 'EOS-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"9a45c3c6a1134ac48bec57f7f5130768","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 532, in test_005
+    if len(obj_price.split('.')[1]) != len(od_price.split('.')[1]):
+IndexError: list index out of range
+撤单失败 -> 没有找到该挂单 或 订单已经成交: -> 币对ID:00080
+币种对象:
+	{'exSymbol': 'dash_usdt', 'symbol': 'dash_usdt', 'exBaseCoin': 'dash', 'exMoneyCoin': 'usdt', 'baseCoin': 'dash', 'moneyCoin': 'usdt', 'basePrecision': '0.000001', 'moneyPrecision': '0.1', 'minOrderSize': '0.001', 'symbolType': 'spot', 'tradeType': 'dash', 'multiplier': '1'}
+下单金额:
+	63.0
+下单数量:
+	0.001001
+
+
+list index out of rangeTraceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 523, in test_005
+    od_price = order_status['data']['price']
+TypeError: 'NoneType' object is not subscriptable
+撤单失败 -> 没有找到该挂单 或 订单已经成交: -> 币对ID:00091
+币种对象:
+	{'exSymbol': 'ctxc_eth', 'symbol': 'ctxc_eth', 'exBaseCoin': 'ctxc', 'exMoneyCoin': 'eth', 'baseCoin': 'ctxc', 'moneyCoin': 'eth', 'basePrecision': '0.001', 'moneyPrecision': '0.000001', 'minOrderSize': '0.01', 'symbolType': 'spot', 'tradeType': 'ctxc', 'multiplier': '1'}
+下单金额:
+	0.000364
+下单数量:
+	0.011
+
+
+'NoneType' object is not subscriptableTraceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00127
+币种对象:
+	{'exSymbol': 'usdt_usdk', 'symbol': 'usdt_usdk', 'exBaseCoin': 'usdt', 'exMoneyCoin': 'usdk', 'baseCoin': 'usdt', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'usdt', 'multiplier': '1'}
+下单金额:
+	1.0082
+下单数量:
+	0.1001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"9a0b4ab3b5e64644bf81eb2e638074d1","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997017393, 'data': {'customId': '9a0b4ab3b5e64644bf81eb2e638074d1', 'price': '1.0082', 'qty': '0.1001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997017324, 'symbol': 'usdt_usdk', 'exSymbol': 'USDT-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"9a0b4ab3b5e64644bf81eb2e638074d1","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00134
+币种对象:
+	{'exSymbol': 'link_eth', 'symbol': 'link_eth', 'exBaseCoin': 'link', 'exMoneyCoin': 'eth', 'baseCoin': 'link', 'moneyCoin': 'eth', 'basePrecision': '0.001', 'moneyPrecision': '0.00001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'link', 'multiplier': '1'}
+下单金额:
+	0.01648
+下单数量:
+	1.001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"f83e23584e3943d4ac0c62966b383302","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997028609, 'data': {'customId': 'f83e23584e3943d4ac0c62966b383302', 'price': '0.01648', 'qty': '1.001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997028534, 'symbol': 'link_eth', 'exSymbol': 'LINK-ETH', 'leverage': 1}, 'rawStr': '{"client_oid":"f83e23584e3943d4ac0c62966b383302","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 523, in test_005
+    od_price = order_status['data']['price']
+TypeError: 'NoneType' object is not subscriptable
+撤单失败 -> 没有找到该挂单 或 订单已经成交: -> 币对ID:00147
+币种对象:
+	{'exSymbol': 'ont_usdt', 'symbol': 'ont_usdt', 'exBaseCoin': 'ont', 'exMoneyCoin': 'usdt', 'baseCoin': 'ont', 'moneyCoin': 'usdt', 'basePrecision': '0.001', 'moneyPrecision': '0.0001', 'minOrderSize': '0.1', 'symbolType': 'spot', 'tradeType': 'ont', 'multiplier': '1'}
+下单金额:
+	0.5424
+下单数量:
+	0.101
+
+
+'NoneType' object is not subscriptableTraceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00149
+币种对象:
+	{'exSymbol': 'ltc_usdk', 'symbol': 'ltc_usdk', 'exBaseCoin': 'ltc', 'exMoneyCoin': 'usdk', 'baseCoin': 'ltc', 'moneyCoin': 'usdk', 'basePrecision': '0.000001', 'moneyPrecision': '0.01', 'minOrderSize': '0.001', 'symbolType': 'spot', 'tradeType': 'ltc', 'multiplier': '1'}
+下单金额:
+	50.23
+下单数量:
+	0.001001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"165f845f870c4e21a04364b95e0618af","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997052350, 'data': {'customId': '165f845f870c4e21a04364b95e0618af', 'price': '50.23', 'qty': '0.001001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997052281, 'symbol': 'ltc_usdk', 'exSymbol': 'LTC-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"165f845f870c4e21a04364b95e0618af","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00154
+币种对象:
+	{'exSymbol': 'vsys_usdk', 'symbol': 'vsys_usdk', 'exBaseCoin': 'vsys', 'exMoneyCoin': 'usdk', 'baseCoin': 'vsys', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'vsys', 'multiplier': '1'}
+下单金额:
+	0.0502
+下单数量:
+	1.0001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"4c982211587241eea37e70712e527f45","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997060546, 'data': {'customId': '4c982211587241eea37e70712e527f45', 'price': '0.0502', 'qty': '1.0001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997060415, 'symbol': 'vsys_usdk', 'exSymbol': 'VSYS-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"4c982211587241eea37e70712e527f45","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00160
+币种对象:
+	{'exSymbol': 'btc_usdk', 'symbol': 'btc_usdk', 'exBaseCoin': 'btc', 'exMoneyCoin': 'usdk', 'baseCoin': 'btc', 'moneyCoin': 'usdk', 'basePrecision': '0.00000001', 'moneyPrecision': '0.1', 'minOrderSize': '0.001', 'symbolType': 'spot', 'tradeType': 'btc', 'multiplier': '1'}
+下单金额:
+	7519.8
+下单数量:
+	0.00100001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"4abfb7f1a7364b32a602e639851713bf","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997069620, 'data': {'customId': '4abfb7f1a7364b32a602e639851713bf', 'price': '7519.8', 'qty': '0.00100001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997069551, 'symbol': 'btc_usdk', 'exSymbol': 'BTC-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"4abfb7f1a7364b32a602e639851713bf","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00165
+币种对象:
+	{'exSymbol': 'btc_usdt', 'symbol': 'btc_usdt', 'exBaseCoin': 'btc', 'exMoneyCoin': 'usdt', 'baseCoin': 'btc', 'moneyCoin': 'usdt', 'basePrecision': '0.00000001', 'moneyPrecision': '0.1', 'minOrderSize': '0.001', 'symbolType': 'spot', 'tradeType': 'btc', 'multiplier': '1'}
+下单金额:
+	7450.7
+下单数量:
+	0.00100001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"9bdfc444fd754562892d1392abef4097","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997077435, 'data': {'customId': '9bdfc444fd754562892d1392abef4097', 'price': '7450.7', 'qty': '0.00100001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997077364, 'symbol': 'btc_usdt', 'exSymbol': 'BTC-USDT', 'leverage': 1}, 'rawStr': '{"client_oid":"9bdfc444fd754562892d1392abef4097","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00169
+币种对象:
+	{'exSymbol': 'bsv_usdk', 'symbol': 'bsv_usdk', 'exBaseCoin': 'bsv', 'exMoneyCoin': 'usdk', 'baseCoin': 'bsv', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.01', 'minOrderSize': '0.01', 'symbolType': 'spot', 'tradeType': 'bsv', 'multiplier': '1'}
+下单金额:
+	116.689
+下单数量:
+	0.0101
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"5f49ef535b9b4112add5e6789759b659","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997083990, 'data': {'customId': '5f49ef535b9b4112add5e6789759b659', 'price': '116.689', 'qty': '0.0101', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997083920, 'symbol': 'bsv_usdk', 'exSymbol': 'BSV-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"5f49ef535b9b4112add5e6789759b659","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00269
+币种对象:
+	{'exSymbol': 'xrp_usdk', 'symbol': 'xrp_usdk', 'exBaseCoin': 'xrp', 'exMoneyCoin': 'usdk', 'baseCoin': 'xrp', 'moneyCoin': 'usdk', 'basePrecision': '0.001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'xrp', 'multiplier': '1'}
+下单金额:
+	0.2802
+下单数量:
+	1.001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"c7a9a8e28bf940ea82426c3cc5625775","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997244203, 'data': {'customId': 'c7a9a8e28bf940ea82426c3cc5625775', 'price': '0.2802', 'qty': '1.001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997244130, 'symbol': 'xrp_usdk', 'exSymbol': 'XRP-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"c7a9a8e28bf940ea82426c3cc5625775","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00287
+币种对象:
+	{'exSymbol': 'okb_eth', 'symbol': 'okb_eth', 'exBaseCoin': 'okb', 'exMoneyCoin': 'eth', 'baseCoin': 'okb', 'moneyCoin': 'eth', 'basePrecision': '0.0001', 'moneyPrecision': '0.000001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'okb', 'multiplier': '1'}
+下单金额:
+	0.014632
+下单数量:
+	1.0001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"5a0c790292c146f7963aafad058591dd","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997272483, 'data': {'customId': '5a0c790292c146f7963aafad058591dd', 'price': '0.014632', 'qty': '1.0001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997272418, 'symbol': 'okb_eth', 'exSymbol': 'OKB-ETH', 'leverage': 1}, 'rawStr': '{"client_oid":"5a0c790292c146f7963aafad058591dd","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 532, in test_005
+    if len(obj_price.split('.')[1]) != len(od_price.split('.')[1]):
+IndexError: list index out of range
+撤单失败 -> 没有找到该挂单 或 订单已经成交: -> 币对ID:00314
+币种对象:
+	{'exSymbol': 'zec_okb', 'symbol': 'zec_okb', 'exBaseCoin': 'zec', 'exMoneyCoin': 'okb', 'baseCoin': 'zec', 'moneyCoin': 'okb', 'basePrecision': '0.000001', 'moneyPrecision': '0.1', 'minOrderSize': '0.01', 'symbolType': 'spot', 'tradeType': 'zec', 'multiplier': '1'}
+下单金额:
+	14.0
+下单数量:
+	0.010001
+
+
+list index out of rangeTraceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00330
+币种对象:
+	{'exSymbol': 'bch_usdk', 'symbol': 'bch_usdk', 'exBaseCoin': 'bch', 'exMoneyCoin': 'usdk', 'baseCoin': 'bch', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.01', 'minOrderSize': '0.01', 'symbolType': 'spot', 'tradeType': 'bch', 'multiplier': '1'}
+下单金额:
+	216.749
+下单数量:
+	0.0101
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"df7c794ee6bd4dbba004b1c305c8eb2a","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997340156, 'data': {'customId': 'df7c794ee6bd4dbba004b1c305c8eb2a', 'price': '216.749', 'qty': '0.0101', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997340089, 'symbol': 'bch_usdk', 'exSymbol': 'BCH-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"df7c794ee6bd4dbba004b1c305c8eb2a","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00336
+币种对象:
+	{'exSymbol': 'trx_usdk', 'symbol': 'trx_usdk', 'exBaseCoin': 'trx', 'exMoneyCoin': 'usdk', 'baseCoin': 'trx', 'moneyCoin': 'usdk', 'basePrecision': '0.01', 'moneyPrecision': '0.00001', 'minOrderSize': '10', 'symbolType': 'spot', 'tradeType': 'trx', 'multiplier': '1'}
+下单金额:
+	0.01514
+下单数量:
+	10.01
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"a22a2791a96a4caabce63ce608f3952a","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997348930, 'data': {'customId': 'a22a2791a96a4caabce63ce608f3952a', 'price': '0.01514', 'qty': '10.01', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997348858, 'symbol': 'trx_usdk', 'exSymbol': 'TRX-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"a22a2791a96a4caabce63ce608f3952a","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00381
+币种对象:
+	{'exSymbol': 'etc_usdk', 'symbol': 'etc_usdk', 'exBaseCoin': 'etc', 'exMoneyCoin': 'usdk', 'baseCoin': 'etc', 'moneyCoin': 'usdk', 'basePrecision': '0.00001', 'moneyPrecision': '0.001', 'minOrderSize': '0.01', 'symbolType': 'spot', 'tradeType': 'etc', 'multiplier': '1'}
+下单金额:
+	4.325
+下单数量:
+	0.01001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"e51b241e46b9473b8a7c3afadf20bbee","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997418054, 'data': {'customId': 'e51b241e46b9473b8a7c3afadf20bbee', 'price': '4.325', 'qty': '0.01001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997417982, 'symbol': 'etc_usdk', 'exSymbol': 'ETC-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"e51b241e46b9473b8a7c3afadf20bbee","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00390
+币种对象:
+	{'exSymbol': 'okb_usdk', 'symbol': 'okb_usdk', 'exBaseCoin': 'okb', 'exMoneyCoin': 'usdk', 'baseCoin': 'okb', 'moneyCoin': 'usdk', 'basePrecision': '0.0001', 'moneyPrecision': '0.0001', 'minOrderSize': '1', 'symbolType': 'spot', 'tradeType': 'okb', 'multiplier': '1'}
+下单金额:
+	2.3825
+下单数量:
+	1.0001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"8a68df0f72744fc58748e462ea7ee507","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997432466, 'data': {'customId': '8a68df0f72744fc58748e462ea7ee507', 'price': '2.3825', 'qty': '1.0001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997432393, 'symbol': 'okb_usdk', 'exSymbol': 'OKB-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"8a68df0f72744fc58748e462ea7ee507","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 516, in test_005
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 币对ID:00412
+币种对象:
+	{'exSymbol': 'eth_usdk', 'symbol': 'eth_usdk', 'exBaseCoin': 'eth', 'exMoneyCoin': 'usdk', 'baseCoin': 'eth', 'moneyCoin': 'usdk', 'basePrecision': '0.000001', 'moneyPrecision': '0.01', 'minOrderSize': '0.001', 'symbolType': 'spot', 'tradeType': 'eth', 'multiplier': '1'}
+下单金额:
+	163.509
+下单数量:
+	0.001001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"0a758cf8d6504b81bf85356be30b12db","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997466194, 'data': {'customId': '0a758cf8d6504b81bf85356be30b12db', 'price': '163.509', 'qty': '0.001001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'spot', 'postType': 'normal', 'orderTime': 1571997466122, 'symbol': 'eth_usdk', 'exSymbol': 'ETH-USDK', 'leverage': 1}, 'rawStr': '{"client_oid":"0a758cf8d6504b81bf85356be30b12db","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 718, in test_007
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 或 没有币对 币对ID:00002
+币种对象:
+	{'exSymbol': 'bsv_btc', 'symbol': 'bsv_btc', 'exBaseCoin': 'bsv', 'exMoneyCoin': 'btc', 'baseCoin': 'bsv', 'moneyCoin': 'btc', 'basePrecision': '0.0001', 'moneyPrecision': '0.000001', 'minOrderSize': '0.01', 'symbolType': 'margin', 'tradeType': 'bsv', 'multiplier': '1'}
+下单金额:
+	0.015539
+下单数量:
+	0.0101
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997490792, 'data': {'customId': 'd15a74cef4f84081846c6a2ee95f19a9', 'price': '0.015539', 'qty': '0.0101', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'margin', 'postType': 'normal', 'orderTime': 1571997490720, 'symbol': 'bsv_btc', 'exSymbol': 'BSV-BTC', 'leverage': 1}, 'rawStr': '{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 718, in test_007
     orderId = res['data']['orderId']
 KeyError: 'orderId'
 下单失败 -> 精度丢失 或者 金额不足 或 没有币对 币对ID:00003
@@ -10,10 +327,10 @@ KeyError: 'orderId'
 下单数量:
 	0.001001
 返回json:
-	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571996065142, 'data': {'customId': '8b625455ccb5432c89bcfd04feac88d5', 'price': '0.00835', 'qty': '0.001001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'margin', 'postType': 'normal', 'orderTime': 1571996065063, 'symbol': 'dash_btc', 'exSymbol': 'DASH-BTC', 'leverage': 1}, 'rawStr': '{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997493295, 'data': {'customId': '5f6f1a684f804177bc7c360b9d9fe71d', 'price': '0.00835', 'qty': '0.001001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'margin', 'postType': 'normal', 'orderTime': 1571997493223, 'symbol': 'dash_btc', 'exSymbol': 'DASH-BTC', 'leverage': 1}, 'rawStr': '{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
 
 Traceback (most recent call last):
-  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 702, in test_006
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 718, in test_007
     orderId = res['data']['orderId']
 KeyError: 'orderId'
 下单失败 -> 精度丢失 或者 金额不足 或 没有币对 币对ID:00004
@@ -24,19 +341,130 @@ KeyError: 'orderId'
 下单数量:
 	0.11
 返回json:
-	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571996067711, 'data': {'customId': 'a8cc2cabf1a547feb9d10bbdb085b484', 'price': '0.00000043', 'qty': '0.11', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'margin', 'postType': 'normal', 'orderTime': 1571996067639, 'symbol': 'iost_btc', 'exSymbol': 'IOST-BTC', 'leverage': 1}, 'rawStr': '{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997496586, 'data': {'customId': '14655ca2594c4641922f1ce2c5942c0e', 'price': '0.00000043', 'qty': '0.11', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'margin', 'postType': 'normal', 'orderTime': 1571997496515, 'symbol': 'iost_btc', 'exSymbol': 'IOST-BTC', 'leverage': 1}, 'rawStr': '{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
 
 Traceback (most recent call last):
-  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 702, in test_006
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 718, in test_007
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 或 没有币对 币对ID:00006
+币种对象:
+	{'exSymbol': 'eos_usdt', 'symbol': 'eos_usdt', 'exBaseCoin': 'eos', 'exMoneyCoin': 'usdt', 'baseCoin': 'eos', 'moneyCoin': 'usdt', 'basePrecision': '0.0001', 'moneyPrecision': '0.001', 'minOrderSize': '0.1', 'symbolType': 'margin', 'tradeType': 'eos', 'multiplier': '1'}
+下单金额:
+	2.732
+下单数量:
+	0.1001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997504382, 'data': {'customId': '2947b5cb85f946e49a6ea9d5e12692a2', 'price': '2.732', 'qty': '0.1001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'margin', 'postType': 'normal', 'orderTime': 1571997504301, 'symbol': 'eos_usdt', 'exSymbol': 'EOS-USDT', 'leverage': 1}, 'rawStr': '{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 718, in test_007
     orderId = res['data']['orderId']
 KeyError: 'orderId'
 下单失败 -> 精度丢失 或者 金额不足 或 没有币对 币对ID:00008
 币种对象:
 	{'exSymbol': 'trx_btc', 'symbol': 'trx_btc', 'exBaseCoin': 'trx', 'exMoneyCoin': 'btc', 'baseCoin': 'trx', 'moneyCoin': 'btc', 'basePrecision': '0.01', 'moneyPrecision': '0.000000001', 'minOrderSize': '10', 'symbolType': 'margin', 'tradeType': 'trx', 'multiplier': '1'}
 下单金额:
-	0.000002028
+	0.000002025
 下单数量:
 	10.01
 返回json:
-	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571996086560, 'data': {'customId': 'e35ae840b2b24fbd89d5c3c9d2dd15df', 'price': '0.000002028', 'qty': '10.01', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'margin', 'postType': 'normal', 'orderTime': 1571996086486, 'symbol': 'trx_btc', 'exSymbol': 'TRX-BTC', 'leverage': 1}, 'rawStr': '{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997512461, 'data': {'customId': 'fabeb8ea3e25468ea458871d92470922', 'price': '0.000002025', 'qty': '10.01', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'margin', 'postType': 'normal', 'orderTime': 1571997512388, 'symbol': 'trx_btc', 'exSymbol': 'TRX-BTC', 'leverage': 1}, 'rawStr': '{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 718, in test_007
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 或 没有币对 币对ID:00011
+币种对象:
+	{'exSymbol': 'xrp_btc', 'symbol': 'xrp_btc', 'exBaseCoin': 'xrp', 'exMoneyCoin': 'btc', 'baseCoin': 'xrp', 'moneyCoin': 'btc', 'basePrecision': '0.001', 'moneyPrecision': '0.00000001', 'minOrderSize': '1', 'symbolType': 'margin', 'tradeType': 'xrp', 'multiplier': '1'}
+下单金额:
+	0.00003722
+下单数量:
+	1.001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997526016, 'data': {'customId': 'ce035a03145d40649a9539d949bc64d0', 'price': '0.00003722', 'qty': '1.001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'margin', 'postType': 'normal', 'orderTime': 1571997525950, 'symbol': 'xrp_btc', 'exSymbol': 'XRP-BTC', 'leverage': 1}, 'rawStr': '{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 718, in test_007
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 或 没有币对 币对ID:00012
+币种对象:
+	{'exSymbol': 'eth_btc', 'symbol': 'eth_btc', 'exBaseCoin': 'eth', 'exMoneyCoin': 'btc', 'baseCoin': 'eth', 'moneyCoin': 'btc', 'basePrecision': '0.000001', 'moneyPrecision': '0.00001', 'minOrderSize': '0.001', 'symbolType': 'margin', 'tradeType': 'eth', 'multiplier': '1'}
+下单金额:
+	0.02166
+下单数量:
+	0.001001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997528515, 'data': {'customId': '1389192b15284a7eabf825b0b05cc0b3', 'price': '0.02166', 'qty': '0.001001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'margin', 'postType': 'normal', 'orderTime': 1571997528445, 'symbol': 'eth_btc', 'exSymbol': 'ETH-BTC', 'leverage': 1}, 'rawStr': '{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 718, in test_007
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 或 没有币对 币对ID:00015
+币种对象:
+	{'exSymbol': 'btc_usdt', 'symbol': 'btc_usdt', 'exBaseCoin': 'btc', 'exMoneyCoin': 'usdt', 'baseCoin': 'btc', 'moneyCoin': 'usdt', 'basePrecision': '0.00000001', 'moneyPrecision': '0.1', 'minOrderSize': '0.001', 'symbolType': 'margin', 'tradeType': 'btc', 'multiplier': '1'}
+下单金额:
+	7446.5
+下单数量:
+	0.00100001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997541671, 'data': {'customId': '5fd95fca8eca407082a2bfbe4d43dcdb', 'price': '7446.5', 'qty': '0.00100001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'margin', 'postType': 'normal', 'orderTime': 1571997541591, 'symbol': 'btc_usdt', 'exSymbol': 'BTC-USDT', 'leverage': 1}, 'rawStr': '{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 718, in test_007
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 或 没有币对 币对ID:00017
+币种对象:
+	{'exSymbol': 'ltc_usdt', 'symbol': 'ltc_usdt', 'exBaseCoin': 'ltc', 'exMoneyCoin': 'usdt', 'baseCoin': 'ltc', 'moneyCoin': 'usdt', 'basePrecision': '0.000001', 'moneyPrecision': '0.01', 'minOrderSize': '0.001', 'symbolType': 'margin', 'tradeType': 'ltc', 'multiplier': '1'}
+下单金额:
+	49.57
+下单数量:
+	0.001001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997549503, 'data': {'customId': '7b42986d719b424cb0e21316ad96c797', 'price': '49.57', 'qty': '0.001001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'margin', 'postType': 'normal', 'orderTime': 1571997549432, 'symbol': 'ltc_usdt', 'exSymbol': 'LTC-USDT', 'leverage': 1}, 'rawStr': '{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 734, in test_007
+    if len(obj_price.split('.')[1]) != len(od_price.split('.')[1]):
+IndexError: list index out of range
+撤单失败 -> 没有找到该挂单 或 订单已经成交: -> 币对ID:00018
+币种对象:
+	{'exSymbol': 'dash_usdt', 'symbol': 'dash_usdt', 'exBaseCoin': 'dash', 'exMoneyCoin': 'usdt', 'baseCoin': 'dash', 'moneyCoin': 'usdt', 'basePrecision': '0.000001', 'moneyPrecision': '0.1', 'minOrderSize': '0.001', 'symbolType': 'margin', 'tradeType': 'dash', 'multiplier': '1'}
+下单金额:
+	63.0
+下单数量:
+	0.001001
+
+
+list index out of rangeTraceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 718, in test_007
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 或 没有币对 币对ID:00022
+币种对象:
+	{'exSymbol': 'ltc_btc', 'symbol': 'ltc_btc', 'exBaseCoin': 'ltc', 'exMoneyCoin': 'btc', 'baseCoin': 'ltc', 'moneyCoin': 'btc', 'basePrecision': '0.000001', 'moneyPrecision': '0.000001', 'minOrderSize': '0.001', 'symbolType': 'margin', 'tradeType': 'ltc', 'multiplier': '1'}
+下单金额:
+	0.006649
+下单数量:
+	0.001001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997565998, 'data': {'customId': '5f9ec6ed39f5430b8b94447a9a983033', 'price': '0.006649', 'qty': '0.001001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'margin', 'postType': 'normal', 'orderTime': 1571997565914, 'symbol': 'ltc_btc', 'exSymbol': 'LTC-BTC', 'leverage': 1}, 'rawStr': '{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
+
+Traceback (most recent call last):
+  File "/Users/yangyuexiong/Desktop/AirCurrency/case/V2/test_003_OrderAccuracy_OKEX.py", line 718, in test_007
+    orderId = res['data']['orderId']
+KeyError: 'orderId'
+下单失败 -> 精度丢失 或者 金额不足 或 没有币对 币对ID:00023
+币种对象:
+	{'exSymbol': 'eos_btc', 'symbol': 'eos_btc', 'exBaseCoin': 'eos', 'exMoneyCoin': 'btc', 'baseCoin': 'eos', 'moneyCoin': 'btc', 'basePrecision': '0.0001', 'moneyPrecision': '0.0000001', 'minOrderSize': '0.1', 'symbolType': 'margin', 'tradeType': 'eos', 'multiplier': '1'}
+下单金额:
+	0.0003676
+下单数量:
+	0.1001
+返回json:
+	{'code': 2000, 'message': '交易所错误提示,交易所返回信息:{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}.', 'success': False, 'timestamp': 1571997568709, 'data': {'customId': 'e3f0f60a14d844d4ba07a1e3442bda5f', 'price': '0.0003676', 'qty': '0.1001', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'margin', 'postType': 'normal', 'orderTime': 1571997568632, 'symbol': 'eos_btc', 'exSymbol': 'EOS-BTC', 'leverage': 1}, 'rawStr': '{"client_oid":"","error_code":"33017","error_message":"Greater than the maximum available balance","order_id":"-1","result":false}'}
 
