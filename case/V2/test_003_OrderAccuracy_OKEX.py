@@ -295,10 +295,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
         self.clear_db_08()
 
-        for i in self.f_list:
-            with open(self.logs_path + '/{}'.format(i), 'w', encoding='utf-8') as f:
-                f.write('')
-            print('clear file -> {}'.format(i))
+        # for i in self.f_list:
+        #     with open(self.logs_path + '/{}'.format(i), 'w', encoding='utf-8') as f:
+        #         f.write('')
+        #     print('clear file -> {}'.format(i))
 
         get_url_symbol_list('okex:spot')
         get_url_symbol_list('okex:margin')
@@ -424,18 +424,13 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                             '该用例检验参数:moneyPrecision': str(dic_obj['moneyPrecision']),
                             'OrderBook精度': asks_and_bids_c,
                         }
-                        R.set('error_moneyPrecision_OrderBook_{}'.format(i), str(d))
+                        R.set('test_004->币种精度与OrderBook不相符_{}'.format(i), str(d))
                 else:
-                    msg = '未找到该币种 -> {} 请前往 -> {} 交易所复查 -> this func is test_004\n'.format(dic_obj['symbol'], 'okex')
-                    R.set('error_not_symbol_{}'.format(i), str(msg))
+                    msg = '交易所或OrderBook未找到该币种 -> {} -> this func is test_004\n'.format(dic_obj['symbol'])
+                    R.set('test_004->not_symbol_{}'.format(i), str(msg))
                     continue
             except BaseException as e:
-                msg = 'test_004 -> ID{} 执行异常 -> {}'.format(n, str(e))
-                print(msg)
-                with open(self.logs_path + '/okex_func_errors.json', 'a+') as f:
-                    f.write(msg)
-                    traceback.print_exc(file=open(self.logs_path + '/okex_func_errors.json', 'a+'))
-                    f.write('\n')
+                R.set('test_004 -> 外层func执行异常->ID{}'.format(n), str(e))
                 continue
 
     def test_005(self):
@@ -521,9 +516,8 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     print('*下单金额:', p, type(p))
                     print('*防止精度丢失备用下单金额:', p1, type(p1))
                 else:
-                    msg = '未找到该币种 -> {} 请前往 -> {} 交易所复查 或 orderbook 不存在该币对-> this func is test_005\n'.format(
-                        sy['symbol'], 'okex')
-                    R.set('error_not_symbol_{}'.format(i), str(msg))
+                    msg = '交易所或OrderBook未找到该币种 -> {} -> this func is test_005'.format(sy['symbol'])
+                    R.set('test_005_error_not_symbol_{}'.format(i), str(msg))
                     print('====================end test -> orror {} -> {}====================\n'.format(n, sy))
                     continue
 
@@ -645,7 +639,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                         '下单数量': str(order_q),
                         '异常': str(e)
                     }
-                    R.set('test_005->内func执行异常->{}'.format(n), str(error_obj))
+                    R.set('test_005->内层func执行异常->ID{}'.format(n), str(error_obj))
                     continue
             except BaseException as e:
                 error_obj = {
@@ -655,7 +649,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     '下单数量': str(order_q),
                     '异常': str(e)
                 }
-                R.set('test_005->外func执行异常->ID{}'.format(n), str(e))
+                R.set('test_005->外层func执行异常->ID{}'.format(n), str(e))
                 continue
 
     def test_006(self):
@@ -951,6 +945,12 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
     def test_010(self):
         """整合并格式化输出日志"""
+        # print(R.keys(pattern='test_*'))
+        for i in R.keys(pattern='test_*'):
+            print(i)
+            msg = '{}\n{}\n\n'.format(i, R.get(i))
+            with open(self.logs_path + '/log.txt', 'a+', encoding='utf-8') as f:
+                f.write(msg)
 
     @unittest.skip('调试函数 -> Pass')
     def test_099(self):
@@ -987,8 +987,8 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         self.test_002()
         self.test_003()
         self.test_004()
-        self.test_005()
-        self.test_006()
+        # self.test_005()
+        # self.test_006()
 
     @unittest.skip('分组调试 -> Pass')
     def test_099999(self):

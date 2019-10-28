@@ -5,27 +5,36 @@
 # @File    : run.py
 # @Software: PyCharm
 
+import sys
+import time
 
 import unittest
+
 from common.HTMLTestReportCN import HTMLTestRunner
-import time
-import sys
 from config.config import *
 
 # 终端执行
 path = '/Users/yangyuexiong/Desktop/AirCurrency'
 sys.path.append(path)
 
-# 报告路径
-report_dir = './reports'
-# 测试路径
-test_dir = './case/V2'
-# test_dir = './case/v3.0_'
-# 文件前缀
-# file_prefix = 'test_*.py'
-file_prefix = 'test_003_OrderAccuracy_OKEX.py'
-
-if not C:
+# 终端命令穿参
+ter_param = sys.argv[1:]
+if len(ter_param) != 0:
+    print(ter_param)
+    report_dir = './reports'  # 报告路径
+    test_dir = './case/V2'  # 测试路径
+    if ter_param[0] == 'all':
+        "执行说有用例"
+        file_prefix = 'test_*.py'  # 文件前缀
+    if ter_param[0] == 'okex':
+        """执行okex"""
+        file_prefix = 'test_003_OrderAccuracy_OKEX.py'
+    else:
+        print('参数错误...')
+        exit()
+else:
+    report_dir = './reports'
+    test_dir = './case/V2'
     file_prefix = ''
 
 print('报告路径:{}\n测试路径:{}\n文件前缀:{}\n'.format(report_dir, test_dir, file_prefix))
