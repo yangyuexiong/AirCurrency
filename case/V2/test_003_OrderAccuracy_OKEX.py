@@ -275,11 +275,9 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
     test_005: spot 通过下单测试 -> moneyPrecision 与 basePrecision + minOrderSize
     test_006: 复查是否还有未撤的活跃订单->撤单
     test_007: margin 通过下单测试 -> moneyPrecision 与 basePrecision+minOrderSize
-    test_008: 
+    test_008: 查看 spot 与 margin 资金
     test_009: 查看输出错误
     test_010: 整合并格式化输出日志
-    Redis记录
-        error_dic_obj_  记录币种 moneyPrecision 精度与OrderBook精度不匹配
     
     """
     error_num = 0
@@ -680,7 +678,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         """margin 通过下单测试 -> moneyPrecision 与 basePrecision+minOrderSize"""
         print(list_margin_c)
         print(sy_obj_margin)
-        # list_margin_c = 10
+        # list_margin_c = 3
         # sy_obj_margin = 'okex:margin_list_'
 
         for i in range(1, list_margin_c + 1):
@@ -766,36 +764,41 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 print('*下单数量:', order_q, type(order_q))
 
                 # 划转-下单-反划转
-                try:
-                    # 查看余额
-                    print('===查看需要划转的资金===')
-                    md = self.money_detailed(accountId).json()
+                print('=' * 66 + '划转 -> 下单 -> 撤单 -> 反划转' + '=' * 66)
+                # 查看余额
+                print('===查看需要划转的资金===')
+                md = self.money_detailed(accountId).json()
+                # print('md', md)
+
+                if md.get('code', None) == 1000 and md.get('message', None) == '获取成功':
                     spot_money = md['data']['position']['spot']
                     margin_money = md['data']['position']['margin']
                     sy_money = [i for i in spot_money if i['symbol'] == sy_r][0]
                     print('币种:{}\n余额:{}'.format(sy_money.get('symbol'), sy_money.get('total')))
 
-                    nb = 0
-                    if int(str(sy_money.get('total')).split('.')[0]) < 1:  # 余额小于 1
-                        nb = round(float(sy_money.get('total')), 16)  # 保留 6位小数
-                        print('划转金额:{}'.format(nb))
-                    else:
-                        print(sy_money.get('total'), type(sy_money.get('total')))
-                        nb = int(float(sy_money.get('total')))  # 取整
-                        print('划转金额:{}'.format(nb))
+                else:
+                    R.set('test_007->获取资金明细失败->{}'.format(n), str(md))
+                    continue
 
-                    # 划转 spot -> margin
-                    print('===划转 spot -> margin===')
-                    mt = self.money_transfer(accountId, nb, sy_r, 'spot', sy, 'margin').json()
+                nb = 0
+                if int(str(sy_money.get('total')).split('.')[0]) < 1:  # 余额小数点前小于 1
+                    nb = round(float(sy_money.get('total')),
+                               len(str(sy_money.get('total')).split('.')[1]))  # 保留 6位小数
+                    print('划转金额:{}'.format(nb))
+                else:
+                    print(sy_money.get('total'), type(sy_money.get('total')))
+                    nb = int(float(sy_money.get('total')))  # 取整
+                    print('划转金额:{}'.format(nb))
+
+                # 划转 spot -> margin
+                print('===划转 spot -> margin===')
+                mt = self.money_transfer(accountId, nb, sy_r, 'spot', sy, 'margin').json()
+                if mt.get('code', None) == 1000 and mt.get('message', None) == '操作成功' and mt.get('success', None):
                     print(mt)
                     sleep(1)
-
-                except BaseException as e:
-                    msg = 'test_006 -> ID{} 执行异常(查询余额or划转出现异常) -> {}'.format(n, str(e))
-                    print(msg)
-                    with open(self.logs_path + '/okex_func_errors.json', 'a+') as f:
-                        f.write(msg)
-                        traceback.print_exc(file=open(self.logs_path + '/okex_func_errors.json', 'a+'))
+                else:
+                    R.set('test_007->划转失败->{}'.format(n), str(mt))
+                    sleep(1)
                     continue
 
                 try:
@@ -823,6 +826,25 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                         error_obj['json_res'] = str(res)
                         R.set('test_007->下单失败->{}'.format(n), str(error_obj))
                         print('下单失败->{}'.format(n))
+
+                        # 下单失败反划转
+                        print('=====下单失败 -> 划转还原 金额  margin -> spot=====')
+                        reset_md = self.money_detailed(accountId).json()
+                        reset_spot_money = reset_md['data']['position']['spot']
+                        reset_margin_money = reset_md['data']['position']['margin']
+                        sy_money = [i for i in reset_margin_money if i['symbol'] == sy_r][0]
+                        print('币种:{}\n余额:{}'.format(sy_money.get('symbol'), sy_money.get('total')))
+                        print(nb)
+                        print(sy_r)
+                        print(sy)
+                        sleep(1)
+                        reset_mt = self.money_transfer(accountId, nb, sy_r, 'margin', sy, 'spot').json()
+                        print(reset_mt)
+                        if reset_mt.get('message', None) != '操作成功' and reset_mt.get('code', None) != 1000:
+                            error_obj['json_res'] = str(reset_mt)
+                            R.set('test_007->下单失败_反划转失败->{}'.format(n), str(error_obj))
+                        else:
+                            sleep(1)
                         continue
 
                     # 获取订单
@@ -909,7 +931,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         self.test_010()
 
     def test_008(self):
-        """查看 margin 资金"""
+        """查看 spot 与 margin 资金"""
         self.money_spot_margin()
 
     def test_009(self):
@@ -973,6 +995,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         self.test_001()
         self.test_002()
         self.test_007()
+        self.test_008()
 
 
 if __name__ == '__main__':
