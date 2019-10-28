@@ -35,7 +35,8 @@ discover = unittest.defaultTestLoader.discover(test_dir, pattern=file_prefix)
 
 # 时间拼接报告名称
 now = time.strftime('%Y-%m-%d %H_%M_%S')
-report_name = report_dir + '/' + now + '.html'
+test_rp = '测试报告_{}_.html'.format(now)
+report_name = report_dir + '/' + test_rp
 
 # 打开-生成测试报告
 with open(report_name, 'wb') as f:

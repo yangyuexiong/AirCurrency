@@ -316,3 +316,7 @@ class CommonFunc:
         print('<---------- margin ---------->')
         for j in margin_money:
             print(j)
+
+
+if __name__ == '__main__':
+    pass

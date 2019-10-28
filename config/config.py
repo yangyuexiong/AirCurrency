@@ -221,7 +221,90 @@ if __name__ == '__main__':
                '0.00000374', '0.00000373', '0.00000372', '0.00000371', '0.0000037', '0.00000369', '0.00000367',
                '0.00000366', '0.00000365', '0.00000364', '0.00000363']
 
+
     # ad_price(test001)
     # print(cnmd(count_list_max_len(test001)))
 
-    print(os.getcwd())
+    def first_add(s, sell=False):
+        """
+
+        :param s:      浮点数字符串
+        :param sell:   卖加 买减 -> 默认:买减
+        :return:
+        """
+        k = '0.'
+        if isinstance(s, int):
+            s = str(round(float(s), 1))
+        else:
+            s = str(as_num(s))
+
+        print('first_add -> 传入金额:', s, type(s))
+
+        s_obj = s.split('.')  # '0' + '0123'
+        print(s_obj[0])
+        print(s_obj[1])
+        print(len(s_obj[1]))
+        if int(s_obj[0]) == 0:
+            if sell:
+                print('sell')
+                okc = kexue_add(float(s) + 0.1, len(str(s_obj[1])))
+                print(okc, type(okc))
+                return okc
+
+            else:
+                print('buy')
+                s_obj_index = []
+                add_list = []
+                if len(s_obj[1]) > 1:
+                    for index, i in enumerate(s_obj[1]):
+                        if int(i) > 0:  # 如果为 0 往后推一为再减少
+                            s_obj_index.append(int(index))  # 组装值 >0 索引 list
+
+                    print('符合格式的索引列表:{}'.format(s_obj_index))
+
+                    for j in s_obj_index:
+                        c_num = k + '0' * int(j) + '1'  # 生成计算精度: k + '0' * index + '1'
+                        add_list.append(c_num)
+                        print(c_num)
+
+                        okc = kexue_add(float(s) - float(c_num), len(str(s_obj[1])))  # 格式化科学计数
+                        print(okc)
+
+                        print('{} - {} = {} -> {} -> {}'.format(s, c_num, okc, type(okc), float(okc)))
+
+                        if float(okc) == 0:
+                            print('Calculation results is zero ')
+                            print(okc + '1', type(okc + '1'))
+                            return okc + '1'  # 末尾补 1 -> '0.00000000'+'1'
+                        else:
+                            print(okc, type(okc))
+                            return okc
+                    print('计算值的列表:{}'.format(add_list))
+
+        else:
+            print('整数位 > 0')
+
+            lens = len(str(s_obj[0])) - 1  # 整数位第一位+1
+            add_okc = '1{}'.format('0' * lens)
+            print('计算的值:{}'.format(add_okc))
+
+            if sell:
+                print('sell')
+                okc = kexue_add(float(s) + float(add_okc), len(str(s_obj[1])))
+                print(okc, type(okc))
+                return okc
+            else:
+                print('buy')
+                okc = kexue_add(float(s) - float(add_okc), len(str(s_obj[1])))
+                print(okc, type(okc))
+                return okc
+
+
+    print('-' * 100)
+    first_add('0.00000364', sell=True)
+    first_add('57.88', sell=True)
+    first_add('0.00000001', sell=True)
+    print('-' * 100)
+    first_add('0.00000364')
+    first_add('57.88')
+    first_add('0.00000001')
