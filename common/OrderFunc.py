@@ -118,10 +118,7 @@ def get_url_symbol_list(exchange):
         'exchange': exchange
     }
     result = requests.get(Symbol_url, kv)
-    # print(result.json()['data'][0])
-    # print(result.json()['data'][1])
     print(type(result.json()['data']))
-
     v = result.json()['data']
     print(v)
     R.set(exchange, str(v))
@@ -165,7 +162,6 @@ def get_url_order_book(exchange, symbol):
         'symbol': symbol
     }
     result = requests.get(Orderbook, kv)
-    # print(result.json(), '\n')
     return result
 
 
@@ -186,13 +182,6 @@ def get_ticker(exchange, symbol, contractType=''):
     result = requests.get(ticker, da)
     print(result.json())
     return result
-
-
-# 错误记录
-def error_log(p, sy, o_s):
-    ff = '币种对象:\n\t{}\n订单对象:\n\t{}\n\n'.format(sy, o_s)
-    with open(p + '/okex_err_Symbol_OrderMoneyPrecision.json', 'a+') as f:
-        f.write(ff)
 
 
 # 格式化8位小数
@@ -229,30 +218,25 @@ class CommonFunc:
 
         if not sy.get('moneyPrecision') or not sy.get('basePrecision'):
             print('moneyPrecision 或 basePrecision 为 None')
-            R.set('error_data_{}'.format(shortuuid.uuid()), str(sy))
-            assert 1 == 1 - 1
+            R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
 
         if float(sy.get('moneyPrecision')) <= 0 or float(sy.get('basePrecision')) <= 0:
             print('moneyPrecision 或 basePrecision 值 < 0')
-            R.set('error_data_{}'.format(shortuuid.uuid()), str(sy))
-            assert 1 == 1 - 1
+            R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
 
         if not sy.get('minOrderSize') and not sy.get('minOrderValue'):
             print('minOrderSize 与 minOrderValue 为 None')
-            R.set('error_data_{}'.format(shortuuid.uuid()), str(sy))
-            assert 1 == 1 - 1
+            R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
 
         if sy.get('minOrderSize'):
             if float(sy.get('minOrderSize')) <= 0:
                 print('minOrderSize  <= 0')
-                R.set('error_data_{}'.format(shortuuid.uuid()), str(sy))
-                assert 1 == 1 - 1
+                R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
 
         if sy.get('minOrderValue'):
             if float(sy.get('minOrderValue')) <= 0:
                 print('minOrderValue  <= 0')
-                R.set('error_data_{}'.format(shortuuid.uuid()), str(sy))
-                assert 1 == 1 - 1
+                R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
 
     def money_detailed(self, accountId):
         """

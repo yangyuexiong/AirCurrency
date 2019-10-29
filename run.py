@@ -33,9 +33,10 @@ if len(ter_param) != 0:
         print('参数错误...')
         exit()
 else:
+    print('else')
     report_dir = './reports'
     test_dir = './case/V2'
-    file_prefix = ''
+    file_prefix = 'test_003_OrderAccuracy_OKEX.py'
 
 print('报告路径:{}\n测试路径:{}\n文件前缀:{}\n'.format(report_dir, test_dir, file_prefix))
 

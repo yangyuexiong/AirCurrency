@@ -169,15 +169,6 @@ if __name__ == '__main__':
         print(d2)
 
 
-    # last_add_2('0.00000100')
-
-    # print(as_num('1.02e-06'))
-    # print(as_num('1e-06'))
-
-    p = ['aaa', 'aaaaa', 'aaaa', 'bbbbb', 'ccccc']
-    p1 = ['0.00000389', '0.0000039', '0.00000381', '0.00000382', '11', '22', '33', ]
-
-
     def ad_price(price_list):
         """
         过滤失去精度的下单价格
@@ -299,12 +290,11 @@ if __name__ == '__main__':
                 print(okc, type(okc))
                 return okc
 
-
-    print('-' * 100)
-    first_add('0.00000364', sell=True)
-    first_add('57.88', sell=True)
-    first_add('0.00000001', sell=True)
-    print('-' * 100)
-    first_add('0.00000364')
-    first_add('57.88')
-    first_add('0.00000001')
+    # print('-' * 100)
+    # first_add('0.00000364', sell=True)
+    # first_add('57.88', sell=True)
+    # first_add('0.00000001', sell=True)
+    # print('-' * 100)
+    # first_add('0.00000364')
+    # first_add('57.88')
+    # first_add('0.00000001')
