@@ -524,8 +524,9 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     print('*下单金额:', p, type(p))
                     print('*防止精度丢失备用下单金额:', p1, type(p1))
                 else:
-                    msg = '交易所或OrderBook未找到该币种->{}'.format(sy['symbol'])
-                    R.set('test_005->交易所或OrderBook未找到该币种->ID:{}'.format(i), str(msg))
+                    sss = '{} -> 交易所或OrderBook未找到该币对'.format(sy['symbol'])
+                    self.format_logs['send'] = sss
+                    R.set('test_005->交易所或OrderBook未找到该币种->ID:{}'.format(i), str(self.format_logs))
                     print('====================end test -> orror {} -> {}====================\n'.format(n, sy))
                     continue
 
@@ -592,7 +593,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     if res_code != 1000 and res_message != '下单成功' and not orderId:
                         print(res)
                         error_obj['json_res'] = str(res)
-                        R.set('test_005->下单失败->ID:{}'.format(n), str(error_obj))
+                        sss = '{} -> 下单失败:价格{},数量{}'.format(sy, this_p, order_q)
+                        self.format_logs['msg'] = error_obj
+                        self.format_logs['send'] = sss
+                        R.set('test_005->下单失败->ID:{}'.format(n), str(self.format_logs))
                         print('下单失败->{}'.format(n))
                         continue
 
@@ -601,7 +605,11 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     if order_status.get('message', None) != '获取订单成功：':
                         print(order_status)
                         error_obj['json_res'] = str(order_status)
-                        R.set('test_005->获取订单失败->ID:{}'.format(n), str(error_obj))
+                        sss = '{} -> 获取订单失败:状态 {},单号 {}'.format(sy, order_status['data'].get('status', None),
+                                                                order_status['data'].get('orderId', None))
+                        self.format_logs['msg'] = error_obj
+                        self.format_logs['send'] = sss
+                        R.set('test_005->获取订单失败->ID:{}'.format(n), str(self.format_logs))
                         print('获取订单失败->{}'.format(n))
                         continue
 
@@ -620,7 +628,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
                     if len(obj_price.split('.')[1]) != len(od_price.split('.')[1]):
                         ff = '币种对象:\n{}\n\n订单对象:\n{}'.format(str(d), str(order_status))
-                        R.set('test_005->下单后币种精度与OrderBook不相符->ID{}'.format(n), ff)
+                        sss = '{} -> 下单后币种精度与OrderBook不相符,价格精度{},数量精度{}'.format(sy, od_price, od_minsize)
+                        self.format_logs['msg'] = ff
+                        self.format_logs['send'] = sss
+                        R.set('test_005->下单后币种精度与OrderBook不相符->ID{}'.format(n), str(self.format_logs))
 
                     print('od_status', od_status)
 
@@ -630,7 +641,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                         print('撤单失败->{}'.format(n))
                         error_obj['json_res'] = str({'订单状态': '{}'.format(od_status)})
                         error_obj['订单明细'] = str(order_status)
-                        R.set('test_005->撤单失败->{}'.format(n), str(error_obj))
+                        sss = '{} -> 撤单失败,状态{},单号{}'.format(sy, od_status, order_status['data'].get('orderId', None))
+                        self.format_logs['msg'] = error_obj
+                        self.format_logs['send'] = sss
+                        R.set('test_005->撤单失败->{}'.format(n), str(self.format_logs))
                         continue
                     else:
                         co['exchangeType'] = order_status['data']['exchangeType']
@@ -648,7 +662,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                         '下单数量': str(order_q),
                         '异常': str(e)
                     }
-                    R.set('test_005->内层func执行异常->ID{}'.format(n), str(error_obj))
+                    sss = '{} -> 内层func执行异常'.format(sy)
+                    self.format_logs['msg'] = error_obj
+                    self.format_logs['send'] = sss
+                    R.set('test_005->内层func执行异常->ID{}'.format(n), str(self.format_logs))
                     continue
             except BaseException as e:
                 error_obj = {
@@ -658,7 +675,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     '下单数量': str(order_q),
                     '异常': str(e)
                 }
-                R.set('test_005->外层func执行异常->ID{}'.format(n), str(e))
+                sss = '{} -> 外层func执行异常'.format(sy)
+                self.format_logs['msg'] = error_obj
+                self.format_logs['send'] = sss
+                R.set('test_005->外层func执行异常->ID{}'.format(n), str(self.format_logs))
                 continue
 
     def test_006(self):
@@ -724,8 +744,9 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     print('*下单金额:', p, type(p))
                     print('*防止精度丢失备用下单金额:', p1, type(p1))
                 else:
-                    msg = '未找到该币种{}'.format(sy['symbol'])
-                    R.set('test_007->交易所或OrderBook未找到该币种->{}'.format(i), str(msg))
+                    sss = '{} -> 交易所或OrderBook未找到该币种'.format(sy)
+                    self.format_logs['send'] = sss
+                    R.set('test_007->交易所或OrderBook未找到该币种->{}'.format(i), str(self.format_logs))
                     print('====================end test -> orror {} -> {}====================\n'.format(n, sy))
                     continue
 
@@ -780,7 +801,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     print('币种:{}\n余额:{}'.format(sy_money.get('symbol'), sy_money.get('total')))
 
                 else:
-                    R.set('test_007->获取资金明细失败->ID{}'.format(n), str(md))
+                    sss = '{} -> 获取资金明细失败'.format(sy)
+                    self.format_logs['msg'] = md
+                    self.format_logs['send'] = sss
+                    R.set('test_007->获取资金明细失败->ID{}'.format(n), str(self.format_logs))
                     continue
 
                 nb = 0
@@ -800,7 +824,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     print(mt)
                     sleep(1)
                 else:
-                    R.set('test_007->划转失败->ID{}'.format(n), str(mt))
+                    sss = '{} -> 划转失败'.format(sy)
+                    self.format_logs['msg'] = mt
+                    self.format_logs['send'] = sss
+                    R.set('test_007->划转失败->ID{}'.format(n), str(self.format_logs))
                     sleep(1)
                     continue
 
@@ -827,7 +854,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     if res_code != 1000 and res_message != '下单成功' and not orderId:
                         print(res)
                         error_obj['json_res'] = str(res)
-                        R.set('test_007->下单失败->ID{}'.format(n), str(error_obj))
+                        sss = '{} -> 下单失败'.format(sy)
+                        self.format_logs['msg'] = error_obj
+                        self.format_logs['send'] = sss
+                        R.set('test_007->下单失败->ID{}'.format(n), str(self.format_logs))
                         print('下单失败->{}'.format(n))
 
                         # 下单失败反划转
@@ -845,7 +875,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                         print(reset_mt)
                         if reset_mt.get('message', None) != '操作成功' and reset_mt.get('code', None) != 1000:
                             error_obj['json_res'] = str(reset_mt)
-                            R.set('test_007->下单失败_反划转失败->ID{}'.format(n), str(error_obj))
+                            sss = '{} -> 下单失败_反划转失败'.format(sy)
+                            self.format_logs['msg'] = error_obj
+                            self.format_logs['send'] = sss
+                            R.set('test_007->下单失败_反划转失败->ID{}'.format(n), str(self.format_logs))
                         else:
                             sleep(1)
                         continue
@@ -855,7 +888,11 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     if order_status.get('message', None) != '获取订单成功：':
                         print(order_status)
                         error_obj['json_res'] = str(order_status)
-                        R.set('test_007->获取订单失败->ID{}'.format(n), str(error_obj))
+                        sss = '{} -> 获取订单失败:状态 {},单号 {}'.format(sy, order_status['data'].get('status', None),
+                                                                order_status['data'].get('orderId', None))
+                        self.format_logs['msg'] = error_obj
+                        self.format_logs['send'] = sss
+                        R.set('test_007->获取订单失败->ID{}'.format(n), str(self.format_logs))
                         print('获取订单失败->{}'.format(n))
                         continue
 
@@ -874,7 +911,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
                     if len(obj_price.split('.')[1]) != len(od_price.split('.')[1]):
                         ff = '币种对象:\n{}\n\n订单对象:\n{}'.format(str(d), str(order_status))
-                        R.set('test_007->下单后币种精度与OrderBook不相符->ID{}'.format(n), ff)
+                        sss = '{} -> 下单后币种精度与OrderBook不相符,价格精度{},数量精度{}'.format(sy, od_price, od_minsize)
+                        self.format_logs['msg'] = ff
+                        self.format_logs['send'] = sss
+                        R.set('test_007->下单后币种精度与OrderBook不相符->ID{}'.format(n), str(self.format_logs))
 
                     # 撤单
                     if od_status != 'active':
@@ -882,7 +922,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                         print('撤单失败->{}'.format(n))
                         error_obj['json_res'] = str({'订单状态': '{}'.format(od_status)})
                         error_obj['订单明细'] = str(order_status)
-                        R.set('test_007->撤单失败->ID{}'.format(n), str(error_obj))
+                        sss = '{} -> 撤单失败,状态{},单号{}'.format(sy, od_status, order_status['data'].get('orderId', None))
+                        self.format_logs['msg'] = error_obj
+                        self.format_logs['send'] = sss
+                        R.set('test_007->撤单失败->ID{}'.format(n), str(self.format_logs))
                         continue
                     else:
                         co['exchangeType'] = order_status['data']['exchangeType']
@@ -907,7 +950,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     print(reset_mt)
                     if reset_mt.get('message', None) != '操作成功' and reset_mt.get('code', None) != 1000:
                         error_obj['json_res'] = str(reset_mt)
-                        R.set('test_007->反划转失败->ID{}'.format(n), str(error_obj))
+                        sss = '{} -> 反划转失败'.format(sy)
+                        self.format_logs['msg'] = error_obj
+                        self.format_logs['send'] = sss
+                        R.set('test_007->反划转失败->ID{}'.format(n), str(self.format_logs))
                     else:
                         sleep(1)
                 except BaseException as e:
@@ -918,7 +964,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                         '下单数量': str(order_q),
                         '异常': str(e)
                     }
-                    R.set('test_007->内func执行异常->ID{}'.format(n), str(error_obj))
+                    sss = '{} -> 内func执行异常'.format(sy)
+                    self.format_logs['msg'] = error_obj
+                    self.format_logs['send'] = sss
+                    R.set('test_007->内func执行异常->ID{}'.format(n), str(self.format_logs))
                     continue
 
             except BaseException as e:
@@ -929,7 +978,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     '下单数量': str(order_q),
                     '异常': str(e)
                 }
-                R.set('test_007->外func执行异常->ID{}'.format(n), str(e))
+                sss = '{} -> 外func执行异常'.format(sy)
+                self.format_logs['msg'] = error_obj
+                self.format_logs['send'] = sss
+                R.set('test_007->外func执行异常->ID{}'.format(n), str(self.format_logs))
                 continue
 
     def test_008(self):
@@ -939,26 +991,36 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
     def test_009(self):
         """整合并格式化输出日志"""
 
-        with open(self.logs_path + '/log.txt', 'w', encoding='utf-8') as f:
-            f.write('')
-
-        for i in R.keys(pattern='test_*'):
-            logs_obj = eval('(' + R.get(i) + ')')
-            print(logs_obj['send'], '\n')
+        tb.field_names = ['Symbol', 'error']
+        if R.keys(pattern='test_*'):
+            for i in R.keys(pattern='test_*'):
+                logs_obj = eval('(' + R.get(i) + ')')
+                l = logs_obj['send'].split('->')[0]
+                r = logs_obj['send'].split('->')[1]
+                tb.add_row([l, r])
+                print(logs_obj['send'], '\n')
+            with open(self.logs_path + '/log.txt', 'w', encoding='utf-8') as f:
+                f.write(str(tb))
+            print(tb)
+        else:
+            tb.add_row(['null', 'null'])
+            print('===未发现错误===')
+            with open(self.logs_path + '/log.txt', 'w', encoding='utf-8') as f:
+                f.write('')
+            print(tb)
 
     def test_010(self):
         """查看错误输出"""
 
         er = 0
-        for i in self.f_list:
-            with open(self.logs_path + '/{}'.format(i), 'r', encoding='utf-8') as f:
-                fs = f.read()
-                if not fs:
-                    print('{} -> not error'.format(i))
-                else:
-                    print('===error->>> {} ==='.format(i))
-                    print(fs, '\n')
-                    er += 1
+
+        with open(self.logs_path + '/log.txt', 'r', encoding='utf-8') as f:
+            fs = f.read()
+            if not fs:
+                print('not error')
+            else:
+                print(fs)
+                er += 1
         assert er == 0
 
     @unittest.skip('调试函数 -> Pass')
@@ -1014,15 +1076,17 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         # self.test_005()
         # self.test_006()
 
-    # @unittest.skip('分组调试 -> Pass')
+    @unittest.skip('分组调试 -> Pass')
     def test_09999(self):
         self.test_001()
         self.test_002()
         self.test_003()
         self.test_004()
-        # self.test_009()
-        # self.test_005()
-        # self.test_006()
+        self.test_005()
+        self.test_006()
+
+        self.test_009()
+        self.test_010()
 
     @unittest.skip('分组调试 -> Pass')
     def test_099999(self):
