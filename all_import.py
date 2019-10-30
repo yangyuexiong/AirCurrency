@@ -15,6 +15,6 @@ import prettytable as pt
 from common.BaseUnit import StartEnd
 from common.PublicFunc import *
 from config.Urls import *
-from config.config import POOL, R
+from config.config import POOL, redis_obj
 
 tb = pt.PrettyTable()

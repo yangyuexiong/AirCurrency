@@ -11,6 +11,8 @@ from all_import import *
 from config.data.test_data import *
 from common.OrderFunc import *
 
+R = redis_obj(9)
+
 
 class PublicOrderFunc:
     """公共类"""
@@ -20,7 +22,8 @@ class PublicOrderFunc:
 
     def clear_db_08(self):
         """测试数据init"""
-        R.flushall()
+        # R.flushall()
+        R.flushdb()
         print('redis db8 flushall .....')
 
     def fund_status(self, x, exchangeType, symbol_l, symbol_r):

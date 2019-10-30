@@ -28,15 +28,21 @@ if len(ter_param) != 0:
         file_prefix = 'test_*.py'  # 文件前缀
     if ter_param[0] == 'okex':
         """执行okex"""
-        file_prefix = 'test_003_OrderAccuracy_OKEX.py'
+        file_prefix = 'test_003_OrderAccuracy_001_OKEX.py'
+    if ter_param[0] == 'bitfinex':
+        """执行bitfinex"""
+        file_prefix = 'test_003_OrderAccuracy_002_BitFinex.py'
+    if ter_param[0] == 'bitmex':
+        """执行bitmex"""
+        file_prefix = 'test_003_OrderAccuracy_003_BitMex.py'
     else:
         print('参数错误...')
         exit()
 else:
-    print('else')
+    print('else -> all test case')
     report_dir = './reports'
     test_dir = './case/V2'
-    file_prefix = 'test_003_OrderAccuracy_OKEX.py'
+    file_prefix = 'test_003_OrderAccuracy_001_OKEX.py'
 
 print('报告路径:{}\n测试路径:{}\n文件前缀:{}\n'.format(report_dir, test_dir, file_prefix))
 

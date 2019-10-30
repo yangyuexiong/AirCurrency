@@ -103,7 +103,7 @@ def get_active_orders():
 
 
 # 获取交易所所有币对list
-def get_url_symbol_list(exchange):
+def get_url_symbol_list(exchange, R):
     """
 
     moneyPrecision -> 下单价格精度
@@ -126,7 +126,7 @@ def get_url_symbol_list(exchange):
 
 
 # 分开保存每一个币种到Redis
-def save_symbol_obj(s):
+def save_symbol_obj(s, R):
     """
 
     :param s: 交易所:子市场 -> okex:spot
@@ -198,16 +198,18 @@ def bl8(n):
 class CommonFunc:
     """公共类"""
 
-    def clear_db_08(self):
+    def clear_db_08(self, R):
         """测试数据init"""
-        R.flushall()
-        print('redis db8 flushall .....')
+        R.flushdb()
+        # R.flushall()
+        print('redis db{} flushall .....'.format(R))
 
-    def check_sy_kv(self, sy):
+    def check_sy_kv(self, sy, R):
         """
         检查symbol参数 最要包括:moneyPrecision,basePrecision,minOrderSize,minOrderValue
 
         :param sy:
+        :param R:
         :return:
 
         """
