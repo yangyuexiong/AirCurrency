@@ -10,9 +10,9 @@ from config.data.test_data import *
 
 
 # 下单
-# def generating_orders(exchange=None, exchangeType=None, postType=None, price=None, qty=None, side=None, symbol=None):
-def generating_orders(exchange, exchangeType, postType, price, qty, side, symbol):
+def generating_orders(accountId, exchange, exchangeType, postType, price, qty, side, symbol):
     """
+    :param accountId:       accountId
     :param exchange:        交易所
     :param exchangeType:    交易类型  币币-> spot, 杠杆-> margin, 交割-> future, 永续-> swap
     :param postType:                 默认-> normal , 吃单-> post_only
@@ -71,10 +71,25 @@ def generating_orders(exchange, exchangeType, postType, price, qty, side, symbol
         return
 
 
+# 撤单
+def cancel_order(accountId, exchange, exchangeType, orderId, symbol):
+    co = {
+        "accountId": accountId,
+        "customId": "",
+        "exchange": exchange,
+        "exchangeType": exchangeType,
+        "orderId": orderId,
+        "symbol": symbol
+    }
+    result = requests.post(cancelOrder, json=co, headers=header)
+    print(result.json())
+    return result
+
+
 #  查看订单状态
-def check_order(exchange, exchangeType, orderId, symbol, a_id=accountId, all_json=False):
+def check_order(accountId, exchange, exchangeType, orderId, symbol, all_json=False):
     j = {
-        "accountId": a_id,
+        "accountId": accountId,
         "customId": "",
         "exchange": exchange,
         "exchangeType": exchangeType,
@@ -95,8 +110,15 @@ def check_order(exchange, exchangeType, orderId, symbol, a_id=accountId, all_jso
 
 
 # 查看挂单list
-def get_active_orders():
+def get_active_orders(accountId, exchange, exchangeType):
     """获取活跃订单列表"""
+    ao = {
+        "accountId": accountId,
+        "exchange": exchange,
+        "exchangeType": exchangeType,
+        "readFromCache": True,
+        "symbol": ""
+    }
     result = requests.post(getActiveOrders, json=ao, headers=header)
     # print(result.json())
     return result
@@ -285,7 +307,7 @@ class CommonFunc:
         result = requests.post(transfer, json=mt, headers=header)
         return result
 
-    def money_spot_margin(self):
+    def money_spot_margin(self, accountId):
         r = self.money_detailed(accountId).json()
         spot_money = r['data']['position']['spot']
         margin_money = r['data']['position']['margin']

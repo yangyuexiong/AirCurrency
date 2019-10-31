@@ -50,7 +50,16 @@ symbol*	string
 
 '''
 
-accountId = '4993'  # okex交易所
+# okex:4993
+# bitfinex:5008
+# bitmex:5009
+# accountId = '4993'
+
+accountId_to_dict = {
+    'okex': '4993',
+    'bitfinex': '5008',
+    'bitmex': '5009',
+}
 
 # 交易类型
 exchangeType = {
@@ -70,35 +79,13 @@ side = {
     '平空': 'close_sell',
 }
 
-# 下单
-d = {
-    "accountId": accountId,
-    "exchange": "okex",
-    "exchangeType": "spot",
-    "postType": "normal",
-    "price": "1",
-    "qty": "1",
-    "side": "buy",
-    "symbol": "ltc_okb",
-    "type": "limit"
-}
-
 # 撤单
 co = {
-    "accountId": accountId,
+    "accountId": '',
     "customId": "",
     "exchange": "okex",
     "exchangeType": "",
     "orderId": "",
-    "symbol": ""
-}
-
-# 挂单list
-ao = {
-    "accountId": accountId,
-    "exchange": "okex",
-    "exchangeType": "spot",
-    "readFromCache": True,
     "symbol": ""
 }
 
@@ -125,7 +112,7 @@ def reset_place_order(data):
 
 
 # 返回对应交易所测试数据
-def return_exchange(exch, ):
+def return_exchange(exch):
     d = {
         "accountId": accountId,
         "exchange": "okex",
