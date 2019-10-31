@@ -50,11 +50,6 @@ symbol*	string
 
 '''
 
-# okex:4993
-# bitfinex:5008
-# bitmex:5009
-# accountId = '4993'
-
 accountId_to_dict = {
     'okex': '4993',
     'bitfinex': '5008',

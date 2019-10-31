@@ -5,6 +5,7 @@
 # @File    : run.py
 # @Software: PyCharm
 
+import os
 import sys
 import time
 
@@ -14,8 +15,11 @@ from common.HTMLTestReportCN import HTMLTestRunner
 from config.config import *
 
 # 终端执行
-path = '/Users/yangyuexiong/Desktop/AirCurrency'
+path_1 = os.getcwd().split('AirCurrency')[0]
+path_2 = 'AirCurrency/'
+path = path_1 + path_2
 sys.path.append(path)
+print(path)
 
 # 终端命令穿参
 ter_param = sys.argv[1:]

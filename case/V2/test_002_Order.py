@@ -133,6 +133,7 @@ class PublicOrderFunc:
         print('save db success')
 
 
+@unittest.skip('PASS')
 class TestPlaceOrderForwardLogic(StartEnd, PublicOrderFunc):
     """Place Order Forward logic"""
 
@@ -201,6 +202,7 @@ class TestPlaceOrderForwardLogic(StartEnd, PublicOrderFunc):
         """测试-币币:交易 -> buy【成交】前后金额增加/减少"""
 
 
+@unittest.skip('PASS')
 class TestPlaceOrderReverseLogic(StartEnd, PublicOrderFunc):
     """Place Order Reverse logic"""
 
@@ -855,7 +857,7 @@ class TestPlaceOrderReverseLogic(StartEnd, PublicOrderFunc):
         self.clear_db_08()
 
 
-# @unittest.skip('pass-> 单元调试类')
+@unittest.skip('pass-> 单元调试类')
 class TestDevTest(StartEnd, PublicOrderFunc):
     """调试类"""
 

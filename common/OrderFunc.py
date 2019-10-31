@@ -240,27 +240,34 @@ class CommonFunc:
                 'moneyCoin': 'btc', 'basePrecision': '0.001', 'moneyPrecision': '0.0000001', 'minOrderSize': '1',
                 'symbolType': 'spot', 'tradeType': 'knc', 'multiplier': '1'}
 
-        if not sy.get('moneyPrecision') or not sy.get('basePrecision'):
-            print('moneyPrecision 或 basePrecision 为 None')
-            R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
-
-        if float(sy.get('moneyPrecision')) <= 0 or float(sy.get('basePrecision')) <= 0:
-            print('moneyPrecision 或 basePrecision 值 < 0')
-            R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
-
-        if not sy.get('minOrderSize') and not sy.get('minOrderValue'):
-            print('minOrderSize 与 minOrderValue 为 None')
-            R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
-
-        if sy.get('minOrderSize'):
-            if float(sy.get('minOrderSize')) <= 0:
-                print('minOrderSize  <= 0')
+        # print(sy)
+        # print(sy.get('moneyPrecision'), type(sy.get('moneyPrecision')))
+        # print(float(sy.get('moneyPrecision')), type(float(sy.get('moneyPrecision'))))
+        # print(round(float(sy.get('moneyPrecision')), len(sy.get('moneyPrecision').split('.')[1])))
+        try:
+            if not sy.get('moneyPrecision') or not sy.get('basePrecision'):
+                print('moneyPrecision 或 basePrecision 为 None')
                 R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
 
-        if sy.get('minOrderValue'):
-            if float(sy.get('minOrderValue')) <= 0:
-                print('minOrderValue  <= 0')
+            if float(sy.get('moneyPrecision')) <= 0 or float(sy.get('basePrecision')) <= 0:
+                print('moneyPrecision 或 basePrecision 值 < 0')
                 R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
+
+            if not sy.get('minOrderSize') and not sy.get('minOrderValue'):
+                print('minOrderSize 与 minOrderValue 为 None')
+                R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
+
+            if sy.get('minOrderSize'):
+                if float(sy.get('minOrderSize')) <= 0:
+                    print('minOrderSize  <= 0')
+                    R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
+
+            if sy.get('minOrderValue'):
+                if float(sy.get('minOrderValue')) <= 0:
+                    print('minOrderValue  <= 0')
+                    R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
+        except BaseException as e:
+            R.set('error->check_sy_kv暂时忽略->{}'.format(shortuuid.uuid()), str(sy))
 
     def money_detailed(self, accountId):
         """

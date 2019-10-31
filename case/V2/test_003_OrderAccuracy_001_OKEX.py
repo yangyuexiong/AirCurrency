@@ -14,11 +14,10 @@ from common.OrderFunc import *
 
 a_id = accountId_to_dict.get('okex')
 
-R = redis_obj(9)
-
-
 # R = redis_obj(10)
-# R = redis_obj(11)
+
+
+R = redis_obj(11)
 
 
 def kexue_add(number, ll):
@@ -330,7 +329,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         sy_obj_margin = res_margin[1][:-5]
 
     def test_003(self):
-        """检查币obj参数"""
+        """检查币对参数"""
         print(list_c)
         print(sy_ob)
         print(list_margin_c)
@@ -525,7 +524,6 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     print('buy_list_to_float -> ', buy_list2)
                     print('\n')
 
-                    print('[]' * 500)
                     p = first_add(bids_one)
                     p1 = first_add(ad_price(buy_list2))
                     print('\n')
@@ -1244,12 +1242,6 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
         # reset_mt = self.money_transfer(a_id, 6, 'usdt', 'margin', 'neo_usdt', 'spot').json()
         # print(reset_mt)
-        # self.test_001()
-        # self.test_002()
-        # self.test_003()
-        # self.test_004()
-        # self.test_005()
-        # self.test_006()
 
     @unittest.skip('分组调试 -> Pass')
     def test_09999(self):
@@ -1259,16 +1251,13 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         # self.test_004()
         self.test_005()
         # self.test_006()
-        #
+
         # self.test_009()
         # self.test_010()
 
     @unittest.skip('分组调试 -> Pass')
     def test_099999(self):
-        self.test_001()
-        self.test_002()
-        self.test_007()
-        self.test_008()
+        """分组调试"""
 
 
 if __name__ == '__main__':
