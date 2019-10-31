@@ -79,16 +79,6 @@ side = {
     '平空': 'close_sell',
 }
 
-# 撤单
-co = {
-    "accountId": '',
-    "customId": "",
-    "exchange": "okex",
-    "exchangeType": "",
-    "orderId": "",
-    "symbol": ""
-}
-
 
 # 重置下单测试数据
 def reset_place_order(data):
@@ -109,28 +99,6 @@ def reset_place_order(data):
     else:
         print('T:重置参数')
         return data
-
-
-# 返回对应交易所测试数据
-def return_exchange(exch):
-    d = {
-        "accountId": accountId,
-        "exchange": "okex",
-        "exchangeType": "spot",
-        "postType": "normal",
-        "price": "1",
-        "qty": "1",
-        "side": "buy",
-        "symbol": "ltc_okb",
-        "type": "limit"
-    }
-    if exch == exchange['okex']:
-        d['exchange'] = exch
-        return d
-    if exch == exchange['火币']:
-        pass
-    if exch == exchange['币安']:
-        pass
 
 
 if __name__ == '__main__':

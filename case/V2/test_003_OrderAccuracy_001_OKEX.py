@@ -43,6 +43,8 @@ def as_num(number, prec=20):
         return format(ctx.create_decimal(str(number)), 'f')
     else:
         # print(number, type(number))
+        if '.' not in str(number):
+            return str(number) + '.0'
         return number
 
 
@@ -285,7 +287,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
     test_006: 复查是否还有未撤的活跃订单->撤单
     test_007: margin 通过下单测试 -> moneyPrecision 与 basePrecision+minOrderSize
     test_008: 查看 spot 与 margin 资金
-    test_009: test_009: 查看输出错误 
+    test_009: 整合并格式化输出日志 
     test_010: 查看输出错误
     test_011: 格式化输出
     
@@ -633,7 +635,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     print(od_minsize, type(od_minsize))
                     print('=====校验订单精度=====\n')
 
-                    if len(obj_price.split('.')[1]) != len(od_price.split('.')[1]):
+                    if len(obj_price.split('.')[1]) != len(as_num(od_price).split('.')[1]):
                         ff = '币种对象:\n{}\n\n订单对象:\n{}'.format(str(d), str(order_status))
                         sss = '{} -> 下单后币种精度与OrderBook不相符,价格精度{},数量精度{}'.format(sy, od_price, od_minsize)
                         self.format_logs['msg'] = ff
@@ -913,7 +915,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     print(od_minsize, type(od_minsize))
                     print('=====校验订单精度=====\n')
 
-                    if len(obj_price.split('.')[1]) != len(od_price.split('.')[1]):
+                    if len(obj_price.split('.')[1]) != len(as_num(od_price).split('.')[1]):
                         ff = '币种对象:\n{}\n\n订单对象:\n{}'.format(str(d), str(order_status))
                         sss = '{} -> 下单后币种精度与OrderBook不相符,价格精度{},数量精度{}'.format(sy, od_price, od_minsize)
                         self.format_logs['msg'] = ff
@@ -1026,13 +1028,13 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 er += 1
         assert er == 0
 
-    @unittest.skip('调试函数 -> Pass')
+    @unittest.skip('调试test_005 -> Pass')
     def test_011(self):
-        """调试函数"""
+        """调试test_005"""
 
         list_c = 1  # 调试
         # sy_ob = 'okex:spot_list_'  # 调试
-        test_sy_ob = 'okex:spot_list_{}'.format("%05d" % 54)
+        test_sy_ob = 'okex:spot_list_{}'.format("%05d" % 364)
 
         for i in range(1, list_c + 1):
 
@@ -1179,7 +1181,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
             print(obj_price.split('.')[1])
             print(od_price)
 
-            if len(obj_price.split('.')[1]) != len(od_price.split('.')[1]):
+            if len(obj_price.split('.')[1]) != len(as_num(od_price).split('.')[1]):
                 ff = '币种对象:\n{}\n\n订单对象:\n{}'.format(str(d), str(order_status))
                 sss = '{} -> 下单后币种精度与OrderBook不相符,价格精度{},数量精度{}'.format(sy, od_price, od_minsize)
                 self.format_logs['msg'] = ff

@@ -66,6 +66,8 @@ def as_num(number, prec=20):
         # return ctx.create_decimal(str(number))
     else:
         # print(number, type(number))
+        if '.' not in str(number):
+            return str(number) + '.0'
         return number
 
 
@@ -277,6 +279,7 @@ def first_add(s, sell=False):
             print(okc, type(okc))
             return okc
 
+
 # first_add('0.00000364', sell=True)
 # first_add('57.88', sell=True)
 # first_add('0.00000001', sell=True)
@@ -285,4 +288,6 @@ def first_add(s, sell=False):
 # first_add('57.88')
 # first_add('0.00000001')
 
-first_add('58.0')
+
+print(as_num(99))
+as_num(0.00000364)
