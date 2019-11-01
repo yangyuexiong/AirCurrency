@@ -50,6 +50,7 @@
     pip3 install shortuuid
     pip3 install prettytable
     pip3 install redis
+    pip3 install apscheduler
 
     ```
 * 运行

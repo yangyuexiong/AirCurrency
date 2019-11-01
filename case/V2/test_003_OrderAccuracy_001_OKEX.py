@@ -288,7 +288,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
     test_008: 查看 spot 与 margin 资金
     test_009: 整合并格式化输出日志 
     test_010: 查看输出错误
-    test_011: 格式化输出
+    test_011: 调试test_005
     
     """
     error_num = 0
@@ -1013,7 +1013,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
             print(tb)
 
     def test_010(self):
-        """查看错误输出"""
+        """ okex -> 查看错误输出"""
 
         er = 0
 
@@ -1205,20 +1205,6 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 symbol = order_status['data'].get('symbol')
                 cancel_order(a_id, 'okex', exchangeType, orderId, symbol)
                 print('====================end test -> {} -> {}====================\n'.format(n, sy))
-
-            # except BaseException as e:
-            #     error_obj = {
-            #         '币对测试ID': str(n),
-            #         '币种对象': str(d),
-            #         '下单金额': str(this_p),
-            #         '下单数量': str(order_q),
-            #         '异常': str(e)
-            #     }
-            #     sss = '{} -> 内层func执行异常'.format(sy)
-            #     self.format_logs['msg'] = error_obj
-            #     self.format_logs['send'] = sss
-            #     R.set('test_005->内层func执行异常->ID{}'.format(n), str(self.format_logs))
-            #     continue
 
     @unittest.skip('调试函数 -> Pass')
     def test_099(self):

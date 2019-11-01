@@ -18,10 +18,10 @@ print(path)
 
 def ter_start():
     # 终端命令穿参
-    ter_param = sys.argv
+    ter_param = sys.argv[1:]
     if len(ter_param) != 0:
         print(ter_param)
-        p = ter_param[1]
+        p = ter_param[0]
         print(p, type(p))
 
         if p == 'all':

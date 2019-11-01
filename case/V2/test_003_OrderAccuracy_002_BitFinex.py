@@ -6,14 +6,6 @@
 # @Software: PyCharm
 
 
-import os
-import sys
-
-path_1 = os.getcwd().split('AirCurrency')[0]
-path_2 = 'AirCurrency/'
-path = path_1 + path_2
-sys.path.append(path)
-
 from all_import import *
 from config.data.test_data import *
 from common.OrderFunc import *
@@ -64,7 +56,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
         list_future_c = int(res_future[0])  # future 总数
         sy_obj_future = res_future[1][:-5]
 
-    @unittest.skip('3')
+    @unittest.skip('分组调试 -> Pass')
     def test_003(self):
         """检查币对参数"""
         print(list_c)
@@ -97,7 +89,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
 
         print('========== check future success ==========')
 
-    @unittest.skip('4')
+    @unittest.skip('分组调试 -> Pass')
     def test_004(self):
         """下单前 -> 通过已有orderBook校验 -> moneyPrecision精度"""
 
