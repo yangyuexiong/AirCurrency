@@ -56,7 +56,6 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
         list_future_c = int(res_future[0])  # future 总数
         sy_obj_future = res_future[1][:-5]
 
-    @unittest.skip('分组调试 -> Pass')
     def test_003(self):
         """检查币对参数"""
         print(list_c)
@@ -89,7 +88,6 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
 
         print('========== check future success ==========')
 
-    @unittest.skip('分组调试 -> Pass')
     def test_004(self):
         """下单前 -> 通过已有orderBook校验 -> moneyPrecision精度"""
 
@@ -406,10 +404,10 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
         # self.test_009()
         # self.test_010()
 
-    @unittest.skip('分组调试 -> Pass')
+    # @unittest.skip('分组调试 -> Pass')
     def test_099999(self):
         """1"""
-        list_c = 10  # 调试
+        list_c = 30  # 调试
         sy_ob = 'bitfinex:spot_list_'  # 调试
         # test_sy_ob = 'bitfinex:spot_list_{}'.format("%05d" % 171)
 
@@ -510,18 +508,13 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
             # r = generating_orders(a_id, exchange', 'spot', 'normal', this_p, order_q, 'sell', sy)  # sell
             res = r.json()
             print(res)
-            sleep(5)
+            sleep(20)
 
             res_code = res.get('code', None)
             print(res_code)
-            res_message = res.get('message', None)
-            exchangeType = res.get('data', {})
-            print('exchangeType', exchangeType)
-            exchangeType = exchangeType.get('exchangeType', None)
-            print('exchangeType', exchangeType)
 
-            # exchangeType = res['data'].get('exchangeType', None)
-            print(exchangeType)
+            res_message = res.get('message', None)
+            exchangeType = res['data'].get('exchangeType', None)
             orderId = res['data'].get('orderId', None)
             symbol = res['data'].get('symbol', None)
 
@@ -537,6 +530,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
 
             # 获取订单
             order_status = check_order(a_id, exchange, exchangeType, orderId, symbol, all_json=True)
+            sleep(20)
             if order_status.get('message', None) != '获取订单成功：':
                 print(order_status)
                 error_obj['json_res'] = str(order_status)
@@ -586,6 +580,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                 orderId = order_status['data'].get('orderId')
                 symbol = order_status['data'].get('symbol')
                 cancel_order(a_id, exchange, exchangeType, orderId, symbol)
+                sleep(20)
                 print('====================end test -> {} -> {}====================\n'.format(n, sy))
 
 

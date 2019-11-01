@@ -17,7 +17,7 @@ sched = BlockingScheduler()
 
 @sched.scheduled_job('cron', hour=18, minute=8, second=59)
 def cron_task():
-    print('开始时间:'.format(datetime.now()))
+    print('开始时间:{}'.format(datetime.now()))
 
     path_1 = os.getcwd().split('AirCurrency')[0]  # 系统目录
     path_2 = 'AirCurrency/'  # 项目目录
@@ -27,7 +27,7 @@ def cron_task():
     c = 'cd ~ ; cd {} ; ls ; {}'.format(path_1 + path_2, command_set)
     os.system(c)
 
-    print('结束时间:'.format(datetime.now()))
+    print('结束时间:{}'.format(datetime.now()))
 
 
 if __name__ == '__main__':

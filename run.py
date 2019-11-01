@@ -27,8 +27,7 @@ def ter_start():
         if p == 'all':
             "执行所有用例"
             print('all -> 执行所有用例')
-            # file_prefix = 'test_*.py'
-            file_prefix = 'test_003_OrderAccuracy_002_BitFinex.py'
+            file_prefix = 'test_*.py'
             return file_prefix
 
         if p == 'okex':
