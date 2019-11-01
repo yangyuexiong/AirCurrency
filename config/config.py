@@ -7,7 +7,7 @@
 
 import redis
 
-SEND_MAIL = False
+SEND_MAIL = True
 
 REDIS_PWD = 123456
 POOL = redis.ConnectionPool(host='localhost', port=6379, password=REDIS_PWD, decode_responses=True, db=8)
