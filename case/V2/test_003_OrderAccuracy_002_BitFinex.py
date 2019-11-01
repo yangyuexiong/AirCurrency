@@ -6,6 +6,14 @@
 # @Software: PyCharm
 
 
+import os
+import sys
+
+path_1 = os.getcwd().split('AirCurrency')[0]
+path_2 = 'AirCurrency/'
+path = path_1 + path_2
+sys.path.append(path)
+
 from all_import import *
 from config.data.test_data import *
 from common.OrderFunc import *
@@ -168,6 +176,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                 R.set('test_004->外层func执行异常->ID{}'.format(n), str(self.format_logs))
                 continue
 
+    @unittest.skip('分组调试 -> Pass')
     def test_005(self):
         """spot 通过下单测试 -> moneyPrecision 与 basePrecision+minOrderSize"""
         print(list_c)
@@ -376,6 +385,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                 R.set('test_005->外层func执行异常->ID{}'.format(n), str(self.format_logs))
                 continue
 
+    @unittest.skip('分组调试 -> Pass')
     def test_006(self):
         """复查是否还有未撤的活跃订单->撤单"""
         r = get_active_orders(a_id, exchange, 'spot').json()  # spot订单
@@ -388,7 +398,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                 cancel_order(a_id, exchange, i['exchangeType'], i['orderId'], i['symbol'])
             print('已经处理漏撤订单')
 
-    # @unittest.skip('分组调试 -> Pass')
+    @unittest.skip('分组调试 -> Pass')
     def test_09999(self):
         self.test_001()
         self.test_002()
@@ -402,6 +412,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
         # self.test_009()
         # self.test_010()
 
+    @unittest.skip('分组调试 -> Pass')
     def test_099999(self):
         """1"""
         list_c = 10  # 调试
@@ -511,9 +522,9 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
             print(res_code)
             res_message = res.get('message', None)
             exchangeType = res.get('data', {})
-            print('exchangeType',exchangeType)
+            print('exchangeType', exchangeType)
             exchangeType = exchangeType.get('exchangeType', None)
-            print('exchangeType',exchangeType)
+            print('exchangeType', exchangeType)
 
             # exchangeType = res['data'].get('exchangeType', None)
             print(exchangeType)
