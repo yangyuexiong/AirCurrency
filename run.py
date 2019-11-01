@@ -7,12 +7,6 @@
 
 import os
 import sys
-import time
-
-import unittest
-
-from common.HTMLTestReportCN import HTMLTestRunner
-from config.config import *
 
 # 终端执行
 path_1 = os.getcwd().split('AirCurrency')[0]
@@ -21,32 +15,62 @@ path = path_1 + path_2
 sys.path.append(path)
 print(path)
 
-# 终端命令穿参
-ter_param = sys.argv[1:]
-if len(ter_param) != 0:
-    print(ter_param)
-    report_dir = './reports'  # 报告路径
-    test_dir = './case/V2'  # 测试路径
-    if ter_param[0] == 'all':
-        "执行说有用例"
-        file_prefix = 'test_*.py'  # 文件前缀
-    if ter_param[0] == 'okex':
-        """执行okex"""
-        file_prefix = 'test_003_OrderAccuracy_001_OKEX.py'
-    if ter_param[0] == 'bitfinex':
-        """执行bitfinex"""
-        file_prefix = 'test_003_OrderAccuracy_002_BitFinex.py'
-    if ter_param[0] == 'bitmex':
-        """执行bitmex"""
-        file_prefix = 'test_003_OrderAccuracy_003_BitMex.py'
+
+def ter_start():
+    # 终端命令穿参
+    ter_param = sys.argv
+    if len(ter_param) != 0:
+        print(ter_param)
+        p = ter_param[1]
+        print(p, type(p))
+
+        if p == 'all':
+            "执行所有用例"
+            print('all -> 执行所有用例')
+            # file_prefix = 'test_*.py'
+            file_prefix = 'test_003_OrderAccuracy_002_BitFinex.py'
+            return file_prefix
+
+        if p == 'okex':
+            """执行okex"""
+            print('okex case')
+            file_prefix = 'test_003_OrderAccuracy_001_OKEX.py'
+            return file_prefix
+
+        if p == 'bitfinex':
+            """执行bitfinex"""
+            print('bitfinex case')
+            file_prefix = 'test_003_OrderAccuracy_002_BitFinex.py'
+            return file_prefix
+
+        if p == 'bitmex':
+            """执行bitmex"""
+            print('bitmex case')
+            file_prefix = 'test_003_OrderAccuracy_003_BitMex.py'
+            return file_prefix
+
+        else:
+            print('参数错误...')
+            exit()
     else:
-        print('参数错误...')
-        exit()
-else:
-    print('else -> all test case')
-    report_dir = './reports'
-    test_dir = './case/V2'
-    file_prefix = 'test_003_OrderAccuracy_001_OKEX.py'
+        print('else -> all test case')
+        file_prefix = 'test_003_OrderAccuracy_002_BitFinex.py'
+        # return 'test_*.py'
+        return file_prefix
+
+
+report_dir = './reports'  # 报告路径
+test_dir = './case/V2'  # 测试路径
+file_prefix = ''  # 文件前缀
+
+file_prefix = ter_start()
+
+import time
+
+import unittest
+
+from common.HTMLTestReportCN import HTMLTestRunner
+from config.config import *
 
 print('报告路径:{}\n测试路径:{}\n文件前缀:{}\n'.format(report_dir, test_dir, file_prefix))
 
