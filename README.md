@@ -45,8 +45,29 @@
 
 * 项目依赖
     ```
+    pip3 install unittest
+    pip3 install requests
     pip3 install shortuuid
     pip3 install prettytable
     pip3 install redis
 
+    ```
+* 运行
+    ```
+    # 默认执行全部用例
+    python3 run.py
+
+    # 单个用例执行
+    python3 run.py 交易所名称    # python3 run.py okex
+    ```
+
+* 定时任务
+    ```
+    cd /AirCurrency/tasks/ApsTasks
+
+    python3 CarryTask.py # 默认执行所有用例
+    ```
+* 报告目录
+    ```
+    /AirCurrency/reports
     ```
