@@ -13,9 +13,8 @@ from config.data.test_data import *
 from common.OrderFunc import *
 
 a_id = accountId_to_dict.get('okex')
-
-# R = redis_obj(10)
-
+ob_ex_exType = 'okex:spot'
+exchange = 'okex'
 
 R = redis_obj(11)
 
@@ -433,12 +432,12 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                                                                                          asks_and_bids_c)
                         self.format_logs['msg'] = str(d)
                         self.format_logs['send'] = sss
-                        R.set('test_004->币种精度与OrderBook不相符->{}'.format(i), str(self.format_logs))
+                        R.set('test_004->币种精度与OrderBook不相符->{}'.format(n), str(self.format_logs))
                 else:
-                    sss = '{} -> 交易所或OrderBook未找到该币对'.format(dic_obj['symbol'])
+                    sss = '{} -> OrderBook未找到该币对'.format(dic_obj['symbol'])
                     self.format_logs['msg'] = ''
                     self.format_logs['send'] = sss
-                    R.set('test_004->交易所或OrderBook未找到该币种->ID{}'.format(i), str(self.format_logs))
+                    R.set('test_004->OrderBook未找到该币种->ID{}'.format(n), str(self.format_logs))
                     continue
             except BaseException as e:
                 sss = 'test_004->外层func执行异常:{}'.format(str(e))
@@ -530,10 +529,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     print('*下单金额:', p, type(p))
                     print('*防止精度丢失备用下单金额:', p1, type(p1))
                 else:
-                    sss = '{} -> 交易所或OrderBook未找到该币对'.format(sy)
+                    sss = '{} -> OrderBook未找到该币对'.format(sy)
                     self.format_logs['msg'] = str(d)
                     self.format_logs['send'] = sss
-                    R.set('test_005->交易所或OrderBook未找到该币种->ID:{}'.format(i), str(self.format_logs))
+                    R.set('test_005->OrderBook未找到该币种->ID:{}'.format(n), str(self.format_logs))
                     print('====================end test -> orror {} -> {}====================\n'.format(n, sy))
                     continue
 
@@ -585,8 +584,8 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     }
 
                     # 下单
-                    r = generating_orders(a_id, 'okex', 'spot', 'normal', this_p, order_q, 'buy', sy)  # buy
-                    # r = generating_orders(a_id, 'okex', 'spot', 'normal', this_p, order_q, 'sell', sy)  # sell
+                    r = generating_orders(a_id, exchange, 'spot', 'normal', this_p, order_q, 'buy', sy)  # buy
+                    # r = generating_orders(a_id, exchange, 'spot', 'normal', this_p, order_q, 'sell', sy)  # sell
                     res = r.json()
                     print(res)
                     sleep(1)
@@ -608,7 +607,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                         continue
 
                     # 获取订单
-                    order_status = check_order(a_id, 'okex', exchangeType, orderId, symbol, all_json=True)
+                    order_status = check_order(a_id, exchange, exchangeType, orderId, symbol, all_json=True)
                     if order_status.get('message', None) != '获取订单成功：':
                         print(order_status)
                         error_obj['json_res'] = str(order_status)
@@ -657,7 +656,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                         exchangeType = order_status['data'].get('exchangeType')
                         orderId = order_status['data'].get('orderId')
                         symbol = order_status['data'].get('symbol')
-                        cancel_order(a_id, 'okex', exchangeType, orderId, symbol)
+                        cancel_order(a_id, exchange, exchangeType, orderId, symbol)
                         print('====================end test -> {} -> {}====================\n'.format(n, sy))
 
                 except BaseException as e:
@@ -690,14 +689,14 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
     def test_006(self):
         """复查是否还有未撤的活跃订单->撤单"""
-        r = get_active_orders(a_id, 'okex', 'spot').json()  # spot订单
+        r = get_active_orders(a_id, exchange, 'spot').json()  # spot订单
         print(r['data'])
         if len(r['data']) == 0:
             print('未发现漏撤订单')
         else:
             print('发现漏撤订单')
             for i in r['data']:
-                cancel_order(a_id, 'okex', i['exchangeType'], i['orderId'], i['symbol'])
+                cancel_order(a_id, exchange, i['exchangeType'], i['orderId'], i['symbol'])
             print('已经处理漏撤订单')
 
     def test_007(self):
@@ -844,7 +843,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                         'json_res': ''
                     }
                     # 下单
-                    r = generating_orders(a_id, 'okex', 'margin', 'normal', this_p, order_q, 'buy', sy)  # buy
+                    r = generating_orders(a_id, exchange, 'margin', 'normal', this_p, order_q, 'buy', sy)  # buy
                     res = r.json()
                     print(res)
                     sleep(1)
@@ -888,7 +887,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                         continue
 
                     # 获取订单
-                    order_status = check_order(a_id, 'okex', exchangeType, orderId, symbol, all_json=True)
+                    order_status = check_order(a_id, exchange, exchangeType, orderId, symbol, all_json=True)
                     if order_status.get('message', None) != '获取订单成功：':
                         print(order_status)
                         error_obj['json_res'] = str(order_status)
@@ -935,7 +934,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                         exchangeType = order_status['data'].get('exchangeType')
                         orderId = order_status['data'].get('orderId')
                         symbol = order_status['data'].get('symbol')
-                        cancel_order(a_id, 'okex', exchangeType, orderId, symbol)
+                        cancel_order(a_id, exchange, exchangeType, orderId, symbol)
                         print('====================end test -> {} -> {}====================\n'.format(n, sy))
 
                     # 反划转
@@ -1129,8 +1128,8 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
             }
 
             # 下单
-            r = generating_orders(a_id, 'okex', 'spot', 'normal', this_p, order_q, 'buy', sy)  # buy
-            # r = generating_orders(a_id, 'okex', 'spot', 'normal', this_p, order_q, 'sell', sy)  # sell
+            r = generating_orders(a_id, exchange, 'spot', 'normal', this_p, order_q, 'buy', sy)  # buy
+            # r = generating_orders(a_id, exchange, 'spot', 'normal', this_p, order_q, 'sell', sy)  # sell
             res = r.json()
             print(res)
             sleep(1)
@@ -1152,7 +1151,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 continue
 
             # 获取订单
-            order_status = check_order(a_id, 'okex', exchangeType, orderId, symbol, all_json=True)
+            order_status = check_order(a_id, exchange, exchangeType, orderId, symbol, all_json=True)
             if order_status.get('message', None) != '获取订单成功：':
                 print(order_status)
                 error_obj['json_res'] = str(order_status)
@@ -1203,7 +1202,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 exchangeType = order_status['data'].get('exchangeType')
                 orderId = order_status['data'].get('orderId')
                 symbol = order_status['data'].get('symbol')
-                cancel_order(a_id, 'okex', exchangeType, orderId, symbol)
+                cancel_order(a_id, exchange, exchangeType, orderId, symbol)
                 print('====================end test -> {} -> {}====================\n'.format(n, sy))
 
     @unittest.skip('调试函数 -> Pass')

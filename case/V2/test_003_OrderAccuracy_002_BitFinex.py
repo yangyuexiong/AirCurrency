@@ -56,7 +56,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
         list_future_c = int(res_future[0])  # future 总数
         sy_obj_future = res_future[1][:-5]
 
-    @unittest.skip('分组调试 -> Pass')
+    # @unittest.skip('分组调试 -> Pass')
     def test_003(self):
         """检查币对参数"""
         print(list_c)
@@ -89,7 +89,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
 
         print('========== check future success ==========')
 
-    @unittest.skip('分组调试 -> Pass')
+    # @unittest.skip('分组调试 -> Pass')
     def test_004(self):
         """下单前 -> 通过已有orderBook校验 -> moneyPrecision精度"""
 
@@ -115,7 +115,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                 print('\n')
 
                 print('-----orderbook-----')
-                jd_list_init = get_url_order_book('okex:spot', dic_obj['symbol']).json()
+                jd_list_init = get_url_order_book('bitfinex:spot', dic_obj['symbol']).json()
 
                 if jd_list_init.get('data', None):
                     jd_list = jd_list_init['data']
@@ -156,12 +156,12 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                                                                                          asks_and_bids_c)
                         self.format_logs['msg'] = str(d)
                         self.format_logs['send'] = sss
-                        R.set('test_004->币种精度与OrderBook不相符->{}'.format(i), str(self.format_logs))
+                        R.set('test_004->币种精度与OrderBook不相符->{}'.format(n), str(self.format_logs))
                 else:
-                    sss = '{} -> 交易所或OrderBook未找到该币对'.format(dic_obj['symbol'])
+                    sss = '{} -> OrderBook未找到该币对'.format(dic_obj['symbol'])
                     self.format_logs['msg'] = ''
                     self.format_logs['send'] = sss
-                    R.set('test_004->交易所或OrderBook未找到该币种->ID{}'.format(i), str(self.format_logs))
+                    R.set('test_004->OrderBook未找到该币种->ID{}'.format(n), str(self.format_logs))
                     continue
             except BaseException as e:
                 sss = 'test_004->外层func执行异常:{}'.format(str(e))
@@ -170,7 +170,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                 R.set('test_004->外层func执行异常->ID{}'.format(n), str(self.format_logs))
                 continue
 
-    @unittest.skip('分组调试 -> Pass')
+    @unittest.skip('请求被限制 -> Pass')
     def test_005(self):
         """spot 通过下单测试 -> moneyPrecision 与 basePrecision+minOrderSize"""
         print(list_c)
@@ -220,10 +220,10 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                     print('*下单金额:', p, type(p))
                     print('*防止精度丢失备用下单金额:', p1, type(p1))
                 else:
-                    sss = '{} -> 交易所或OrderBook未找到该币对'.format(sy)
+                    sss = '{} -> OrderBook未找到该币对'.format(sy)
                     self.format_logs['msg'] = str(d)
                     self.format_logs['send'] = sss
-                    R.set('test_005->交易所或OrderBook未找到该币种->ID:{}'.format(i), str(self.format_logs))
+                    R.set('test_005->OrderBook未找到该币种->ID:{}'.format(n), str(self.format_logs))
                     print('====================end test -> orror {} -> {}====================\n'.format(n, sy))
                     continue
 
@@ -279,7 +279,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                     # r = generating_orders(a_id, exchange', 'spot', 'normal', this_p, order_q, 'sell', sy)  # sell
                     res = r.json()
                     print(res)
-                    sleep(5)
+                    sleep(1)
 
                     res_code = res.get('code', None)
                     res_message = res.get('message', None)
@@ -348,7 +348,6 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                         orderId = order_status['data'].get('orderId')
                         symbol = order_status['data'].get('symbol')
                         cancel_order(a_id, exchange, exchangeType, orderId, symbol)
-                        sleep(5)
                         print('====================end test -> {} -> {}====================\n'.format(n, sy))
 
                 except BaseException as e:
@@ -379,7 +378,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                 R.set('test_005->外层func执行异常->ID{}'.format(n), str(self.format_logs))
                 continue
 
-    @unittest.skip('分组调试 -> Pass')
+    @unittest.skip('请求被限制 -> Pass')
     def test_006(self):
         """复查是否还有未撤的活跃订单->撤单"""
         r = get_active_orders(a_id, exchange, 'spot').json()  # spot订单
@@ -392,12 +391,27 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                 cancel_order(a_id, exchange, i['exchangeType'], i['orderId'], i['symbol'])
             print('已经处理漏撤订单')
 
-    @unittest.skip('分组调试 -> Pass')
+    def test_008(self):
+        """查看 spot 与 future 资金"""
+        j = {
+            "accountId": a_id
+        }
+        result = requests.post(getAsset, json=j, headers=header)
+        print('<---------- spot ---------->')
+        for i in result.json()['data']['position']['spot']:
+            print(i)
+
+        print('<---------- future ---------->')
+        for i in result.json()['data']['position']['future']:
+            print(i)
+        return result
+
+    # @unittest.skip('分组调试 -> Pass')
     def test_09999(self):
         self.test_001()
         self.test_002()
         self.test_003()
-        # self.test_004()
+        self.test_004()
 
         # self.test_099999()
         # self.test_005()
@@ -406,7 +420,16 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
         # self.test_009()
         # self.test_010()
 
-    @unittest.skip('分组调试 -> Pass')
+        # r = generating_orders(a_id, exchange, 'spot', 'normal', '0.00043351', '0.6001', 'buy', 'etc_btc')
+        # print(r.json())
+        # while True:
+        #     if r.json()['code'] == 2000 and '响应失败' in r.json()['message']:
+        #         r = generating_orders(a_id, exchange, 'spot', 'normal', '0.00043351', '0.6001', 'buy', 'etc_btc')
+        #     else:
+        #         print('请求成功')
+        #         break
+
+    # @unittest.skip('分组调试 -> Pass')
     def test_099999(self):
         """1"""
         list_c = 30  # 调试
@@ -453,10 +476,10 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                 print('*下单金额:', p, type(p))
                 print('*防止精度丢失备用下单金额:', p1, type(p1))
             else:
-                sss = '{} -> 交易所或OrderBook未找到该币对'.format(sy)
+                sss = '{} -> OrderBook未找到该币对'.format(sy)
                 self.format_logs['msg'] = str(d)
                 self.format_logs['send'] = sss
-                R.set('test_005->交易所或OrderBook未找到该币种->ID:{}'.format(i), str(self.format_logs))
+                R.set('test_005->OrderBook未找到该币种->ID:{}'.format(n), str(self.format_logs))
                 print('====================end test -> orror {} -> {}====================\n'.format(n, sy))
                 continue
 
@@ -506,15 +529,29 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
             }
 
             # 下单
+            sleep(30)
             r = generating_orders(a_id, exchange, 'spot', 'normal', this_p, order_q, 'buy', sy)  # buy
             # r = generating_orders(a_id, exchange', 'spot', 'normal', this_p, order_q, 'sell', sy)  # sell
+            print(r.json())
+            while True:
+                if r.json()['code'] == 2000 and '响应失败' in r.json()['message']:
+                    r = generating_orders(a_id, exchange, 'spot', 'normal', this_p, order_q, 'buy', sy)
+                else:
+                    if r.json()['code'] == 2000 and '请求超过频率限制' in r.json()['message']:
+                        self.format_logs['send'] = ''
+                        self.format_logs['msg'] = str(r.json())
+                        R.set('test_005->请求被限制->ID{}'.format(n), str(self.format_logs))
+                        sleep(30)
+                        break
+                    else:
+                        print('下单api->请求成功')
+                        break
+
             res = r.json()
             print(res)
-            sleep(20)
+            sleep(1)
 
             res_code = res.get('code', None)
-            print(res_code)
-
             res_message = res.get('message', None)
             exchangeType = res['data'].get('exchangeType', None)
             orderId = res['data'].get('orderId', None)
@@ -532,7 +569,13 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
 
             # 获取订单
             order_status = check_order(a_id, exchange, exchangeType, orderId, symbol, all_json=True)
-            sleep(20)
+            while True:
+                if order_status['code'] == 2000 and '响应失败' in order_status['message']:
+                    order_status = check_order(a_id, exchange, exchangeType, orderId, symbol, all_json=True)
+                else:
+                    print('获取订单api->请求成功')
+                    break
+
             if order_status.get('message', None) != '获取订单成功：':
                 print(order_status)
                 error_obj['json_res'] = str(order_status)
@@ -581,8 +624,14 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                 exchangeType = order_status['data'].get('exchangeType')
                 orderId = order_status['data'].get('orderId')
                 symbol = order_status['data'].get('symbol')
-                cancel_order(a_id, exchange, exchangeType, orderId, symbol)
-                sleep(20)
+                r = cancel_order(a_id, exchange, exchangeType, orderId, symbol)
+                while True:
+                    if r.json()['code'] == 2000 and '响应失败' in r.json()['message']:
+                        r = cancel_order(a_id, exchange, exchangeType, orderId, symbol)
+                    else:
+                        print('撤单api->请求成功')
+                        break
+
                 print('====================end test -> {} -> {}====================\n'.format(n, sy))
 
 

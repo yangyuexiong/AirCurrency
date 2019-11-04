@@ -15,7 +15,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 sched = BlockingScheduler()
 
 
-@sched.scheduled_job('cron', hour=18, minute=8, second=59)
+@sched.scheduled_job('cron', hour=6, minute=1, second=1)
 def cron_task():
     print('开始时间:{}'.format(datetime.now()))
 
@@ -31,4 +31,5 @@ def cron_task():
 
 
 if __name__ == '__main__':
+    print('CarryTask start...')
     sched.start()
