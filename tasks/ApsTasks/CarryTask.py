@@ -16,6 +16,7 @@ sched = BlockingScheduler()
 
 
 @sched.scheduled_job('cron', hour=6, minute=1, second=1)
+@sched.scheduled_job('cron', hour=15, minute=30, second=1)
 def cron_task():
     print('开始时间:{}'.format(datetime.now()))
 

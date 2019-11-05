@@ -303,7 +303,7 @@ file_name(logs_path)
 
 with open(logs_path + '/BitFinex_log.txt', 'r', encoding='utf-8') as f:
     fs = f.read()
-    print(fs)
+    # print(fs)
 
 if __name__ == '__main__':
     pass

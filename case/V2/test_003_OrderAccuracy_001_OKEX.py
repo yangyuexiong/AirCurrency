@@ -292,6 +292,8 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
     """
     error_num = 0
     logs_path = os.getcwd().split('case')[0] + '/logs'
+    now = time.strftime('%Y-%m-%d %H_%M_%S')
+    f_name = '/okex_lo_{}.txt'.format(now)
     format_logs = {
         'msg': '',
         'send': ''
@@ -993,21 +995,30 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
     def test_009(self):
         """整合并格式化输出日志"""
 
-        tb.field_names = ['Symbol', 'error']
+        R2 = redis_obj(0)
+        exchange_key = 'exchange:%s' % exchange
         if R.keys(pattern='test_*'):
             for i in R.keys(pattern='test_*'):
                 logs_obj = eval('(' + R.get(i) + ')')
+                print(logs_obj)
                 l = logs_obj['send'].split('->')[0]
                 r = logs_obj['send'].split('->')[1]
-                tb.add_row([l, r])
-                print(logs_obj['send'], '\n')
-            with open(self.logs_path + '/okex_log.txt', 'w', encoding='utf-8') as f:
+                R2.hmset(exchange_key, {l: r})
+
+            # print(R2.hgetall(exchange_key))
+            # print(type(R2.hgetall(exchange_key)))
+
+            tb.field_names = ['Symbol', 'error']
+            for k, v in R2.hgetall(exchange_key).items():
+                print(k, '->', v)
+                tb.add_row([k, v])
+            with open(self.logs_path + self.f_name, 'w', encoding='utf-8') as f:
                 f.write(str(tb))
             print(tb)
         else:
             tb.add_row(['null', 'null'])
             print('===未发现错误===')
-            with open(self.logs_path + '/okex_log.txt', 'w', encoding='utf-8') as f:
+            with open(self.logs_path + self.f_name, 'w', encoding='utf-8') as f:
                 f.write('')
             print(tb)
 
@@ -1016,7 +1027,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
         er = 0
 
-        with open(self.logs_path + '/okex_log.txt', 'r', encoding='utf-8') as f:
+        with open(self.logs_path + self.f_name, 'r', encoding='utf-8') as f:
             fs = f.read()
             if not fs:
                 print('not error')
