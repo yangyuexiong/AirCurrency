@@ -22,6 +22,8 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
 
     error_num = 0
     logs_path = os.getcwd().split('case')[0] + '/logs'
+    now = time.strftime('%Y-%m-%d %H_%M_%S')
+    f_name = '/BitFinex_log_{}.txt'.format(now)
     format_logs = {
         'msg': '',
         'send': ''
@@ -412,8 +414,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
 
     def test_009(self):
         """整合并格式化输出日志"""
-        now = time.strftime('%Y-%m-%d %H_%M_%S')
-        f_name = '/BitFinex_log_{}.txt'.format(now)
+
         R2 = redis_obj(0)
         exchange_key = 'exchange:%s' % exchange
         if R.keys(pattern='test_*'):
@@ -431,15 +432,29 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
             for k, v in R2.hgetall(exchange_key).items():
                 print(k, '->', v)
                 tb.add_row([k, v])
-            with open(self.logs_path + f_name, 'w', encoding='utf-8') as f:
+            with open(self.logs_path + self.f_name, 'w', encoding='utf-8') as f:
                 f.write(str(tb))
             print(tb)
         else:
             tb.add_row(['null', 'null'])
             print('===未发现错误===')
-            with open(self.logs_path + f_name, 'w', encoding='utf-8') as f:
+            with open(self.logs_path + self.f_name, 'w', encoding='utf-8') as f:
                 f.write('')
             print(tb)
+
+    def test_010(self):
+        """ BitFinex -> 查看错误输出"""
+
+        er = 0
+
+        with open(self.logs_path + self.f_name, 'r', encoding='utf-8') as f:
+            fs = f.read()
+            if not fs:
+                print('not error')
+            else:
+                print(fs)
+                er += 1
+        assert er == 0
 
     @unittest.skip('分组调试 -> Pass')
     def test_09999(self):
