@@ -56,7 +56,6 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
         list_future_c = int(res_future[0])  # future 总数
         sy_obj_future = res_future[1][:-5]
 
-    # @unittest.skip('分组调试 -> Pass')
     def test_003(self):
         """检查币对参数"""
         print(list_c)
@@ -89,17 +88,16 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
 
         print('========== check future success ==========')
 
-    # @unittest.skip('分组调试 -> Pass')
     def test_004(self):
         """下单前 -> 通过已有orderBook校验 -> moneyPrecision精度"""
 
-        # print(list_c)
-        # print(sy_ob)
-        # print(list_future_c)
-        # print(sy_obj_future)
+        print(list_c)
+        print(sy_ob)
+        print(list_future_c)
+        print(sy_obj_future)
 
-        list_c = 416  # 调试
-        sy_ob = 'bitfinex:spot_list_'  # 调试
+        # list_c = 416  # 调试
+        # sy_ob = 'bitfinex:spot_list_'  # 调试
 
         for i in range(1, list_c + 1):
 
@@ -170,7 +168,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                 R.set('test_004->外层func执行异常->ID{}'.format(n), str(self.format_logs))
                 continue
 
-    @unittest.skip('请求被限制 -> Pass')
+    @unittest.skip('请求被限制 -> test_005 Pass')
     def test_005(self):
         """spot 通过下单测试 -> moneyPrecision 与 basePrecision+minOrderSize"""
         print(list_c)
@@ -378,7 +376,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
                 R.set('test_005->外层func执行异常->ID{}'.format(n), str(self.format_logs))
                 continue
 
-    @unittest.skip('请求被限制 -> Pass')
+    @unittest.skip('请求被限制 -> test_006 Pass')
     def test_006(self):
         """复查是否还有未撤的活跃订单->撤单"""
         r = get_active_orders(a_id, exchange, 'spot').json()  # spot订单
@@ -390,6 +388,12 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
             for i in r['data']:
                 cancel_order(a_id, exchange, i['exchangeType'], i['orderId'], i['symbol'])
             print('已经处理漏撤订单')
+
+    @unittest.skip('请求被限制 -> test_007 Pass')
+    def test_007(self):
+        """future 通过下单测试 -> moneyPrecision 与 basePrecision+minOrderSize"""
+        print(list_future_c)
+        print(sy_obj_future)
 
     def test_008(self):
         """查看 spot 与 future 资金"""
@@ -406,7 +410,28 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
             print(i)
         return result
 
-    # @unittest.skip('分组调试 -> Pass')
+    def test_009(self):
+        """整合并格式化输出日志"""
+
+        tb.field_names = ['Symbol', 'error']
+        if R.keys(pattern='test_*'):
+            for i in R.keys(pattern='test_*'):
+                logs_obj = eval('(' + R.get(i) + ')')
+                l = logs_obj['send'].split('->')[0]
+                r = logs_obj['send'].split('->')[1]
+                tb.add_row([l, r])
+                print(logs_obj['send'], '\n')
+            with open(self.logs_path + '/BitFinex_log.txt', 'w', encoding='utf-8') as f:
+                f.write(str(tb))
+            print(tb)
+        else:
+            tb.add_row(['null', 'null'])
+            print('===未发现错误===')
+            with open(self.logs_path + '/BitFinex_log.txt', 'w', encoding='utf-8') as f:
+                f.write('')
+            print(tb)
+
+    @unittest.skip('分组调试 -> Pass')
     def test_09999(self):
         self.test_001()
         self.test_002()
@@ -429,7 +454,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
         #         print('请求成功')
         #         break
 
-    # @unittest.skip('分组调试 -> Pass')
+    @unittest.skip('分组调试 -> Pass')
     def test_099999(self):
         """1"""
         list_c = 30  # 调试

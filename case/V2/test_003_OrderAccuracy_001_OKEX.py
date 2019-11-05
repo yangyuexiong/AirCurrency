@@ -1001,13 +1001,13 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 r = logs_obj['send'].split('->')[1]
                 tb.add_row([l, r])
                 print(logs_obj['send'], '\n')
-            with open(self.logs_path + '/log.txt', 'w', encoding='utf-8') as f:
+            with open(self.logs_path + '/okex_log.txt', 'w', encoding='utf-8') as f:
                 f.write(str(tb))
             print(tb)
         else:
             tb.add_row(['null', 'null'])
             print('===未发现错误===')
-            with open(self.logs_path + '/log.txt', 'w', encoding='utf-8') as f:
+            with open(self.logs_path + '/okex_log.txt', 'w', encoding='utf-8') as f:
                 f.write('')
             print(tb)
 
@@ -1016,7 +1016,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
         er = 0
 
-        with open(self.logs_path + '/log.txt', 'r', encoding='utf-8') as f:
+        with open(self.logs_path + '/okex_log.txt', 'r', encoding='utf-8') as f:
             fs = f.read()
             if not fs:
                 print('not error')

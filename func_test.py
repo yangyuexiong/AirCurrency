@@ -279,6 +279,7 @@ def first_add(s, sell=False):
             print(okc, type(okc))
             return okc
 
+
 # first_add('0.00000364', sell=True)
 # first_add('57.88', sell=True)
 # first_add('0.00000001', sell=True)
@@ -286,3 +287,23 @@ def first_add(s, sell=False):
 # first_add('0.00000364')
 # first_add('57.88')
 # first_add('0.00000001')
+
+import os
+
+
+def file_name(file_dir):
+    for root, dirs, files in os.walk(file_dir):
+        print('root_dir:', root)  # 当前目录路径
+        print('sub_dirs:', dirs)  # 当前路径下所有子目录
+        print('files:', files)  # 当前路径下所有非目录子文件
+
+
+logs_path = os.getcwd().split('case')[0] + '/logs'
+file_name(logs_path)
+
+with open(logs_path + '/BitFinex_log.txt', 'r', encoding='utf-8') as f:
+    fs = f.read()
+    print(fs)
+
+if __name__ == '__main__':
+    pass
