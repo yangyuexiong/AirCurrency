@@ -53,8 +53,10 @@ def ter_start():
             exit()
     else:
         print('else -> all test case')
-        file_prefix = 'test_003_OrderAccuracy_001_OKEX.py'
+        # file_prefix = 'test_003_OrderAccuracy_001_OKEX.py'
         # file_prefix = 'test_003_OrderAccuracy_002_BitFinex.py'
+        file_prefix = 'test_003_OrderAccuracy_*.py'
+        # file_prefix = 'test_999_TestRunEnv.py'
         # return 'test_*.py'
         return file_prefix
 
@@ -72,14 +74,22 @@ import unittest
 from common.HTMLTestReportCN import HTMLTestRunner
 from config.config import *
 
+R = redis_obj(3)
+if not R.get('RUN_ENV'):
+    R.set('RUN_ENV', 'dev')
+
 print('报告路径:{}\n测试路径:{}\n文件前缀:{}\n'.format(report_dir, test_dir, file_prefix))
 
 # 测试路径，匹配规则
 discover = unittest.defaultTestLoader.discover(test_dir, pattern=file_prefix)
 
 # 时间拼接报告名称
+if R.get('RUN_ENV') == 'pro':
+    ll = 'pro'
+else:
+    ll = 'dev'
 now = time.strftime('%Y-%m-%d %H_%M_%S')
-test_rp = '测试报告_{}_.html'.format(now)
+test_rp = '测试报告_{}_{}_.html'.format(ll, now)
 report_name = report_dir + '/' + test_rp
 
 # 打开-生成测试报告
@@ -94,7 +104,7 @@ with open(report_name, 'wb') as f:
 
         print('查找最新报告')
         latest_report = latest_report(report_dir)
-        print(latest_report)
+        # print(latest_report)
         print('发送报告到邮箱')
         send_mail(latest_report)
 

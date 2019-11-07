@@ -5,8 +5,10 @@
 # @File    : Urls.py
 # @Software: PyCharm
 
+import os
 
 from config.data.test_data import sToken
+from config.config import redis_obj
 
 """
 登录平台获取token ->
@@ -14,7 +16,13 @@ from config.data.test_data import sToken
 生成SToken -> genSToken
 
 """
-BaseUrl = 'https://test.bithelp.top/private-api'
+R = redis_obj(3)
+if not R.get('RUN_ENV'):
+    R.set('RUN_ENV', 'dev')
+elif R.get('RUN_ENV') == 'pro':
+    BaseUrl = 'https://www.coinfat.com'
+else:
+    BaseUrl = 'https://test.bithelp.top/private-api'
 
 Token = 'ADD44DB572D23684C3C047E9087588A67aeee0a758bc49e98626503da22dcfe7'
 

@@ -65,7 +65,8 @@ def generating_orders(accountId, exchange, exchangeType, postType, price, qty, s
         return result
     if exchangeType == 'future':
         print('func -> generating_orders data -> future')
-        return
+        result = requests.post(placeOrder, json=d, headers=header)
+        return result
     if exchangeType == 'swap':
         print('func -> generating_orders data -> swap')
         return

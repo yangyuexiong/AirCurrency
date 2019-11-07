@@ -2,6 +2,7 @@
 
 ## Linux:
 
+### 自动化测试项目:
 
 * 更新apt-get
     ```
@@ -14,6 +15,7 @@
     ```
 * 拉取项目
     ```
+    cd /srv
     git clone https://github.com/yangyuexiong/AirCurrency.git
     ```
 * 安装pip3
@@ -37,10 +39,13 @@
     ```
 * 安装 redis
     ```
+    cd /srv
     wget http://download.redis.io/releases/redis-5.0.5.tar.gz
     tar xzf redis-5.0.5.tar.gz
     cd redis-5.0.5
     make
+
+    设置密码 123456
     ```
 
 * 项目依赖
@@ -51,7 +56,7 @@
     pip3 install prettytable
     pip3 install redis
     pip3 install apscheduler
-
+    pip3 install supervisor
     ```
 * 运行
     ```
@@ -72,3 +77,48 @@
     ```
     /AirCurrency/reports
     ```
+* supervisor配置文件
+
+    ```
+    cd /etc/supervisor/conf.d
+    vim air.conf
+    ```
+    ```
+    [program:air]
+    command         = python3 CarryTask.py
+    directory       = /srv/AirCurrency/tasks/ApsTasks
+    startsecs       = 0
+    stopwaitsecs    = 0
+    startretries    = 3
+    autostart       = true
+    autorestart     = true
+    stdout_logfile  = /srv/log/aps.log
+    stderr_logfile  = /srv/log/aps.err
+    user            = root 
+    stdout_logfile_maxbytes = 20MB
+    stdout_logfile_backups = 20
+    redirect_stderr = false
+    stopasgroup     = false
+    killasgroup     = false
+    ```
+* 拉取最新项目
+    ```
+    cd /srv 
+    sh update_project.sh
+    ```
+
+* 跟新项目后重启服务
+    ```
+    cd /srv 
+    sh server_start.sh
+    ```
+
+### web项目:
+
+* A
+
+* A
+
+* A
+
+* A

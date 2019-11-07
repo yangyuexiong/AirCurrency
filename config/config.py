@@ -16,10 +16,12 @@ R = redis.Redis(connection_pool=POOL)
 
 def redis_obj(db_num):
     REDIS_PWD = 123456
-    POOL = redis.ConnectionPool(host='localhost', port=6379, password=REDIS_PWD, decode_responses=True, db=int(db_num))
+    POOL = redis.ConnectionPool(host='localhost', port=6379, password=REDIS_PWD, decode_responses=True,
+                                db=int(db_num))
     R = redis.Redis(connection_pool=POOL)
     return R
 
 
 if __name__ == '__main__':
     pass
+

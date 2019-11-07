@@ -16,10 +16,10 @@ def assert_json(json_obj, key, v):
 # 查找最新报告
 def latest_report(report_dir):
     lists = os.listdir(report_dir)  # 报告列表
-    print('报告列表', lists)
-    lists.sort(key=lambda fn: os.path.getatime(report_dir + '/' + fn))  # 排序
+    # print('报告列表', lists)
+    lists.sort(key=lambda fn: os.path.getmtime(report_dir + '/' + fn))  # 排序
     file = os.path.join(report_dir, lists[-1])  # 最新生成的报告
-    print('最新的报告', file)
+    # print('最新的报告', file)
     return file
 
 

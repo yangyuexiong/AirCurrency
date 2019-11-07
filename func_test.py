@@ -289,21 +289,53 @@ def first_add(s, sell=False):
 # first_add('0.00000001')
 
 import os
+import json
+
+# def file_name(file_dir):
+#     for root, dirs, files in os.walk(file_dir):
+#         print('root_dir:', root)  # 当前目录路径
+#         print('sub_dirs:', dirs)  # 当前路径下所有子目录
+#         print('files:', files)  # 当前路径下所有非目录子文件
 
 
-def file_name(file_dir):
-    for root, dirs, files in os.walk(file_dir):
-        print('root_dir:', root)  # 当前目录路径
-        print('sub_dirs:', dirs)  # 当前路径下所有子目录
-        print('files:', files)  # 当前路径下所有非目录子文件
+# logs_path = os.getcwd().split('case')[0] + '/logs'
+# file_name(logs_path)
+
+# with open(logs_path + '/BitFinex_log.txt', 'r', encoding='utf-8') as f:
+#     fs = f.read()
+# print(fs)
 
 
-logs_path = os.getcwd().split('case')[0] + '/logs'
-file_name(logs_path)
+path_1 = os.getcwd().split('AirCurrency')[0]  # 系统目录
+path_2 = 'AirCurrency/'  # 项目目录
+# print('*->操作系统目录:{}'.format(path_1))
+# print('*->项目目录:{}'.format(path_2))
+# # c = 'cp -r {}static/. {}测试cp/static/'.format(path_1 + path_2, path_1)
+# # os.system(c)
+#
+# print('当前运行环境:{}'.format(os.environ.get('RUN_ENV')))
+#
+# command_set = 'sh set_run_env.sh mac pro'
+# c = 'cd ~ ; cd {} ; ls ; {}'.format(path_1 + path_2, command_set)
+# os.system(c)
+#
+# print('当前运行环境:{}'.format(os.environ.get('RUN_ENV')))
+#
+# command_set = 'sh set_run_env.sh mac dev'
+# c = 'cd ~ ; cd {} ; ls ; {}'.format(path_1 + path_2, command_set)
+# os.system(c)
+# print('当前运行环境:{}'.format(os.environ.get('RUN_ENV')))
 
-with open(logs_path + '/BitFinex_log.txt', 'r', encoding='utf-8') as f:
-    fs = f.read()
-    # print(fs)
+# new_dict = {
+#     '1': 1
+# }
+# with open("{}/env.json".format(path_1 + path_2), "w") as f:
+#     json.dump(new_dict, f)
+#     print("加载入文件完成...")
+#
+# with open("{}/env.json".format(path_1 + path_2), 'r') as f:
+#     load_dict = json.load(f)
+#     print(load_dict)
 
 if __name__ == '__main__':
     pass
