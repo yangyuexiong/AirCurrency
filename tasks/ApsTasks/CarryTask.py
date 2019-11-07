@@ -5,16 +5,9 @@
 # @File    : CarryTask.py
 # @Software: PyCharm
 
-import os, sys
-
-# 终端执行
-path_1 = os.getcwd().split('AirCurrency')[0]
-path_2 = 'AirCurrency/'
-path = path_1 + path_2
-sys.path.append(path)
+import os
 
 import time
-import platform
 
 from datetime import date, datetime
 
@@ -26,6 +19,8 @@ sched = BlockingScheduler()
 
 path_1 = os.getcwd().split('AirCurrency')[0]  # 系统目录
 path_2 = 'AirCurrency/'  # 项目目录
+
+print(path_1)
 
 R = redis_obj(3)
 if not R.get('RUN_ENV'):
@@ -46,7 +41,7 @@ def start_task():
 
 
 @sched.scheduled_job('cron', hour=6, minute=1, second=1)
-@sched.scheduled_job('cron', hour=16, minute=51, second=59)
+@sched.scheduled_job('cron', hour=18, minute=16, second=59)
 def cron_task_dev():
     print('开始时间:{}'.format(datetime.now()))
 
