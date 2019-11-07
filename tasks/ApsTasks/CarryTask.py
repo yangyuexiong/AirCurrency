@@ -47,7 +47,7 @@ def start_task():
 
 
 @sched.scheduled_job('cron', hour=6, minute=1, second=1)
-@sched.scheduled_job('cron', hour=18, minute=16, second=59)
+@sched.scheduled_job('cron', hour=18, minute=36, second=59)
 def cron_task_dev():
     print('开始时间:{}'.format(datetime.now()))
 
@@ -66,7 +66,9 @@ def cron_task_dev():
 
     print('cp reports to web ')
     p = path_1 + path_2
-    c = 'cp -r {}reports/. {}/app/static/'.format(p, path_1 + 'AirCurrencyWeb')
+    web_path = path_1 + 'AirCurrencyWeb'
+    print(web_path)
+    c = 'cp -r {}reports/. {}/app/static/'.format(p, web_path)
     os.system(c)
     print('done')
 
