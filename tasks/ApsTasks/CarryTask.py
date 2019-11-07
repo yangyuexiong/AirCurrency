@@ -5,7 +5,13 @@
 # @File    : CarryTask.py
 # @Software: PyCharm
 
-import os
+import os, sys
+
+# 终端执行
+p1 = os.getcwd().split('AirCurrency')[0]
+p2 = 'AirCurrency/'
+path = p1 + p2
+sys.path.append(path)
 
 import time
 
