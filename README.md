@@ -1,8 +1,6 @@
 # AirCurrency
 
-## Linux:
-
-### 自动化测试项目:
+## Linux环境:
 
 * 更新apt-get
     ```
@@ -13,11 +11,7 @@
     ```
     apt-get install git -y
     ```
-* 拉取项目
-    ```
-    cd /srv
-    git clone https://github.com/yangyuexiong/AirCurrency.git
-    ```
+
 * 安装pip3
     ```
     apt install python3-pip
@@ -47,8 +41,15 @@
 
     设置密码 123456
     ```
+### 自动化测试项目:
 
-* 项目依赖
+* 拉取项目
+    ```
+    cd /srv
+    git clone https://github.com/yangyuexiong/AirCurrency.git
+    ```
+
+* 项目依赖安装
     ```
     pip3 install unittest
     pip3 install requests
@@ -58,6 +59,7 @@
     pip3 install apscheduler
     pip3 install supervisor
     ```
+
 * 运行
     ```
     # 默认执行全部用例
@@ -66,7 +68,6 @@
     # 单个用例执行
     python3 run.py 交易所名称    # python3 run.py okex
     ```
-
 * 定时任务
     ```
     cd /AirCurrency/tasks/ApsTasks
@@ -77,8 +78,7 @@
     ```
     /AirCurrency/reports
     ```
-* supervisor配置文件
-
+* supervisor配置文件与启动
     ```
     cd /etc/supervisor/conf.d
     vim air.conf
@@ -101,26 +101,29 @@
     stopasgroup     = false
     killasgroup     = false
     ```
+    ```
+    supervisorctl
+    start air
+    ```
+
 * 拉取最新项目
     ```
     cd /srv 
     sh update_project.sh
     ```
 
-* 跟新项目后重启服务
+* 更新项目后重启服务
     ```
     cd /srv 
     sh server_start.sh
     ```
 
+
 ### web展示项目:
 
 * 项目依赖
     ```
-    apt-get install nginx
-    pip3 install uwsgi
     pip3 install Flask
-    pip3 install Flask-Cors
     pip3 install redis   
     ```
 
@@ -130,51 +133,58 @@
     ```
 
 * 启动
+    ```
+    cd /AirCurrencyWeb
+    python3 run.py
+    ```
 
-    * 直接启动
-        ```
-        cd /AirCurrencyWeb
-        python3 run.py
-        ```
+* supervisor配置文件与启动
 
-    * uwsgi启动
-        ```
-
-        ```
-
-    * nginx+uwsgi+supervisor启动
-        ```
-
-        ```
-
+    ```
+    cd /etc/supervisor/conf.d
+    vim air_web.conf
+    ```
+    ```
+    [program:air_web]
+    command         = python3 run.py
+    directory       = /srv/AirCurrencyWeb
+    startsecs       = 0
+    stopwaitsecs    = 0
+    startretries    = 3
+    autostart       = true
+    autorestart     = true
+    stdout_logfile  = /srv/log/air_web.log
+    stderr_logfile  = /srv/log/air_web.err
+    user            = root 
+    stdout_logfile_maxbytes = 20MB
+    stdout_logfile_backups = 20
+    redirect_stderr = false
+    stopasgroup     = false
+    killasgroup     = false
+    ```
+    ```
+    supervisorctl
+    start air_web
+    ```
 
 
 * 如果使用python3.7+(当前服务器python3.6.8)
 
     ```
-        1.环境隔离
-            pip3 install pipenv
+    1.环境隔离
+        pip3 install pipenv
 
-        2.启动配置
-            vim ~/.bashrc
-            export FLASK_ENV='production'
+    2.启动配置
+        vim ~/.bashrc
+        export FLASK_ENV='production'
 
-        3.安装依赖
-            cd /srv/AirCurrencyWeb
-            pipenv install
-        
-        4.不带web容器启动
-            cd /srv/AirCurrencyWeb
-            pipenv shell
-            pipenv python3 run.py
-        
-        5.web容器+Nginx启动
+    3.安装依赖
+        cd /srv/AirCurrencyWeb
+        pipenv install
+    
+    4.不带web容器启动
+        cd /srv/AirCurrencyWeb
+        pipenv shell
+        pipenv python3 run.py
+    
     ```
-
-* A
-
-* A
-
-* A
-
-* A
