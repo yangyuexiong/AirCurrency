@@ -12,7 +12,7 @@ from all_import import *
 from config.data.test_data import *
 from common.OrderFunc import *
 
-R = redis_obj(9)
+R = redis_obj(16)
 
 
 class PublicOrderFunc:

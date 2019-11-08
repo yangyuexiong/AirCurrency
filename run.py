@@ -88,8 +88,8 @@ if R.get('RUN_ENV') == 'pro':
     ll = 'pro'
 else:
     ll = 'dev'
-now = time.strftime('%Y-%m-%d %H_%M_%S')
-test_rp = '测试报告_{}_{}_.html'.format(ll, now)
+now = time.strftime('%Y-%m-%d %H:%M:%S')
+test_rp = '测试报告_{} {}_.html'.format(ll, now)
 report_name = report_dir + '/' + test_rp
 
 # 打开-生成测试报告

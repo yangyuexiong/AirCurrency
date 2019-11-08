@@ -14,7 +14,13 @@ from case.V2.test_003_OrderAccuracy_001_OKEX import as_num, cnmd, count_list_max
 a_id = accountId_to_dict.get('bitfinex')
 ob_ex_exType = 'bitfinex:spot'
 exchange = 'bitfinex'
-R = redis_obj(12)
+
+if R.get('RUN_ENV') == 'pro':
+    R = redis_obj(7)
+    R2 = redis_obj(1)
+else:
+    R = redis_obj(8)
+    R2 = redis_obj(0)
 
 
 class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):

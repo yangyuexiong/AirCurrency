@@ -13,7 +13,13 @@ from case.V2.test_003_OrderAccuracy_001_OKEX import as_num, cnmd, count_list_max
 a_id = accountId_to_dict.get('bitmex')
 ob_ex_exType = 'bitmex:future'
 exchange = 'bitmex'
-R = redis_obj(13)
+
+if R.get('RUN_ENV') == 'pro':
+    R = redis_obj(9)
+    R2 = redis_obj(1)
+else:
+    R = redis_obj(10)
+    R2 = redis_obj(0)
 
 
 @unittest.skip('VPN -> Pass')

@@ -46,7 +46,7 @@ def start_task():
     os.system(c)
 
 
-# @sched.scheduled_job('date')
+@sched.scheduled_job('date')
 @sched.scheduled_job('cron', hour=6, minute=1, second=1)
 @sched.scheduled_job('cron', hour=9, minute=1, second=1)
 def cron_task_dev():

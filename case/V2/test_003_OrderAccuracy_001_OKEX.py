@@ -16,7 +16,12 @@ a_id = accountId_to_dict.get('okex')
 ob_ex_exType = 'okex:spot'
 exchange = 'okex'
 
-R = redis_obj(11)
+if R.get('RUN_ENV') == 'pro':
+    R = redis_obj(5)
+    R2 = redis_obj(1)
+else:
+    R = redis_obj(6)
+    R2 = redis_obj(0)
 
 
 def kexue_add(number, ll):
@@ -995,7 +1000,6 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
     def test_009(self):
         """整合并格式化输出日志"""
 
-        R2 = redis_obj(0)
         exchange_key = 'exchange:%s' % exchange
         if R.keys(pattern='test_*'):
             for i in R.keys(pattern='test_*'):
