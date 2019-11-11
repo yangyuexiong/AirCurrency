@@ -15,7 +15,6 @@ class TestRunEnv(StartEnd):
 
     def test_001(self):
         """1"""
-        print('当前运行环境:{}'.format(os.environ.get('RUN_ENV')))
         print(BaseUrl)
 
 
