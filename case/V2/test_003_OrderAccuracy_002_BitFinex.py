@@ -421,7 +421,6 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
     def test_009(self):
         """整合并格式化输出日志"""
 
-        R2 = redis_obj(0)
         exchange_key = 'exchange:%s' % exchange
         if R.keys(pattern='test_*'):
             for i in R.keys(pattern='test_*'):
