@@ -54,9 +54,10 @@ def ter_start():
     else:
         print('else -> all test case')
         # file_prefix = 'test_003_OrderAccuracy_001_OKEX.py'
-        file_prefix = 'test_003_OrderAccuracy_002_BitFinex.py'
+        # file_prefix = 'test_003_OrderAccuracy_002_BitFinex.py'
         # file_prefix = 'test_003_OrderAccuracy_*.py'
-        # file_prefix = 'test_999_TestRunEnv.py'
+        # file_prefix = 'test_003_TestRunEnv.py'
+        file_prefix = 'test_003_*.py'
         # return 'test_*.py'
         return file_prefix
 
