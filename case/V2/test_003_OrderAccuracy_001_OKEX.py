@@ -493,10 +493,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
             |
         撤单操作
         """
-        print(list_c)
-        print(sy_ob)
-        # list_c = 1  # 调试
-        # sy_ob = 'okex:spot_list_'  # 调试
+        # print(list_c)
+        # print(sy_ob)
+        list_c = 10  # 调试
+        sy_ob = 'okex:spot_list_'  # 调试
         # test_sy_ob = 'okex:spot_list_{}'.format("%05d" % 171)
 
         for i in range(1, list_c + 1):
@@ -1003,6 +1003,8 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
     def test_009(self):
         """整合并格式化输出日志"""
+
+        R2.flushdb()
 
         exchange_key = 'exchange:%s' % exchange
         if R.keys(pattern='test_*'):
