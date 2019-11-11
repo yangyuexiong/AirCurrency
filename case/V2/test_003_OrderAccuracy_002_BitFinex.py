@@ -11,16 +11,19 @@ from config.data.test_data import *
 from common.OrderFunc import *
 from case.V2.test_003_OrderAccuracy_001_OKEX import as_num, cnmd, count_list_max_len, first_add, kexue_add, ad_price
 
-a_id = accountId_to_dict.get('bitfinex')
-ob_ex_exType = 'bitfinex:spot'
-exchange = 'bitfinex'
-
 if R.get('RUN_ENV') == 'pro':
+    run_env = 'pro'
+    a_id = accountId_to_dict.get('pro')['bitfinex']
     R = redis_obj(7)
     R2 = redis_obj(1)
 else:
+    run_env = 'dev'
+    a_id = accountId_to_dict.get('dev')['bitfinex']
     R = redis_obj(8)
     R2 = redis_obj(0)
+
+ob_ex_exType = 'bitfinex:spot'
+exchange = 'bitfinex'
 
 
 class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
@@ -34,6 +37,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
         'msg': '',
         'send': ''
     }
+    print(run_env)
 
     def test_001(self):
         """获取交易所所有Symbol(spot,future) -> 储存至Redis"""

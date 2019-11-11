@@ -51,9 +51,17 @@ symbol*	string
 '''
 
 accountId_to_dict = {
-    'okex': '4993',
-    'bitfinex': '5008',
-    'bitmex': '5009',
+    'dev': {
+        'okex': '4993',
+        'bitfinex': '5008',
+        'huobi': '5016'
+    },
+    'pro': {
+        'okex': '4582',
+        'bitfinex': '4681',
+        'huobi': '4682'
+    }
+
 }
 
 # 交易类型

@@ -12,16 +12,19 @@ from all_import import *
 from config.data.test_data import *
 from common.OrderFunc import *
 
-a_id = accountId_to_dict.get('okex')
-ob_ex_exType = 'okex:spot'
-exchange = 'okex'
-
 if R.get('RUN_ENV') == 'pro':
+    run_env = 'pro'
+    a_id = accountId_to_dict.get('pro')['okex']
     R = redis_obj(5)
     R2 = redis_obj(1)
 else:
+    run_env = 'dev'
+    a_id = accountId_to_dict.get('dev')['okex']
     R = redis_obj(6)
     R2 = redis_obj(0)
+
+ob_ex_exType = 'okex:spot'
+exchange = 'okex'
 
 
 def kexue_add(number, ll):
@@ -303,6 +306,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         'msg': '',
         'send': ''
     }
+    print(run_env)
 
     def test_001(self):
         """获取交易所所有Symbol(spot,margin) -> 储存至Redis"""
