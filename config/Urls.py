@@ -20,9 +20,11 @@ R = redis_obj(3)
 if not R.get('RUN_ENV'):
     R.set('RUN_ENV', 'dev')
 elif R.get('RUN_ENV') == 'pro':
-    BaseUrl = 'https://www.coinfat.com'
+    BaseUrl = 'http://172.31.65.46'
+    BaseUrl2 = 'http://172.31.65.46/public-api'
 else:
     BaseUrl = 'https://test.bithelp.top/private-api'
+    BaseUrl2 = 'https://test.bithelp.top/public-api'
 
 Token = 'ADD44DB572D23684C3C047E9087588A67aeee0a758bc49e98626503da22dcfe7'
 
@@ -54,7 +56,7 @@ getLeverage = BaseUrl + '/assets/getLeverage'  # 获取杠杆倍数
 transfer = BaseUrl + '/assets/transfer'  # 资金划转
 
 """--------------------public-api--------------------"""
-BaseUrl2 = 'https://test.bithelp.top/public-api'
+
 ticker = BaseUrl2 + '/api/public/ticker'  # 获取Ticker
 Symbol_url = BaseUrl2 + '/api/public/symbols'  # 获取Symbol
 Orderbook = BaseUrl2 + '/api/public/orderbook'  # 获取Orderbook

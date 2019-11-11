@@ -5,7 +5,9 @@
 # @File    : CarryTask.py
 # @Software: PyCharm
 
-import os, sys
+import os
+import sys
+import platform
 
 # 终端执行
 p1 = os.getcwd().split('AirCurrency')[0]
@@ -55,13 +57,17 @@ def cron_task_dev():
     print('环境变量{}'.format(R.get('RUN_ENV')))
     start_task()  # 执行 dev
 
-    # print('=' * 99)
-    # R.set('RUN_ENV', 'pro')
-    # print('环境变量{}'.format(R.get('RUN_ENV')))
-    #
-    # start_task()  # 执行 pro
-    # R.set('RUN_ENV', 'dev')
-    # print('环境变量{}'.format(R.get('RUN_ENV')))
+    if platform.system() == 'Linux':
+        print('=' * 99)
+        print(platform.system())
+        R.set('RUN_ENV', 'pro')
+        print('环境变量{}'.format(R.get('RUN_ENV')))
+
+        start_task()  # 执行 pro
+        R.set('RUN_ENV', 'dev')
+        print('环境变量{}'.format(R.get('RUN_ENV')))
+    else:
+        print(platform.system())
 
     print('结束时间:{}'.format(datetime.now()))
 
