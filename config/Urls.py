@@ -23,6 +23,7 @@ elif R.get('RUN_ENV') == 'pro':
     BaseUrl = 'http://172.31.65.46'
     BaseUrl2 = 'http://172.31.65.46/public-api'
 else:
+    R.set('RUN_ENV', 'dev')
     BaseUrl = 'https://test.bithelp.top/private-api'
     BaseUrl2 = 'https://test.bithelp.top/public-api'
 

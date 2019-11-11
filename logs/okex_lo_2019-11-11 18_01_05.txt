@@ -1,0 +1,25 @@
++------------+-------------------------------------------------------------------------+
+|   Symbol   |                                  error                                  |
++------------+-------------------------------------------------------------------------+
+|  xtz_btc   |                           OrderBook未找到该币对                         |
+| dash_usdt  |                                 划转失败                                |
+| dash_okb   |        该用例检验参数:moneyPrecision:0.1与OrderBook精度:0.02不一致      |
+|  zen_eth   |   该用例检验参数:moneyPrecision:0.0001与OrderBook精度:0.00000001不一致  |
+| eos_usdt   |                                 划转失败                                |
+| xas_usdt   |   该用例检验参数:moneyPrecision:0.00000001与OrderBook精度:0.0651不一致  |
+| bch_usdt   |                                 下单失败                                |
+| nuls_eth   |   该用例检验参数:moneyPrecision:0.00001与OrderBook精度:0.00001478不一致 |
+| yee_usdt   |    该用例检验参数:moneyPrecision:0.000001与OrderBook精度:0.00001不一致  |
+|  gto_eth   |  该用例检验参数:moneyPrecision:0.000001与OrderBook精度:0.00000002不一致 |
+| xtz_usdt   |                           OrderBook未找到该币对                         |
+| nano_eth   |   该用例检验参数:moneyPrecision:0.00001与OrderBook精度:0.00000002不一致 |
+|  bch_btc   |                                 划转失败                                |
+| fsn_usdk   |      该用例检验参数:moneyPrecision:0.0001与OrderBook精度:0.01不一致     |
+|  eos_btc   |                                 划转失败                                |
+| dash_btc   |                                 划转失败                                |
+|  trx_btc   |                                 划转失败                                |
+| btc_usdt   |                                 划转失败                                |
+|  etc_btc   |                                 划转失败                                |
+| iost_btc   |                                 划转失败                                |
+|  xrp_btc   |                                 划转失败                                |
++------------+-------------------------------------------------------------------------+

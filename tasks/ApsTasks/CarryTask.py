@@ -31,8 +31,7 @@ path_2 = 'AirCurrency/'  # 项目目录
 print(path_1)
 
 R = redis_obj(3)
-if not R.get('RUN_ENV'):
-    R.set('RUN_ENV', 'dev')
+R.set('RUN_ENV', 'dev')
 
 
 def start_task():
@@ -53,7 +52,7 @@ def start_task():
 @sched.scheduled_job('cron', hour=9, minute=1, second=1)
 def cron_task_dev():
     print('开始时间:{}'.format(datetime.now()))
-    R.set('start_time', datetime.now())
+    R.set('start_time', str(datetime.now()))
 
     print('开始环境变量{}'.format(R.get('RUN_ENV')))
     start_task()  # 执行 dev
@@ -71,7 +70,7 @@ def cron_task_dev():
         print(platform.system())
 
     print('结束时间:{}'.format(datetime.now()))
-    R.set('end_time', datetime.now())
+    R.set('end_time', str(datetime.now()))
 
     print('cp reports to web ')
     p = path_1 + path_2
