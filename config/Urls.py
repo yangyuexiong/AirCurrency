@@ -7,7 +7,6 @@
 
 import os
 
-from config.data.test_data import sToken
 from config.config import redis_obj
 
 """
@@ -20,9 +19,12 @@ R = redis_obj(3)
 if not R.get('RUN_ENV'):
     R.set('RUN_ENV', 'dev')
 elif R.get('RUN_ENV') == 'pro':
-    BaseUrl = 'http://172.31.65.46'
+    sToken = "3b6c218a-80d5-4eb0-bc94-ecbe024369bd"
+    BaseUrl = 'http://172.31.65.46/private-api'
     BaseUrl2 = 'http://172.31.65.46/public-api'
+
 else:
+    sToken = '9b09f5cd-9832-4bfe-9800-8ed5c38eefc1'
     R.set('RUN_ENV', 'dev')
     BaseUrl = 'https://test.bithelp.top/private-api'
     BaseUrl2 = 'https://test.bithelp.top/public-api'

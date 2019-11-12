@@ -7,9 +7,6 @@
 
 from all_import import *
 
-# 用户UID的加密签名,hash=sha256((uid+timestamp),sk）
-sToken = '9b09f5cd-9832-4bfe-9800-8ed5c38eefc1'
-
 '''
 
 下单参数:

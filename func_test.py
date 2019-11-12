@@ -337,6 +337,5 @@ path_2 = 'AirCurrency/'  # 项目目录
 #     load_dict = json.load(f)
 #     print(load_dict)
 
-
 if __name__ == '__main__':
     pass
