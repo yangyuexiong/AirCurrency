@@ -31,6 +31,7 @@ path_2 = 'AirCurrency/'  # 项目目录
 print(path_1)
 
 R = redis_obj(3)
+R.flushall()
 R.set('RUN_ENV', 'dev')
 
 

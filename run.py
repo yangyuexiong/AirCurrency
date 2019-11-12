@@ -64,8 +64,7 @@ def ter_start():
 
 report_dir = './reports'  # 报告路径
 test_dir = './case/V2'  # 测试路径
-file_prefix = ''  # 文件前缀
-
+# file_prefix = ''  # 文件前缀
 file_prefix = ter_start()
 
 import time
@@ -86,11 +85,11 @@ discover = unittest.defaultTestLoader.discover(test_dir, pattern=file_prefix)
 
 # 时间拼接报告名称
 if R.get('RUN_ENV') == 'pro':
-    ll = 'pro'
+    run_env = 'pro'
 else:
-    ll = 'dev'
+    run_env = 'dev'
 now = time.strftime('%Y-%m-%d %H:%M:%S')
-test_rp = '测试报告_{} {}_.html'.format(ll, now)
+test_rp = '测试报告_{} {}_.html'.format(run_env, now)
 report_name = report_dir + '/' + test_rp
 
 # 打开-生成测试报告

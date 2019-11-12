@@ -301,7 +301,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
     error_num = 0
     logs_path = os.getcwd().split('case')[0] + '/logs'
     now = time.strftime('%Y-%m-%d %H_%M_%S')
-    f_name = '/okex_lo_{}.txt'.format(now)
+    f_name = '/okex_log_{}_{}.txt'.format(run_env, now)
     format_logs = {
         'msg': '',
         'send': ''
@@ -1003,8 +1003,6 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
     def test_009(self):
         """整合并格式化输出日志"""
-
-        R2.flushdb()
 
         exchange_key = 'exchange:%s' % exchange
         if R.keys(pattern='test_*'):
