@@ -55,7 +55,7 @@ def cron_task_dev():
     R.set('start_time', str(datetime.now()))
 
     print('开始环境变量{}'.format(R.get('RUN_ENV')))
-    start_task()  # 执行 dev
+    # start_task()  # 执行 dev
 
     if platform.system() == 'Linux':
         print('=' * 99)
@@ -80,7 +80,7 @@ def cron_task_dev():
     os.system(c)
     print('done')
     print('结束环境变量{}'.format(R.get('RUN_ENV')))
-    R.set('cp', 'True')
+    R.set('cp', 'True -> {}'.format(str(datetime.now())))
 
 
 if __name__ == '__main__':
