@@ -40,7 +40,7 @@ def start_task():
     :return:
     """
     print('当前运行环境:{}'.format(R.get('RUN_ENV')))
-    command_set = 'python3 run.py okex'  # 启动文件
+    command_set = 'python3 run.py'  # 启动文件
     print('*->操作系统目录:{}'.format(path_1))
     print('*->项目目录:{}'.format(path_2))
     c = 'cd ~ ; cd {} ; ls ; {}'.format(path_1 + path_2, command_set)
@@ -55,7 +55,7 @@ def cron_task_dev():
     R.set('start_time', str(datetime.now()))
 
     print('开始环境变量{}'.format(R.get('RUN_ENV')))
-    # start_task()  # 执行 dev
+    start_task()  # 执行 dev
 
     if platform.system() == 'Linux':
         print('=' * 99)

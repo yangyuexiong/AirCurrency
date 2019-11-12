@@ -493,10 +493,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
             |
         撤单操作
         """
-        # print(list_c)
-        # print(sy_ob)
-        list_c = 10  # 调试
-        sy_ob = 'okex:spot_list_'  # 调试
+        print(list_c)
+        print(sy_ob)
+        # list_c = 10  # 调试
+        # sy_ob = 'okex:spot_list_'  # 调试
         # test_sy_ob = 'okex:spot_list_{}'.format("%05d" % 171)
 
         for i in range(1, list_c + 1):
@@ -714,7 +714,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         """margin 通过下单测试 -> moneyPrecision 与 basePrecision+minOrderSize"""
         print(list_margin_c)
         print(sy_obj_margin)
-        # list_margin_c = 3
+        # list_margin_c = 10
         # sy_obj_margin = 'okex:margin_list_'
 
         for i in range(1, list_margin_c + 1):
