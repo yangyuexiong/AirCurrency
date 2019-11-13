@@ -337,5 +337,24 @@ path_2 = 'AirCurrency/'  # 项目目录
 #     load_dict = json.load(f)
 #     print(load_dict)
 
+from config.config import redis_obj
+
+R = redis_obj(6)
+if R.keys(pattern='test_*'):
+    for i in R.keys(pattern='test_*'):
+        logs_obj = eval('(' + R.get(i) + ')')
+        # print(logs_obj)
+        # print(logs_obj['send'])
+        print(type(logs_obj['msg']))
+        o = eval('(' + logs_obj['msg'] + ')')
+        print(type(o))
+        print(o)
+        print(o.get('Redis_symbol_id'))
+        if o.get('symbol_obj').get('symbol', None):
+            print(i)
+        else:
+            pass
+
+        break
 if __name__ == '__main__':
     pass
