@@ -1,0 +1,10 @@
++------------+---------------------------------------------------------------+------------+
+|   Symbol   |                             error                             |   result   |
++------------+---------------------------------------------------------------+------------+
+| usdt_:cnht | float() argument must be a string or a number, not 'NoneType' | {Ellipsis} |
+| btc_:cnht  |            moneyPrecision 或 basePrecision 为 None            | {Ellipsis} |
+| usdt_:cnht |            moneyPrecision 或 basePrecision 为 None            | {Ellipsis} |
+| btc_:cnht  | float() argument must be a string or a number, not 'NoneType' | {Ellipsis} |
+| cnh_:cnht  |            moneyPrecision 或 basePrecision 为 None            | {Ellipsis} |
+| cnh_:cnht  | float() argument must be a string or a number, not 'NoneType' | {Ellipsis} |
++------------+---------------------------------------------------------------+------------+

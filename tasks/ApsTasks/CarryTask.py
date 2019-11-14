@@ -30,6 +30,7 @@ path_2 = 'AirCurrency/'  # 项目目录
 
 print(path_1)
 
+# 清空测试数据,重置执行环境
 R = redis_obj(3)
 R.flushall()
 R.set('RUN_ENV', 'dev')

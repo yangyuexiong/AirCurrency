@@ -227,13 +227,20 @@ class CommonFunc:
         # R.flushall()
         print('redis db{} flushall .....'.format(R))
 
-    def check_sy_kv(self, sy, R):
+    def check_sy_kv(self, redis_id, sy, R):
         """
         检查symbol参数 最要包括:moneyPrecision,basePrecision,minOrderSize,minOrderValue
 
+        :param redis_id:
         :param sy:
         :param R:
         :return:
+
+
+        精度规则：
+            1. moneyPrecision、basePrecision ->必须不为空
+            2. minOrderSize，minOrderValue   ->不能同时为空
+            3. 上述四个字段非空时，必须大于0
 
         """
         demo = {'exSymbol': 'knc_btc', 'symbol': 'knc_btc', 'exBaseCoin': 'knc', 'exMoneyCoin': 'btc',
@@ -241,34 +248,53 @@ class CommonFunc:
                 'moneyCoin': 'btc', 'basePrecision': '0.001', 'moneyPrecision': '0.0000001', 'minOrderSize': '1',
                 'symbolType': 'spot', 'tradeType': 'knc', 'multiplier': '1'}
 
+        new_obj = {
+            'redis_id': redis_id,
+            'redis_err': '',
+            'result': str(sy)
+        }
+
         # print(sy)
         # print(sy.get('moneyPrecision'), type(sy.get('moneyPrecision')))
         # print(float(sy.get('moneyPrecision')), type(float(sy.get('moneyPrecision'))))
         # print(round(float(sy.get('moneyPrecision')), len(sy.get('moneyPrecision').split('.')[1])))
+
         try:
             if not sy.get('moneyPrecision') or not sy.get('basePrecision'):
                 print('moneyPrecision 或 basePrecision 为 None')
-                R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
+                new_obj['redis_err'] = 'moneyPrecision 或 basePrecision 为 None'
+                sy.update(new_obj)
+                R.set('test_003->币对参数有误->ID:{}'.format(redis_id), str(sy))
 
             if float(sy.get('moneyPrecision')) <= 0 or float(sy.get('basePrecision')) <= 0:
                 print('moneyPrecision 或 basePrecision 值 < 0')
-                R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
+                new_obj['redis_err'] = 'moneyPrecision 或 basePrecision 值 < 0'
+                sy.update(new_obj)
+                R.set('test_003->币对参数有误->ID:{}'.format(redis_id), str(sy))
 
             if not sy.get('minOrderSize') and not sy.get('minOrderValue'):
-                print('minOrderSize 与 minOrderValue 为 None')
-                R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
+                print('minOrderSize 与 minOrderValue 都为空')
+                new_obj['redis_err'] = 'minOrderSize 与 minOrderValue 都为空'
+                sy.update(new_obj)
+                R.set('test_003->币对参数有误->ID:{}'.format(redis_id), str(sy))
 
             if sy.get('minOrderSize'):
                 if float(sy.get('minOrderSize')) <= 0:
                     print('minOrderSize  <= 0')
-                    R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
+                    new_obj['redis_err'] = 'minOrderSize  <= 0'
+                    sy.update(new_obj)
+                    R.set('test_003->币对参数有误->ID:{}'.format(redis_id), str(sy))
 
             if sy.get('minOrderValue'):
                 if float(sy.get('minOrderValue')) <= 0:
                     print('minOrderValue  <= 0')
-                    R.set('error->symbol缺少参数->{}'.format(shortuuid.uuid()), str(sy))
+                    new_obj['redis_err'] = 'minOrderValue  <= 0'
+                    sy.update(new_obj)
+                    R.set('test_003->币对参数有误->ID:{}'.format(redis_id), str(sy))
         except BaseException as e:
-            R.set('error->check_sy_kv暂时忽略->{}'.format(shortuuid.uuid()), str(sy))
+            new_obj['redis_err'] = str(e)
+            sy.update(new_obj)
+            R.set('next_test_003->忽略check_sy_kv的try->ID:{}'.format(redis_id), str(sy))
 
     def money_detailed(self, accountId):
         """

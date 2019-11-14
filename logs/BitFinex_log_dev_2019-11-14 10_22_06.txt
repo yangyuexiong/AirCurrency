@@ -1,0 +1,10 @@
++--------+---------------------------------------------------------------+--------+
+| Symbol |                             error                             | result |
++--------+---------------------------------------------------------------+--------+
+|  None  | float() argument must be a string or a number, not 'NoneType' |        |
+|  None  |            moneyPrecision 或 basePrecision 为 None            |        |
+|  None  |            moneyPrecision 或 basePrecision 为 None            |        |
+|  None  | float() argument must be a string or a number, not 'NoneType' |        |
+|  None  |            moneyPrecision 或 basePrecision 为 None            |        |
+|  None  | float() argument must be a string or a number, not 'NoneType' |        |
++--------+---------------------------------------------------------------+--------+

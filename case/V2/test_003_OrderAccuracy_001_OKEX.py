@@ -353,7 +353,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
             dic_obj = eval('(' + R.get(sy_ob + n) + ')')
             print(dic_obj, type(dic_obj))
 
-            self.check_sy_kv(dic_obj, R)
+            self.check_sy_kv(n, dic_obj, R)
         print('========== check spot success ==========')
 
         print('========== check margin ==========')
@@ -365,7 +365,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
             dic_obj = eval('(' + R.get(sy_obj_margin + n) + ')')
             print(dic_obj, type(dic_obj))
 
-            self.check_sy_kv(dic_obj, R)
+            self.check_sy_kv(n, dic_obj, R)
 
         print('========== check margin success ==========')
 
@@ -1284,22 +1284,9 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         # self.test_009()
         # self.test_010()
 
-    # @unittest.skip('分组调试 -> Pass')
+    @unittest.skip('分组调试 -> Pass')
     def test_099999(self):
         """分组调试"""
-        context = R2.hgetall('exchange:okex').items()
-        num = 1
-        new_context = {}
-        for k, v in context:
-            # print(k)
-            # print(v)
-            vv = eval('(' + v + ')')
-            if vv['symbol'] == 'nano_eth':
-                print('qwe',k)
-            new_context.update({num: vv})
-            num += 1
-
-        # print(new_context)
 
 
 if __name__ == '__main__':

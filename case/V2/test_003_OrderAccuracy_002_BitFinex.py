@@ -32,7 +32,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
     error_num = 0
     logs_path = os.getcwd().split('case')[0] + '/logs'
     now = time.strftime('%Y-%m-%d %H_%M_%S')
-    f_name = '/BitFinex_log_{}_{}.txt'.format(run_env,now)
+    f_name = '/BitFinex_log_{}_{}.txt'.format(run_env, now)
     format_logs = {
         'msg': '',
         'send': ''
@@ -84,7 +84,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
             dic_obj = eval('(' + R.get(sy_ob + n) + ')')
             print(dic_obj, type(dic_obj))
 
-            self.check_sy_kv(dic_obj, R)
+            self.check_sy_kv(n, dic_obj, R)
         print('========== check spot success ==========')
 
         print('========== check future ==========')
@@ -96,10 +96,11 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
             dic_obj = eval('(' + R.get(sy_obj_future + n) + ')')
             print(dic_obj, type(dic_obj))
 
-            self.check_sy_kv(dic_obj, R)
+            self.check_sy_kv(n, dic_obj, R)
 
         print('========== check future success ==========')
 
+    @unittest.skip('bitfinex不要判断moneyPrecision是否与orderbook一致，这个moneyPrecision是不用的，这交易所的价格都是5位有效数字')
     def test_004(self):
         """下单前 -> 通过已有orderBook校验 -> moneyPrecision精度"""
 
@@ -426,26 +427,23 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
         """整合并格式化输出日志"""
 
         exchange_key = 'exchange:%s' % exchange
+        tb.field_names = ['Symbol', 'error', 'result']
+        num = 1
         if R.keys(pattern='test_*'):
             for i in R.keys(pattern='test_*'):
                 logs_obj = eval('(' + R.get(i) + ')')
-                print(logs_obj)
-                l = logs_obj['send'].split('->')[0]
-                r = logs_obj['send'].split('->')[1]
-                R2.hmset(exchange_key, {l: r})
-
-            # print(R2.hgetall(exchange_key))
-            # print(type(R2.hgetall(exchange_key)))
-
-            tb.field_names = ['Symbol', 'error']
-            for k, v in R2.hgetall(exchange_key).items():
-                print(k, '->', v)
-                tb.add_row([k, v])
+                R2.hmset(exchange_key, {num: R.get(i)})
+                num += 1
+                # print(logs_obj.get('symbol'))
+                # print(logs_obj.get('redis_err'))
+                # print(logs_obj.get('result'))
+                tb.add_row([logs_obj.get('symbol'), logs_obj.get('redis_err'), str(logs_obj.get('result'))])
             with open(self.logs_path + self.f_name, 'w', encoding='utf-8') as f:
                 f.write(str(tb))
             print(tb)
+
         else:
-            tb.add_row(['null', 'null'])
+            tb.add_row(['null', 'null', 'null'])
             print('===未发现错误===')
             with open(self.logs_path + self.f_name, 'w', encoding='utf-8') as f:
                 f.write('')
@@ -471,22 +469,10 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
         self.test_002()
         self.test_003()
         self.test_004()
-
-        # self.test_099999()
         # self.test_005()
         # self.test_006()
-
         # self.test_009()
         # self.test_010()
-
-        # r = generating_orders(a_id, exchange, 'spot', 'normal', '0.00043351', '0.6001', 'buy', 'etc_btc')
-        # print(r.json())
-        # while True:
-        #     if r.json()['code'] == 2000 and '响应失败' in r.json()['message']:
-        #         r = generating_orders(a_id, exchange, 'spot', 'normal', '0.00043351', '0.6001', 'buy', 'etc_btc')
-        #     else:
-        #         print('请求成功')
-        #         break
 
     @unittest.skip('分组调试 -> Pass')
     def test_099999(self):
