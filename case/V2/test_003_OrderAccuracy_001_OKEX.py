@@ -309,14 +309,15 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
         """获取交易所所有Symbol(spot,margin) -> 储存至Redis"""
 
         self.clear_db_08(R)
-
-        get_url_symbol_list('okex:spot', R)
-        get_url_symbol_list('okex:margin', R)
+        get_url_symbol_list('{}:spot'.format(exchange), R)
+        get_url_symbol_list('{}:margin'.format(exchange), R)
 
     def test_002(self):
         """将Symbol list 中每一个币对象分开储存 -> Redis"""
-        res_spot = save_symbol_obj('okex:spot', R)
-        res_margin = save_symbol_obj('okex:margin', R)
+
+        res_spot = save_symbol_obj('{}:spot'.format(exchange), R)
+        res_margin = save_symbol_obj('{}:margin'.format(exchange), R)
+
         print('okex:spot -> {}'.format(res_spot))
         print(res_spot[0])
         print(res_spot[1])

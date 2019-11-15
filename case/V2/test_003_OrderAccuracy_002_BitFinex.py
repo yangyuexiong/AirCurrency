@@ -42,13 +42,14 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
     def test_001(self):
         """获取交易所所有Symbol(spot,future) -> 储存至Redis"""
         self.clear_db_08(R)
-        get_url_symbol_list('bitfinex:spot', R)
-        get_url_symbol_list('bitfinex:future', R)
+        get_url_symbol_list('{}:spot'.format(exchange), R)
+        get_url_symbol_list('{}:future'.format(exchange), R)
 
     def test_002(self):
         """将Symbol list 中每一个币对象分开储存 -> Redis"""
-        res_spot = save_symbol_obj('bitfinex:spot', R)
-        res_future = save_symbol_obj('bitfinex:future', R)
+        
+        res_spot = save_symbol_obj('{}:spot'.format(exchange), R)
+        res_future = save_symbol_obj('{}:future'.format(exchange), R)
 
         print('bitfinex:spot -> {}'.format(res_spot))
         print(res_spot[0])
