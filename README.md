@@ -114,18 +114,19 @@
     killasgroup     = false
     ```
 
-* 更新最新项目
+* 启动
+    ```
+    supervisorctl start air
+    ```
+
+* 更新最新项目 与 重启
     ```
     cd /srv 
     bash shell_control.sh
     1
+    bash shell_control.sh
+    3
     ```
-
-* 更新项目后重启服务
-    ```
-    supervisorctl reload air
-    ```
-
 
 ### web展示项目:
 
@@ -171,14 +172,21 @@
     killasgroup     = false
     ```
 
+* 启动
+    ```
+    supervisorctl start air_web
+    ```
+
 * 更新项目后重启服务
     ```
     cd /srv 
     bash shell_control.sh
     2
+    bash shell_control.sh
+    4
     ```
 
-* 一键脚本管理(初次拉取项目之后,使用该脚本更新代码与重启服务)
+* 一键脚本管理(初次拉取项目之后使用该脚本更新代码与重启服务)
     ```
     cd /srv/
     bash shell_control.sh
