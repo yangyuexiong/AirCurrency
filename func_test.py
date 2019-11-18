@@ -337,17 +337,19 @@ path_2 = 'AirCurrency/'  # 项目目录
 #     load_dict = json.load(f)
 #     print(load_dict)
 
-test_dict = {
-    'A': 'a',
-    'B': 'b',
-    'C': 'c',
-    'D': 'd',
-}
-
-if not test_dict.get('E'):
-    print('1')
-else:
-    print('2')
-
+# test_dict = {
+#     'A': 'a',
+#     'B': 'b',
+#     'C': 'c',
+#     'D': 'd',
+# }
+#
+# if not test_dict.get('E'):
+#     print('1')
+# else:
+#     print('2')
+s = '{"status":"error","err-code":"order-value-min-error","err-msg":"Order total cannot be lower than: `0.1`","data":null}'
+x = s.replace('null', "''")
+print(eval('(' + x + ')'))
 if __name__ == '__main__':
     pass

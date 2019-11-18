@@ -596,6 +596,21 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
                     res_code = res.get('code', None)
                     res_message = res.get('message', None)
+                    
+                    if res_code == 2000 and '响应失败,交易所返回信息' in res_message and 'Order total cannot be lower than' in res_message:
+                        x = eval('(' + res.get('rawStr', None).replace('null', "''") + ')')
+                        xx = (x['err-msg'].split('than:')[1][2:-1])
+                        new_obj = {
+                            'redis_id': n,
+                            'redis_err': '数量精度误差:币对数量精度:{},交易所精度:{}'.format(order_q, xx),
+                            'result': res
+                        }
+
+                        d.update(new_obj)
+                        R.set('test_005->下单失败->ID:{}'.format(n), str(d))
+                        print('下单失败->{}'.format(n))
+                        continue
+
                     exchangeType = res['data'].get('exchangeType', None)
                     orderId = res['data'].get('orderId', None)
                     symbol = res['data'].get('symbol', None)
