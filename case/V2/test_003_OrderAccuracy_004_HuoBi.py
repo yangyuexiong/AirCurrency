@@ -172,7 +172,7 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
                 new_obj = {
                     'redis_id': n,
                     'redis_err': 'test_004->外层func执行异常:{}'.format(str(e)),
-                    'result': ''
+                    'result': '忽略'
                 }
                 dic_obj.update(new_obj)
                 R.set('test_004->外层func执行异常->ID{}'.format(n), str(dic_obj))
@@ -372,7 +372,7 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
                     new_obj = {
                         'redis_id': n,
                         'redis_err': '内层func执行异常:{}'.format(str(e)),
-                        'result': ''
+                        'result': '忽略'
                     }
                     d.update(new_obj)
                     R.set('test_005->内层func执行异常->ID{}'.format(n), str(d))
@@ -382,7 +382,7 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
                 new_obj = {
                     'redis_id': n,
                     'redis_err': '外层func执行异常:{}'.format(str(e)),
-                    'result': ''
+                    'result': '忽略'
                 }
                 d.update(new_obj)
                 R.set('test_005->外层func执行异常->ID{}'.format(n), str(d))

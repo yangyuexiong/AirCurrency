@@ -596,7 +596,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
                     res_code = res.get('code', None)
                     res_message = res.get('message', None)
-                    
+
                     if res_code == 2000 and '响应失败,交易所返回信息' in res_message and 'Order total cannot be lower than' in res_message:
                         x = eval('(' + res.get('rawStr', None).replace('null', "''") + ')')
                         xx = (x['err-msg'].split('than:')[1][2:-1])
@@ -691,7 +691,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     new_obj = {
                         'redis_id': n,
                         'redis_err': '内层func执行异常:{}'.format(str(e)),
-                        'result': ''
+                        'result': '忽略'
                     }
                     d.update(new_obj)
                     R.set('test_005->内层func执行异常->ID{}'.format(n), str(d))
@@ -701,7 +701,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 new_obj = {
                     'redis_id': n,
                     'redis_err': '外层func执行异常:{}'.format(str(e)),
-                    'result': ''
+                    'result': '忽略'
                 }
                 d.update(new_obj)
                 R.set('test_005->外层func执行异常->ID{}'.format(n), str(d))

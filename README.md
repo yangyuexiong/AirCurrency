@@ -7,6 +7,7 @@
     apt-get update
     apt-get upgrade
     ```
+
 * 安装git
     ```
     apt-get install git -y
@@ -16,6 +17,7 @@
     ```
     apt install python3-pip
     ```
+
 * 配置python3与pip3
     ```
     vim ~/.bashrc
@@ -31,6 +33,7 @@
     ```
     source ~/.bashrc
     ```
+
 * 安装 redis
     ```
     cd /srv
@@ -38,9 +41,15 @@
     tar xzf redis-5.0.5.tar.gz
     cd redis-5.0.5
     make
-
     设置密码 123456
     ```
+
+* 启动 redis
+    ```
+    cd /srv/redis-5.0.5/src
+    ./redis-server /srv/redis-5.0.5/redis.conf &
+    ```
+
 ### 自动化测试项目:
 
 * 拉取项目
@@ -68,16 +77,19 @@
     # 单个用例执行
     python3 run.py 交易所名称    # python3 run.py okex
     ```
-* 定时任务
+
+* 定时任务(关闭服务器后不会继续运行,需配置在supervisor下才能一直运行)
     ```
     cd /AirCurrency/tasks/ApsTasks
 
     python3 CarryTask.py # 默认执行所有用例
     ```
+
 * 报告目录
     ```
     /AirCurrency/reports
     ```
+
 * supervisor配置文件与启动
     ```
     cd /etc/supervisor/conf.d
@@ -101,21 +113,17 @@
     stopasgroup     = false
     killasgroup     = false
     ```
-    ```
-    supervisorctl
-    start air
-    ```
 
-* 拉取最新项目
+* 更新最新项目
     ```
     cd /srv 
-    sh update_project.sh
+    bash shell_control.sh
+    1
     ```
 
 * 更新项目后重启服务
     ```
-    cd /srv 
-    sh server_start.sh
+    supervisorctl reload air
     ```
 
 
@@ -132,7 +140,7 @@
     git clone https://github.com/yangyuexiong/AirCurrencyWeb.git
     ```
 
-* 启动
+* 启动(关闭服务器后不会继续运行,需配置在supervisor下才能一直运行)
     ```
     cd /AirCurrencyWeb
     python3 run.py
@@ -162,11 +170,26 @@
     stopasgroup     = false
     killasgroup     = false
     ```
+
+* 更新项目后重启服务
     ```
-    supervisorctl
-    start air_web
+    cd /srv 
+    bash shell_control.sh
+    2
     ```
 
+* 一键脚本管理(初次拉取项目之后,使用该脚本更新代码与重启服务)
+    ```
+    cd /srv/
+    bash shell_control.sh
+    ``` 
+
+* 更新代码过程中存储测试报告的文件夹: rp_list (必须存在)
+    ```
+    如果不存在需要手动创建
+    cd /srv/
+    mkdir rp_list
+    ```
 
 * 如果使用python3.7+(当前服务器python3.6.8)
 
