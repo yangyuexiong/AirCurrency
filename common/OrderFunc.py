@@ -217,6 +217,260 @@ def bl8(n):
     return round(float(n), 8)
 
 
+def kexue_add(number, ll):
+    # print('{:.{}f}'.format(number, ll))
+    # print(type('{:.{}f}'.format(number, ll)))
+    return '{:.{}f}'.format(number, ll)
+
+
+def as_num(number, prec=20):
+    """
+    解决科学计数不现实为直观小数
+    :param number:
+    :param prec:
+    :return:
+    """
+    import decimal
+    import math
+    ctx = decimal.Context()
+    ctx.prec = prec
+    if 'E' in str(number) or 'e' in str(number):  # 判断时候为科学计数
+        # n = format(ctx.create_decimal(str(number)), 'f')
+        return format(ctx.create_decimal(str(number)), 'f')
+    else:
+        # print(number, type(number))
+        if '.' not in str(number):
+            return str(number) + '.0'
+        return number
+
+
+def cnmd(d):
+    """
+    使用:
+        cnmd(count_list_max_len(list))
+
+    :param d:
+    :return:
+    """
+    d2 = {}
+    for k, v in d.items():
+        d2[v[0]] = v[1]
+    print(d2)
+    # print(sorted(d2.items(), key=lambda x: x[0]))
+    # print(sorted(d2.items(), key=lambda x: x[0])[-1][1])
+    return sorted(d2.items(), key=lambda x: x[0])[-1][1]
+
+
+def ad_price(price_list):
+    """
+    过滤失去精度的下单价格
+    :param price_list:
+    :return:
+    """
+    new_d = list(zip(price_list, list(range(len(price_list)))))
+    lens = 0
+    new_l = []
+    for i in new_d:
+        x = list(i)
+        x[1] = len(str(x[0]))
+        # print(x)
+        if int(x[1]) >= lens:
+            lens = int(x[1])
+            new_l.append(x[0])
+        else:
+            pass
+    print('数据长度-> {}'.format(lens))
+    n = 0
+    for j in range(len(new_l)):
+        if len(str(new_l[n])) < lens:  # 第一个元素长度<目标长度
+            new_l.pop(n)  # 删除
+        else:
+            n += 1  # 索引+1
+    print('符合精度的价格list -> ', new_l)
+    print('提取价格 -> ', new_l[0])
+    return new_l[0]
+
+
+def count_list_max_len(list):
+    """
+    取出list中 出现长度 最多的 任意值
+
+    key:value
+    长度:[长度,下标]
+
+    :param list:
+    :return:
+    """
+    d = {}
+    for i in list:
+
+        if not d.get(len(str(i))):
+            d[len(str(i))] = [1, '{}'.format(i)]
+        else:
+            n1 = d.get(len(str(i)))[0]
+            n2 = i
+            # print('n1', n1)
+            # print('n2', n2)
+            d[len(str(i))] = [n1 + 1, n2]
+    print(d)
+    return d
+
+
+def last_add_2(s, sell=False):
+    """
+
+    :param s:      浮点数字符串
+    :param sell:   卖加 买减
+    :return:
+    """
+    k = '0.'
+    if isinstance(s, int):
+        s = str(float(s))
+    else:
+        s = str(as_num(s))
+
+    print('first_add -> 传入金额:', s)
+
+    """处理只有一位小数 或者 整数 例: 0.1"""
+    if len(s.split('.')[1]) < 2:
+        if sell:
+            r = float(s) + 0.5  # 卖 +0.5 买 -0.5
+            print('sell -> ', r)
+            return str(r)
+        else:
+            r = float(s)
+            if 0.5 > r > 0.2:
+                r = round(r - 0.1, len(s) - 2)
+                print('buy -> ', r)
+                return str(r)
+
+            else:
+                print('buy -> ', r)
+                return str(r)
+
+    """处理一位小数以上 例: 0.01"""
+    for i in s[2:]:
+        k = k + '0'
+    print(k)
+
+    k1 = k[:-2]
+    print('加减精度:', k1)
+
+    k2 = k[len(k) - 2:-1]
+    print('倒数第二位:', k2)
+
+    k2_1 = int(k2) + 1
+    print('倒数第二位 +1:', k2_1)
+
+    k3 = k[len(s) - 1:]
+    print('最后一位 默认 ->:', k3)
+
+    ss = k1 + str(k2_1) + k3  # 例: "0.0" + "1" + "0"
+    print('生成需要计数精度:', ss)
+
+    if sell:
+        r = kexue_add(float(s) + float(ss), len(s) - 2)  # 卖+1 买-1
+        r = as_num(r)
+        print('sell -> ', r)
+        return str(r)
+    else:
+        print('buy')
+        if int(s[-2:-1]) == 0:  # 值的倒数第二位为 0 往后 推一位
+            print(type(float(s)))
+            msg = '{} - {}'.format(float(s), as_num(float(ss) / 10))
+            print(msg)
+            r = kexue_add((float(s)) - (float(ss) / 10), len(s) - 2)
+            print('科学计数计算结果', r)
+            if r == 0:  # 计算结果为:0
+                print('==0 ->', r, '返回 -> 0')
+                return 0
+            r = as_num(r)
+            print('倒数第二位 == 0 且最后一位减法后结果 >0 :', r)
+            return str(r)
+        else:
+            r = round(float(s) - float(ss), len(s) - 2)
+            r = as_num(r)
+            print('倒数第二位不为 0 减法:', r)
+            print(r)
+            return str(r)
+
+
+def first_add(s, sell=False):
+    """
+
+    :param s:      浮点数字符串
+    :param sell:   卖加 买减 -> 默认:买减
+    :return:
+    """
+    k = '0.'
+    if isinstance(s, int):
+        s = str(round(float(s), 1))
+    else:
+        s = str(as_num(s))
+
+    print('first_add -> 传入金额:', s, type(s))
+
+    s_obj = s.split('.')  # '0' + '0123'
+    print('s_obj s_obj s_obj s_obj', s_obj)
+    print('s_obj[0]', s_obj[0])
+    print('s_obj[1]', s_obj[1])
+    print(len(s_obj[1]))
+    if int(s_obj[0]) == 0:
+        if sell:
+            print('sell')
+            okc = kexue_add(float(s) + 0.1, len(str(s_obj[1])))
+            print('计算结果:', okc, type(okc))
+            return okc
+
+        else:
+            print('buy')
+            s_obj_index = []
+            add_list = []
+            if len(s_obj[1]) >= 1:
+                for index, i in enumerate(s_obj[1]):
+                    if int(i) > 0:  # 如果为 0 往后推一为再减少
+                        s_obj_index.append(int(index))  # 组装值 >0 索引 list
+
+                print('符合格式的索引列表:{}'.format(s_obj_index))
+
+                for j in s_obj_index:
+                    c_num = k + '0' * int(j) + '1'  # 生成计算精度: k + '0' * index + '1'
+                    add_list.append(c_num)
+                    print(c_num)
+
+                    okc = kexue_add(float(s) - float(c_num), len(str(s_obj[1])))  # 格式化科学计数
+                    print(okc)
+
+                    print('{} - {} = {} -> {} -> {}'.format(s, c_num, okc, type(okc), float(okc)))
+
+                    if float(okc) == 0:
+                        print('Calculation results is zero ')
+                        print(okc + '1', type(okc + '1'))
+                        return okc + '1'  # 末尾补 1 -> '0.00000000'+'1'
+                    else:
+                        print('计算结果:', okc, type(okc))
+                        return okc
+                print('计算值的列表:{}'.format(add_list))
+
+    else:
+        print('整数位 > 0')
+
+        lens = len(str(s_obj[0])) - 1  # 整数位第一位+1
+        add_okc = '1{}'.format('0' * lens)
+        print('计算的值:{}'.format(add_okc))
+
+        if sell:
+            print('sell')
+            okc = kexue_add(float(s) + float(add_okc), len(str(s_obj[1])))
+            print(okc, type(okc))
+            return okc
+        else:
+            print('buy')
+            okc = kexue_add(float(s) - float(add_okc), len(str(s_obj[1])))
+            print(okc, type(okc))
+            return okc
+
+
 # 订单/精度相关公共类
 class CommonFunc:
     """公共类"""
@@ -296,6 +550,86 @@ class CommonFunc:
             sy.update(new_obj)
             R.set('next_test_003->忽略check_sy_kv的try->ID:{}'.format(redis_id), str(sy))
 
+    def check_odb(self, list_count, sy_first_key, ex_and_ext, R, redis_first_key):
+        """
+
+        :param list_count:      交易所币对总数
+        :param sy_first_key:    币对前缀: 如 huobi:margin_list_
+        :param ex_and_ext:      交易所与交易类型: 如 'huobi:spot'
+        :param R:               redis实例
+        :param redis_first_key: 用例标示
+        :return:
+        """
+        for i in range(1, list_count + 1):
+
+            try:
+                print(i)
+                n = "%05d" % i
+                print('编号:', n, type(n))
+
+                dic_obj = eval('(' + R.get(sy_first_key + n) + ')')
+                print('-----moneyPrecision-----')
+                print(dic_obj, type(dic_obj))
+                print('moneyPrecision -> {}'.format(dic_obj['moneyPrecision']))
+                print('\n')
+
+                print('-----orderbook-----')
+                jd_list_init = get_url_order_book(ex_and_ext, dic_obj['symbol']).json()
+
+                if jd_list_init.get('data', None):
+                    jd_list = jd_list_init['data']
+
+                    print('<<<- asks list ->>>\n', jd_list['asks'], '\n')
+                    print('<<<- bids list ->>>\n', jd_list['bids'], '\n')
+                    new_asks = [as_num(i[0]) for i in jd_list['asks']]
+                    new_bids = [as_num(i[0]) for i in jd_list['bids']]
+                    print('<<<- asks 价格 list ->>>\n', new_asks, type(new_asks), '\n')
+                    print('<<<- bids 价格 list ->>>\n', new_bids, type(new_bids), '\n')
+                    asks_and_bids = new_asks + new_bids
+                    print('<<<- 合并价格 ->>>\n ', asks_and_bids, type(asks_and_bids))
+                    print('\n')
+
+                    # 排序反取 与 切出精度
+                    asks_and_bids_c = str(cnmd(count_list_max_len(asks_and_bids)))
+                    # asks_and_bids_c = str(ad_price(new_asks))  # 卖价
+                    # asks_and_bids_c = str(ad_price(new_bids))  # 买价
+                    # asks_and_bids_c = str(ad_price(asks_and_bids))  # 合并买卖价
+                    print(asks_and_bids_c)
+
+                    print('-----精度提取-----')
+                    moneyPrecision_c = dic_obj['moneyPrecision'].split('.')[1]
+
+                    print('moneyPrecision - > {} -> 精度:{}'.format(dic_obj['moneyPrecision'], moneyPrecision_c))
+                    print('买卖平均价格 -> {} -> 精度:{}'.format(asks_and_bids_c, asks_and_bids_c.split('.')[1]))
+
+                    if len(moneyPrecision_c) != len(asks_and_bids_c.split('.')[1]):
+                        new_obj = {
+                            'redis_id': n,
+                            'redis_err': '该用例检验参数:moneyPrecision:{}与OrderBook精度:{}不一致'.format(
+                                str(dic_obj['moneyPrecision']), asks_and_bids_c),
+                            'result': ''
+                        }
+                        dic_obj.update(new_obj)
+                        R.set('{}->币种精度与OrderBook不相符->{}'.format(redis_first_key, n), str(dic_obj))
+                else:
+                    new_obj = {
+                        'redis_id': n,
+                        'redis_err': 'OrderBook未找到该币对',
+                        'result': jd_list_init
+                    }
+                    dic_obj.update(new_obj)
+                    R.set('{}->OrderBook未找到该币种->ID{}'.format(redis_first_key, n), str(dic_obj))
+                    continue
+            except BaseException as e:
+                new_obj = {
+                    'redis_id': n,
+                    'redis_err': '{}->外层func执行异常:{}'.format(redis_first_key, str(e)),
+                    'result': '忽略'
+                }
+                dic_obj.update(new_obj)
+                R.set('{}->外层func执行异常->ID{}'.format(redis_first_key, n), str(dic_obj))
+                continue
+
     def money_detailed(self, accountId):
         """
         资金明细
@@ -308,25 +642,34 @@ class CommonFunc:
         result = requests.post(getAsset, json=j, headers=header)
         return result
 
-    def money_transfer(self, accountId, amount, coin, from_, symbol, to_):
+    def money_transfer(self, accountId, amount, coin, from_, fromSymbol, to_, toSymbol, update=False):
         """
         资金划转
         :param accountId: 帐户id
         :param amount: 划转数量
         :param coin: 币种，如BTC
         :param from_: 转出账户 如 spot
+        :param fromSymbol: 转出币对 如btc_usdt
         :param symbol: 币对，如btc_usdt
         :param to_: 转入账户
+        :param toSymbol: 转入币对 如btc_usdt
+        :param update: 默认为false
         :return:
 
+
         {
-          "accountId": "4993",
-          "amount": 5,
-          "coin": "usdt",
+          "accountId": "5016",
+          "amount": 0.00072815,
+          "coin": "btc",
           "from": "spot",
-          "symbol": "trx_usdt",
-          "to": "margin"
+          "fromSymbol": "btt_btc",
+          "to": "margin",
+          "toSymbol": "btt_btc",
+          "update": true
         }
+        demo:
+            mt = self.money_transfer(a_id, '0.00072815', 'btc', 'spot', 'btt_btc', 'margin', 'btt_btc', update=True).json()
+            print(mt)
 
         """
 
@@ -335,8 +678,10 @@ class CommonFunc:
             "amount": amount,
             "coin": coin,
             "from": from_,
-            "symbol": symbol,
-            "to": to_
+            "fromSymbol": fromSymbol,
+            "to": to_,
+            "toSymbol": toSymbol,
+            "update": update,
         }
         result = requests.post(transfer, json=mt, headers=header)
         return result

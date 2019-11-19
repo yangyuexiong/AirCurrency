@@ -9,7 +9,6 @@
 from all_import import *
 from config.data.test_data import *
 from common.OrderFunc import *
-from case.V2.test_003_OrderAccuracy_001_OKEX import as_num, cnmd, count_list_max_len, first_add, kexue_add, ad_price
 
 if R.get('RUN_ENV') == 'pro':
     run_env = 'pro'
@@ -26,6 +25,7 @@ ob_ex_exType = 'bitfinex:spot'
 exchange = 'bitfinex'
 
 
+@unittest.skip('跳过')
 class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
     """BitFinex"""
 
@@ -47,7 +47,7 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
 
     def test_002(self):
         """将Symbol list 中每一个币对象分开储存 -> Redis"""
-        
+
         res_spot = save_symbol_obj('{}:spot'.format(exchange), R)
         res_future = save_symbol_obj('{}:future'.format(exchange), R)
 
@@ -460,7 +460,9 @@ class TestOrderAccuracyForBITFINEX(StartEnd, CommonFunc):
             if not fs:
                 print('not error')
             else:
-                print(fs)
+                # print(fs)
+                print('错误日志记录')
+                print('AirCurrency/logs/{}'.format(self.f_name))
                 er += 1
         assert er == 0
 

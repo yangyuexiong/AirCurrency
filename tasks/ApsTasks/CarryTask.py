@@ -51,7 +51,9 @@ def start_task():
 
 @sched.scheduled_job('date')
 @sched.scheduled_job('cron', hour=6, minute=1, second=1)
-@sched.scheduled_job('cron', hour=9, minute=1, second=1)
+@sched.scheduled_job('cron', hour=8, minute=1, second=1)
+@sched.scheduled_job('cron', hour=22, minute=1, second=1)
+@sched.scheduled_job('cron', hour=0, minute=1, second=1)
 def cron_task_dev():
     print('开始时间:{}'.format(datetime.now()))
     R.set('start_time', str(datetime.now()))

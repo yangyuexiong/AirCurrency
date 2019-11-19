@@ -351,5 +351,6 @@ path_2 = 'AirCurrency/'  # 项目目录
 s = '{"status":"error","err-code":"order-value-min-error","err-msg":"Order total cannot be lower than: `0.1`","data":null}'
 x = s.replace('null', "''")
 print(eval('(' + x + ')'))
+
 if __name__ == '__main__':
     pass
