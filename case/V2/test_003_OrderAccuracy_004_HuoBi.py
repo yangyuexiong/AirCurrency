@@ -714,44 +714,12 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
     def test_011(self):
         """整合并格式化输出日志"""
 
-        exchange_key = 'exchange:%s' % exchange
-        tb.field_names = ['Symbol', 'error', 'result']
-        num = 1
-        if R.keys(pattern='test_*'):
-            for i in R.keys(pattern='test_*'):
-                logs_obj = eval('(' + R.get(i) + ')')
-                R2.hmset(exchange_key, {num: R.get(i)})
-                num += 1
-                # print(logs_obj.get('symbol'))
-                # print(logs_obj.get('redis_err'))
-                # print(logs_obj.get('result'))
-                tb.add_row([logs_obj.get('symbol'), logs_obj.get('redis_err'), str(logs_obj.get('result'))])
-            with open(self.logs_path + self.f_name, 'w', encoding='utf-8') as f:
-                f.write(str(tb))
-            print(tb)
-
-        else:
-            tb.add_row(['null', 'null', 'null'])
-            print('===未发现错误===')
-            with open(self.logs_path + self.f_name, 'w', encoding='utf-8') as f:
-                f.write('')
-            print(tb)
+        self.format_output_log(exchange, R, R2, self.logs_path + self.f_name)
 
     def test_012(self):
         """ HuoBi -> 查看错误输出"""
 
-        er = 0
-
-        with open(self.logs_path + self.f_name, 'r', encoding='utf-8') as f:
-            fs = f.read()
-            if not fs:
-                print('not error')
-            else:
-                # print(fs)
-                print('错误日志记录')
-                print('AirCurrency/logs/{}'.format(self.f_name))
-                er += 1
-        assert er == 0
+        self.see_err_output(self.logs_path + self.f_name, self.f_name)
 
     @unittest.skip('分组调试 -> Pass')
     def test_09999(self):
@@ -771,6 +739,9 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
         # 9~10:margin
         # self.test_009()
         # self.test_010()
+
+        self.test_011()
+        self.test_012()
 
 
 if __name__ == '__main__':

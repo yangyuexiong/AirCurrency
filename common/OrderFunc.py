@@ -704,6 +704,60 @@ class CommonFunc:
         for j in margin_money:
             print(j)
 
+    def format_output_log(self, exchange, R, R2, file_path):
+        """
+        整合并格式化输出日志
+        :param exchange:    交易所名称
+        :param R:           错误日志 redis db
+        :param R2:          整合后存放的 redis db
+        :param file_path:   生成日志文件的路径
+        :return:
+        """
+
+        exchange_key = 'exchange:%s' % exchange
+        tb.field_names = ['Symbol', 'error', 'result']
+        num = 1
+        if R.keys(pattern='test_*'):
+            for i in R.keys(pattern='test_*'):
+                logs_obj = eval('(' + R.get(i) + ')')
+                R2.hmset(exchange_key, {num: R.get(i)})
+                num += 1
+                # print(logs_obj.get('symbol'))
+                # print(logs_obj.get('redis_err'))
+                # print(logs_obj.get('result'))
+                tb.add_row([logs_obj.get('symbol'), logs_obj.get('redis_err'), str(logs_obj.get('result'))])
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(str(tb))
+            # print(tb)
+
+        else:
+            tb.add_row(['null', 'null', 'null'])
+            print('===未发现错误===')
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write('')
+            # print(tb)
+
+    def see_err_output(self, file_path, file_name):
+        """
+        查看错误输出
+        :param file_path: 文件路径
+        :param file_name: 文件名称
+        :return:
+        """
+
+        er = 0
+
+        with open(file_path, 'r', encoding='utf-8') as f:
+            fs = f.read()
+            if not fs:
+                print('not error')
+            else:
+                # print(fs)
+                print('错误日志记录')
+                print('AirCurrency/logs/{}'.format(file_name))
+                er += 1
+        assert er == 0
+
 
 if __name__ == '__main__':
     pass

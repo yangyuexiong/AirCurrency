@@ -6,8 +6,6 @@
 # @Software: PyCharm
 
 
-import traceback
-
 from all_import import *
 from config.data.test_data import *
 from common.OrderFunc import *
@@ -730,71 +728,13 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
     def test_010(self):
         """整合并格式化输出日志"""
-        '''
-        exchange_key = 'exchange:%s' % exchange
-        if R.keys(pattern='test_*'):
-            for i in R.keys(pattern='test_*'):
-                logs_obj = eval('(' + R.get(i) + ')')
-                print(logs_obj)
-                l = logs_obj['send'].split('->')[0]
-                r = logs_obj['send'].split('->')[1]
-                R2.hmset(exchange_key, {l: r})
 
-            # print(R2.hgetall(exchange_key))
-            # print(type(R2.hgetall(exchange_key)))
-
-            tb.field_names = ['Symbol', 'error']
-            for k, v in R2.hgetall(exchange_key).items():
-                print(k, '->', v)
-                tb.add_row([k, v])
-            with open(self.logs_path + self.f_name, 'w', encoding='utf-8') as f:
-                f.write(str(tb))
-            print(tb)
-        else:
-            tb.add_row(['null', 'null'])
-            print('===未发现错误===')
-            with open(self.logs_path + self.f_name, 'w', encoding='utf-8') as f:
-                f.write('')
-            print(tb)
-        '''
-        exchange_key = 'exchange:%s' % exchange
-        tb.field_names = ['Symbol', 'error', 'result']
-        num = 1
-        if R.keys(pattern='test_*'):
-            for i in R.keys(pattern='test_*'):
-                logs_obj = eval('(' + R.get(i) + ')')
-                R2.hmset(exchange_key, {num: R.get(i)})
-                num += 1
-                # print(logs_obj.get('symbol'))
-                # print(logs_obj.get('redis_err'))
-                # print(logs_obj.get('result'))
-                tb.add_row([logs_obj.get('symbol'), logs_obj.get('redis_err'), str(logs_obj.get('result'))])
-            with open(self.logs_path + self.f_name, 'w', encoding='utf-8') as f:
-                f.write(str(tb))
-            print(tb)
-
-        else:
-            tb.add_row(['null', 'null', 'null'])
-            print('===未发现错误===')
-            with open(self.logs_path + self.f_name, 'w', encoding='utf-8') as f:
-                f.write('')
-            print(tb)
+        self.format_output_log(exchange, R, R2, self.logs_path + self.f_name)
 
     def test_011(self):
         """ okex -> 查看错误输出"""
 
-        er = 0
-
-        with open(self.logs_path + self.f_name, 'r', encoding='utf-8') as f:
-            fs = f.read()
-            if not fs:
-                print('not error')
-            else:
-                # print(fs)
-                print('错误日志记录')
-                print('AirCurrency/logs/{}'.format(self.f_name))
-                er += 1
-        assert er == 0
+        self.see_err_output(self.logs_path + self.f_name, self.f_name)
 
     @unittest.skip('调试test_005 -> Pass')
     def test_012(self):
@@ -1015,6 +955,12 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
     @unittest.skip('分组调试 -> Pass')
     def test_099999(self):
         """分组调试"""
+        self.test_001()
+        self.test_002()
+        self.test_003()
+        self.test_004()
+        self.test_010()
+        self.test_011()
 
 
 if __name__ == '__main__':

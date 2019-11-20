@@ -1,0 +1,33 @@
++------------+---------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+
+|   Symbol   |                                   error                                   |                                              result                                             |
++------------+---------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+
+|  dash_okb  |        该用例检验参数:moneyPrecision:0.1与OrderBook精度:0.02不一致        |                                                                                                 |
+|  tra_eth   |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:tra_eth not found', 'success': False, 'data': None}  |
+|  icx_eth   |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:icx_eth not found', 'success': False, 'data': None}  |
+|  zip_eth   |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:zip_eth not found', 'success': False, 'data': None}  |
+|  xas_usdt  |    该用例检验参数:moneyPrecision:0.00000001与OrderBook精度:0.0455不一致   |                                                                                                 |
+|  lsk_eth   |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:lsk_eth not found', 'success': False, 'data': None}  |
+|  snc_eth   |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:snc_eth not found', 'success': False, 'data': None}  |
+|  fun_btc   | 该用例检验参数:moneyPrecision:0.000000001与OrderBook精度:0.00000001不一致 |                                                                                                 |
+| storj_usdt |      该用例检验参数:moneyPrecision:0.0001与OrderBook精度:0.001不一致      |                                                                                                 |
+|  xmr_eth   |       该用例检验参数:moneyPrecision:0.001与OrderBook精度:0.01不一致       |                                                                                                 |
+|  fsn_usdk  |       该用例检验参数:moneyPrecision:0.0001与OrderBook精度:0.01不一致      |                                                                                                 |
+| waves_okb  |                           OrderBook未找到该币对                           | {'code': 2040, 'message': 'book:okex:spot:waves_okb not found', 'success': False, 'data': None} |
+| insur_eth  |                           OrderBook未找到该币对                           | {'code': 2040, 'message': 'book:okex:spot:insur_eth not found', 'success': False, 'data': None} |
+|  nuls_eth  |   该用例检验参数:moneyPrecision:0.00001与OrderBook精度:0.00000854不一致   |                                                                                                 |
+|  gusd_btc  |   该用例检验参数:moneyPrecision:0.0000001与OrderBook精度:0.000117不一致   |                                                                                                 |
+|  bnt_eth   |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:bnt_eth not found', 'success': False, 'data': None}  |
+|  nano_eth  |   该用例检验参数:moneyPrecision:0.00001与OrderBook精度:0.00000002不一致   |                                                                                                 |
+|  dgb_eth   |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:dgb_eth not found', 'success': False, 'data': None}  |
+|  dcr_okb   |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:dcr_okb not found', 'success': False, 'data': None}  |
+|  qun_eth   |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:qun_eth not found', 'success': False, 'data': None}  |
+|  hmc_eth   |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:hmc_eth not found', 'success': False, 'data': None}  |
+|  ada_okb   |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:ada_okb not found', 'success': False, 'data': None}  |
+|  act_eth   |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:act_eth not found', 'success': False, 'data': None}  |
+|  yoyo_eth  |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:yoyo_eth not found', 'success': False, 'data': None} |
+|  bnt_btc   |   该用例检验参数:moneyPrecision:0.000001与OrderBook精度:0.00000001不一致  |                                                                                                 |
+|  qtum_okb  |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:qtum_okb not found', 'success': False, 'data': None} |
+|  zco_btc   |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:zco_btc not found', 'success': False, 'data': None}  |
+|  snt_btc   | 该用例检验参数:moneyPrecision:0.000000001与OrderBook精度:0.00000001不一致 |                                                                                                 |
+|  snt_eth   |                           OrderBook未找到该币对                           |  {'code': 2040, 'message': 'book:okex:spot:snt_eth not found', 'success': False, 'data': None}  |
++------------+---------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------+
