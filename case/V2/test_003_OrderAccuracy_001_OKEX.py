@@ -403,7 +403,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 cancel_order(a_id, exchange, i['exchangeType'], i['orderId'], i['symbol'])
             print('已经处理漏撤订单')
 
-    @unittest.skip('margin需要调试')
+    @unittest.skip('margin需要调试/划转接口修改未更新到生产环境/划转接口请求限制')
     def test_008(self):
         """margin 通过下单测试 -> moneyPrecision 与 basePrecision+minOrderSize"""
         r_first_key = 'test_008'
@@ -416,7 +416,6 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
             try:
                 n = "%05d" % i
                 d = eval('(' + R.get(sy_obj_margin + n) + ')')
-
                 sy = d['symbol']
                 print('====================test -> {} -> {}===================='.format(n, sy))
                 sy_l = d['symbol'].split('_')[0]
@@ -522,19 +521,27 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     R.set('{}->获取资金明细失败->ID{}'.format(r_first_key, n), str(d))
                     continue
 
-                nb = 0
-                if int(str(sy_money.get('total')).split('.')[0]) < 1:  # 余额小数点前小于 1
-                    nb = round(float(sy_money.get('total')),
-                               len(str(sy_money.get('total')).split('.')[1]))  # 保留 6位小数
-                    print('划转金额:{}'.format(nb))
+                # 小数大于8位取8位
+                # 小数小于8位直接取
+                # 整数直接取
+                if '.' in sy_money.get('total'):
+                    if len(sy_money.get('total').split('.')[1]) >= 8:
+                        print(sy_money.get('total').split('.')[1][:8])
+                        nb = sy_money.get('total').split('.')[0] + '.' + sy_money.get('total').split('.')[1][:8]
+                        print(nb)
+                    else:
+                        nb = sy_money.get('total')
                 else:
-                    print(sy_money.get('total'), type(sy_money.get('total')))
-                    nb = int(float(sy_money.get('total')))  # 取整
-                    print('划转金额:{}'.format(nb))
+                    nb = sy_money.get('total')
+
+                print('{}划转金额:{}'.format(n, nb))
 
                 # 划转 spot -> margin
                 print('===划转 spot -> margin===')
-                mt = self.money_transfer(a_id, nb, sy_r, 'spot', sy, 'margin').json()
+
+                mt = self.money_transfer(a_id, nb, sy_r, 'spot', sy, 'margin', sy, update=True).json()
+                print(mt)
+
                 if mt.get('code', None) == 1000 and mt.get('message', None) == '操作成功' and mt.get('success', None):
                     print(mt)
                     sleep(1)
@@ -559,11 +566,9 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
 
                     res_code = res.get('code', None)
                     res_message = res.get('message', None)
-                    exchangeType = res['data'].get('exchangeType', None)
-                    orderId = res['data'].get('orderId', None)
-                    symbol = res['data'].get('symbol', None)
 
-                    if res_code != 1000 and res_message != '下单成功' and not orderId:
+                    # 下单失败
+                    if res_code != 1000 and res_message != '下单成功':
                         print(res)
 
                         new_obj = {
@@ -580,14 +585,18 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                         reset_md = self.money_detailed(a_id).json()
                         reset_spot_money = reset_md['data']['position']['spot']
                         reset_margin_money = reset_md['data']['position']['margin']
+                        print(reset_margin_money)
                         sy_money = [i for i in reset_margin_money if i['symbol'] == sy_r][0]
                         print('币种:{}\n余额:{}'.format(sy_money.get('symbol'), sy_money.get('total')))
                         print(nb)
                         print(sy_r)
                         print(sy)
                         sleep(1)
-                        reset_mt = self.money_transfer(a_id, nb, sy_r, 'margin', sy, 'spot').json()
+
+                        reset_mt = self.money_transfer(a_id, nb, sy_r, 'margin', sy, 'spot', sy, update=True).json()
                         print(reset_mt)
+
+                        # 反划转失败
                         if reset_mt.get('message', None) != '操作成功' and reset_mt.get('code', None) != 1000:
                             new_obj = {
                                 'redis_id': n,
@@ -596,9 +605,20 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                             }
                             d.update(new_obj)
                             R.set('{}->下单失败_反划转失败->ID{}'.format(r_first_key, n), str(d))
+                            continue
                         else:
-                            sleep(1)
-                        continue
+                            new_obj = {
+                                'redis_id': n,
+                                'redis_err': '下单失败_反划转成功',
+                                'result': reset_mt
+                            }
+                            d.update(new_obj)
+                            R.set('{}->下单失败_反划转成功->ID{}'.format(r_first_key, n), str(d))
+                            continue
+
+                    exchangeType = res['data'].get('exchangeType', None)
+                    orderId = res['data'].get('orderId', None)
+                    symbol = res['data'].get('symbol', None)
 
                     # 获取订单
                     order_status = check_order(a_id, exchange, exchangeType, orderId, symbol, all_json=True)
@@ -606,8 +626,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                         print(order_status)
                         new_obj = {
                             'redis_id': n,
-                            'redis_err': '获取订单失败:状态 {},单号 {}'.format(order_status['data'].get('status', None),
-                                                                     order_status['data'].get('orderId', None)),
+                            'redis_err': '获取订单失败',
                             'result': order_status
                         }
                         d.update(new_obj)
@@ -631,7 +650,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     if len(obj_price.split('.')[1]) != len(as_num(od_price).split('.')[1]):
                         new_obj = {
                             'redis_id': n,
-                            'redis_err': '下单后币种精度与OrderBook不相符,价格精度{},数量精度{}'.format(od_price, od_minsize),
+                            'redis_err': '下单后币种精度与OrderBook不相符,币对【价格精度:{}与数量精度:{}】订单【价格精度:{}与数量精度:{}】'.format(obj_price,
+                                                                                                              obj_minsize,
+                                                                                                              od_price,
+                                                                                                              od_minsize),
                             'result': order_status
                         }
                         d.update(new_obj)
@@ -667,8 +689,10 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                     print(sy_r)
                     print(sy)
                     sleep(1)
-                    reset_mt = self.money_transfer(a_id, nb, sy_r, 'margin', sy, 'spot').json()
+
+                    reset_mt = self.money_transfer(a_id, nb, sy_r, 'margin', sy, 'spot', sy, update=True).json()
                     print(reset_mt)
+
                     if reset_mt.get('message', None) != '操作成功' and reset_mt.get('code', None) != 1000:
                         new_obj = {
                             'redis_id': n,
@@ -677,13 +701,14 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                         }
                         d.update(new_obj)
                         R.set('{}->反划转失败->ID{}'.format(r_first_key, n), str(d))
+                        continue
                     else:
                         sleep(1)
                 except BaseException as e:
                     new_obj = {
                         'redis_id': n,
                         'redis_err': '内func执行异常:{}'.format(str(e)),
-                        'result': '忽略'
+                        'result': '{}'.format(str(traceback.print_exc()))
                     }
                     d.update(new_obj)
                     R.set('{}->内func执行异常->ID{}'.format(r_first_key, n), str(d))
@@ -693,7 +718,7 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
                 new_obj = {
                     'redis_id': n,
                     'redis_err': '外func执行异常:{}'.format(str(e)),
-                    'result': '忽略'
+                    'result': '{}'.format(str(traceback.print_exc()))
                 }
                 d.update(new_obj)
                 R.set('{}->外func执行异常->ID{}'.format(r_first_key, n), str(d))
@@ -978,11 +1003,12 @@ class TestOrderAccuracyForOKEX(StartEnd, CommonFunc):
     def test_09999(self):
         self.test_001()
         self.test_002()
-        self.test_003()
+        # self.test_003()
         # self.test_004()
-        self.test_005()
+        # self.test_005()
         # self.test_006()
         # self.test_007()
+        self.test_008()
         # self.test_009()
         # self.test_010()
 

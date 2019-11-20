@@ -40,11 +40,13 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
         self.clear_db_08(R)
         get_url_symbol_list('{}:spot'.format(exchange), R)
         get_url_symbol_list('{}:margin'.format(exchange), R)
+        get_url_symbol_list('{}:marginc'.format(exchange), R)
 
     def test_002(self):
         """将Symbol list 中每一个币对象分开储存 -> Redis"""
         res_spot = save_symbol_obj('{}:spot'.format(exchange), R)
         res_margin = save_symbol_obj('{}:margin'.format(exchange), R)
+        res_marginc = save_symbol_obj('{}:marginc'.format(exchange), R)
 
         print('huobi:spot -> {}'.format(res_spot))
         print(res_spot[0])
@@ -54,22 +56,38 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
         print(res_margin[0])
         print(res_margin[1])
 
+        print('huobi:marginc -> {}'.format(res_marginc))
+        print(res_marginc[0])
+        print(res_marginc[1])
+
         global list_c
         global sy_ob
         list_c = int(res_spot[0])  # spot 总数
-        sy_ob = res_spot[1][:-5]  # spot 前缀:huobi:margin_list_
+        sy_ob = res_spot[1][:-5]  # spot 前缀:huobi:spot_list_
 
         global list_margin_c
         global sy_obj_margin
         list_margin_c = int(res_margin[0])  # margin 总数
-        sy_obj_margin = res_margin[1][:-5]
+        sy_obj_margin = res_margin[1][:-5]  # margin 前缀:huobi:margin_list_
+
+        global list_marginc
+        global sy_obj_marginc
+        list_marginc = int(res_marginc[0])  # marginc 总数
+        sy_obj_marginc = res_marginc[1][:-5]  # marginc 前缀:huobi:marginc_list_
 
     def test_003(self):
         """检查币对参数"""
+        print('===spot===')
         print(list_c)
         print(sy_ob)
+
+        print('===margin===')
         print(list_margin_c)
         print(sy_obj_margin)
+
+        print('===marginc===')
+        print(list_marginc)
+        print(sy_obj_marginc)
 
         print('========== check spot ==========')
         for i in range(1, list_c + 1):
@@ -93,8 +111,19 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
             print(dic_obj, type(dic_obj))
 
             self.check_sy_kv(n, dic_obj, R)
-
         print('========== check margin success ==========')
+
+        print('========== check marginc ==========')
+        for i in range(1, list_marginc + 1):
+            print(i)
+            n = "%05d" % i
+            print(n, type(n))
+
+            dic_obj = eval('(' + R.get(sy_obj_marginc + n) + ')')
+            print(dic_obj, type(dic_obj))
+
+            self.check_sy_kv(n, dic_obj, R)
+        print('========== check marginc success ==========')
 
     def test_004(self):
         """下单前 -> 通过已有orderBook校验 spot-> moneyPrecision精度"""
@@ -118,6 +147,16 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
         self.check_odb(list_margin_c, sy_obj_margin, 'huobi:margin', R, 'test_005')
 
     def test_006(self):
+        """下单前 -> 通过已有orderBook校验 marginc-> moneyPrecision精度"""
+        print(list_marginc)
+        print(sy_obj_marginc)
+
+        # list_marginc = 59  # 调试
+        # sy_obj_marginc = 'huobi:marginc_list_'  # 调试
+
+        self.check_odb(list_marginc, sy_obj_marginc, 'huobi:marginc', R, 'test_006')
+
+    def test_007(self):
         """spot 通过下单测试 -> moneyPrecision 与 minOrderValue / Price + basePrecision"""
         print(list_c)
         print(sy_ob)
@@ -125,7 +164,7 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
         # sy_ob = 'huobi:spot_list_'  # 调试
         # test_sy_ob = 'huobi:spot_list_{}'.format("%05d" % 171)
 
-        r_first_key = 'test_006'
+        r_first_key = 'test_007'
         for i in range(1, list_c + 1):
 
             try:
@@ -328,7 +367,7 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
                 R.set('{}->外层func执行异常->ID{}'.format(r_first_key, n), str(d))
                 continue
 
-    def test_007(self):
+    def test_008(self):
         """复查是否还有未撤的活跃订单->撤单"""
         r = get_active_orders(a_id, exchange, 'spot').json()  # spot订单
         print(r['data'])
@@ -340,9 +379,10 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
                 cancel_order(a_id, exchange, i['exchangeType'], i['orderId'], i['symbol'])
             print('已经处理漏撤订单')
 
-    def test_008(self):
+    # @unittest.skip('划转接口修改未更新到生产环境')
+    def test_009(self):
         """margin 通过下单测试 -> moneyPrecision 与 minOrderValue / Price + basePrecision"""
-        r_first_key = 'test_008'
+        r_first_key = 'test_009'
         print(list_margin_c)
         print(sy_obj_margin)
         # list_margin_c = 1
@@ -352,8 +392,10 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
             try:
                 n = "%05d" % i
                 d = eval('(' + R.get(sy_obj_margin + n) + ')')
-
                 sy = d['symbol']
+                if 'husd' in sy:
+                    print('忽略币对{}-{}'.format(n, sy))
+                    continue
                 print('====================test -> {} -> {}===================='.format(n, sy))
                 sy_l = d['symbol'].split('_')[0]
                 sy_r = d['symbol'].split('_')[1]
@@ -519,7 +561,6 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
                         reset_spot_money = reset_md['data']['position']['spot']
                         reset_margin_money = reset_md['data']['position']['margin']
                         print(reset_margin_money)
-
                         sy_money = [i for i in reset_margin_money if i['symbol'] == sy_r][0]
                         print('币种:{}\n余额:{}'.format(sy_money.get('symbol'), sy_money.get('total')))
                         print(nb)
@@ -544,7 +585,7 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
                             new_obj = {
                                 'redis_id': n,
                                 'redis_err': '下单失败_反划转成功',
-                                'result': res
+                                'result': reset_mt
                             }
                             d.update(new_obj)
                             R.set('{}->下单失败_反划转成功->ID{}'.format(r_first_key, n), str(d))
@@ -571,20 +612,31 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
                     # 订单状态
                     od_status = order_status['data'].get('status', None)
 
+                    test = {'code': 1000, 'message': '下单成功', 'success': True, 'timestamp': 1574215855774,
+                            'data': {'customId': '1574043621945', 'orderId': '56513244113', 'price': '0.0704',
+                                     'qty': '1.4206', 'side': 'buy', 'orderType': 'limit', 'exchangeType': 'margin',
+                                     'postType': 'normal', 'symbol': 'elf_usdt', 'leverage': 1},
+                            'rawStr': '{"status":"ok","data":"56513244113"}'}
+
                     obj_price = d['moneyPrecision']
                     od_price = order_status['data']['price']
-                    obj_minsize = d['minOrderSize']
-                    od_minsize = order_status['data']['qty']
+
+                    obj_minvalue = d['minOrderValue']
+                    od_minvalue = order_status['data']['qty']
+
                     print(obj_price, type(obj_price))
                     print(od_price, type(od_price))
-                    print(obj_minsize, type(obj_minsize))
-                    print(od_minsize, type(od_minsize))
+                    print(obj_minvalue, type(obj_minvalue))
+                    print(od_minvalue, type(od_minvalue))
                     print('=====校验订单精度=====\n')
 
                     if len(obj_price.split('.')[1]) != len(as_num(od_price).split('.')[1]):
                         new_obj = {
                             'redis_id': n,
-                            'redis_err': '下单后币种精度与OrderBook不相符,价格精度{},数量精度{}'.format(od_price, od_minsize),
+                            'redis_err': '下单后币种精度与OrderBook不相符,币对【价格精度:{}与数量精度:{}】订单【价格精度:{}与数量精度:{}】'.format(obj_price,
+                                                                                                              obj_minvalue,
+                                                                                                              od_price,
+                                                                                                              od_minvalue),
                             'result': order_status
                         }
                         d.update(new_obj)
@@ -655,7 +707,11 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
                 R.set('{}->外func执行异常->ID{}'.format(r_first_key, n), str(d))
                 continue
 
-    def test_009(self):
+    def test_010(self):
+        """查看 spot 与 margin 资金"""
+        self.money_spot_margin(a_id)
+
+    def test_011(self):
         """整合并格式化输出日志"""
 
         exchange_key = 'exchange:%s' % exchange
@@ -681,7 +737,7 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
                 f.write('')
             print(tb)
 
-    def test_010(self):
+    def test_012(self):
         """ HuoBi -> 查看错误输出"""
 
         er = 0
@@ -697,28 +753,24 @@ class TestOrderAccuracyForHuoBi(StartEnd, CommonFunc):
                 er += 1
         assert er == 0
 
-    # @unittest.skip('分组调试 -> Pass')
+    @unittest.skip('分组调试 -> Pass')
     def test_09999(self):
-        """1"""
+        """分组调试"""
+        # 1~6
         self.test_001()
         self.test_002()
-        # self.test_003()
-        # self.test_004()
-        # self.test_005()
+        self.test_003()
+        self.test_004()
+        self.test_005()
+        self.test_006()
 
-        # self.test_006()
+        # 7~8:spot
         # self.test_007()
+        # self.test_008()
 
-        self.test_008()
-
+        # 9~10:margin
         # self.test_009()
         # self.test_010()
-
-        # mt = self.money_transfer(a_id, '2', 'btc', 'margin', 'EOS_USD', 'spot', 'EOSH_USD', update=True).json()
-        # print(mt)
-
-        # for i in self.money_detailed(a_id).json()['data']['position']['margin']:
-        #     print(i)
 
 
 if __name__ == '__main__':
