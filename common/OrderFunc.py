@@ -761,3 +761,11 @@ class CommonFunc:
 
 if __name__ == '__main__':
     pass
+    print(get_active_orders('5016', 'huobi', 'spot').json())
+    print(get_active_orders('5016', 'huobi', 'spot').json()['data'][0]['orderId'])
+    print(get_active_orders('5016', 'huobi', 'spot').json()['data'][0]['status'])
+
+    # x = '56997877086'
+    # res = check_order('5016', 'huobi', 'spot', x, 'trx_usdt')
+    # print('\n')
+    # print(res)
